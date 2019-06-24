@@ -1,5 +1,7 @@
 {
-  "name": "ionic-app-test",
-  "integrations": {},
+  "name": "boom-app",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
