@@ -4,15 +4,15 @@
       <div class="login-txt">登录</div>
       <input type="password" style="display: none;" /><!-- 兼容Chrome阻止自动填充用户名密码 -->
       <ion-item>
-        <ion-icon class="input-icon" src="./assets/icons/svg/user.svg"></ion-icon>
-        <ion-input autocomplete="new-member" autocorrect="off" [(ngModel)]="loginInfo.member" clearInput="true"
+        <ion-icon class="input-icon" src="./assets/svg/user.svg"></ion-icon>
+        <ion-input autocomplete="off" autocorrect="off" [(ngModel)]="loginInfo.username" clearInput="true"
           name="loginusername" type="text" spellcheck="false" placeholder="用户名" required>
         </ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-icon class="input-icon" src="./assets/icons/svg/lock-o.svg"></ion-icon>
-        <ion-input autocomplete="new-password" autocorrect="off" [(ngModel)]="loginInfo.pass" clearInput="true"
+        <ion-icon class="input-icon" src="./assets/svg/lock-o.svg"></ion-icon>
+        <ion-input autocomplete="off" autocorrect="off" [(ngModel)]="loginInfo.password" clearInput="true"
           name="loginpassword" [type]="showPsw?'text':'password'" required placeholder="输入密码">
         </ion-input>
         <div class="s_h" item-end tappable (click)="showPsw=!showPsw">
@@ -21,12 +21,22 @@
         </div>
       </ion-item>
 
+      <ion-item>
+        <ion-icon class="input-icon" src="./assets/svg/captcha.svg"></ion-icon>
+        <ion-input autocomplete="off" autocorrect="off" [(ngModel)]="loginInfo.captcha" clearInput="true"
+          name="logincaptcha" required placeholder="验证码">
+        </ion-input>
+        <div class="s_h" item-end tappable>
+          <img [src]="captchaPath" style="width: 149px;" tappable (click)="getCaptcha()" alt="">
+        </div>
+      </ion-item>
+
       <div class="btn-wrap">
         <button type="submit">登录</button>
       </div>
     </form>
   </div>
-  <div class="signin-forgot">
-    <a routerLink="/signin">免费注册</a><!-- &nbsp;/&nbsp;<a>忘记密码</a> -->
-  </div>
+  <!-- <div class="signin-forgot">
+    <a routerLink="/signin">免费注册</a>
+  </div> -->
 </ion-content>

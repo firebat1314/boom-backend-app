@@ -8,7 +8,7 @@ import {
 	CanLoad, Route
 } from '@angular/router';
 
-import { StartupService } from './startup.service';
+import { StorageService } from './storage/storage.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 	redirectUrl: string;
 	constructor(
 		private router: Router,
-		public startServ: StartupService,
+		public storage: StorageService,
 	) { }
 
 	canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -39,10 +39,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 	}
 
 	checkLogin(url: string): boolean {
-		if (this.startServ.token) { return true; }
+		if (this.storage.token) { return true; }
 
 		// Store the attempted URL for redirecting
-		this.startServ.redirectUrl = url;
+		this.storage.redirectUrl = url;
 
 		// Create a dummy session id
 		let sessionId = 123456789;

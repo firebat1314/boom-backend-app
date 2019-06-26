@@ -1,24 +1,36 @@
 <ion-app>
-  <ion-split-pane>
-    <ion-menu type="overlay">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
-  </ion-split-pane>
+  <ion-menu type="push">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <!-- <img src="assets/imgs/avatar.png" style="width: 20px;border-radius: 50%;border: 1px solid #e0e0e0;" alt=""> -->
+          <span>{{userName}}</span>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+
+      <Accordion [accordion]="true" (onChange)="onChange($event)">
+        <AccordionPanel *ngFor="let item of menuList; let i = index;" [key]="i" [header]="item.icon">
+          <List className="my-list">
+            <ListItem *ngFor="let content of item.child">
+              <ion-menu-toggle auto-hide="false">
+                <!-- <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="content.icon"></ion-icon> -->
+                <span style="vertical-align: middle;">{{content.title}}</span>
+              </ion-menu-toggle>
+            </ListItem>
+          </List>
+        </AccordionPanel>
+      </Accordion>
+      <ng-template #title1>
+        <div>Title 1</div>
+      </ng-template>
+    </ion-content>
+    <ion-footer>
+      <ion-menu-toggle auto-hide="false">
+        <ion-button no-margin (click)="logout()" expand="full">退出</ion-button>
+      </ion-menu-toggle>
+    </ion-footer>
+  </ion-menu>
+  <ion-router-outlet main></ion-router-outlet>
 </ion-app>

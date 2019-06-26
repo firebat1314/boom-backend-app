@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, ActivatedRoute } from '@angular/router';
-import { StartupService } from 'src/app/providers/startup.service';
 import { NavController, ToastController } from '@ionic/angular';
-import { HttpDataService } from 'src/app/providers/http-data.service';
+import { UtilsService } from 'src/app/providers/utils/utils.service';
+import { baseurl } from 'src/app/providers/default.interceptor';
+import { StorageService } from 'src/app/providers/storage/storage.service';
+import { ApiService } from 'src/app/providers/api.service';
+import { AnimationOptions } from '@ionic/angular/dist/providers/nav-controller';
 
 @Component({
   selector: 'sss-login',
@@ -12,25 +15,34 @@ import { HttpDataService } from 'src/app/providers/http-data.service';
 export class LoginPage implements OnInit {
 
   showPsw: boolean = false;
-  public loginInfo: { member?: string, pass?: string } = { member: '', pass: '' };
+  public loginInfo = {
+    'username': 'superAdmin',
+    'password': '123456',
+    'uuid': '',
+    'captcha': ''
+  };
+  captchaPath: any;
 
   constructor(
-    public httpServ: HttpDataService,
+    public api: ApiService,
     public route: ActivatedRoute,
     public toastCtrl: ToastController,
     public navCtrl: NavController,
-    public startServ: StartupService,
+    public storage: StorageService,
+    public myUtils: UtilsService,
+
   ) { }
 
   ngOnInit() {
+    this.getCaptcha();
     this.route.paramMap.subscribe(params => {
       let user_name = params.get('user_name');
       if (user_name) {
-        this.loginInfo.member = user_name;
+        this.loginInfo.username = user_name;
       } else {
-        this.startServ.getStorage('username').then(username => {
+        this.storage.getStorage('username').then(username => {
           if (username) {
-            this.loginInfo.member = username;
+            this.loginInfo.username = username;
           }
         })
       };
@@ -38,32 +50,42 @@ export class LoginPage implements OnInit {
   }
 
   goToHome(form) {
-    if (!this.loginInfo.member) {
+    if (!this.loginInfo.username) {
       this.toastTip('请填写用户名');
       return;
     }
-    if (!this.loginInfo.pass) {
+    if (!this.loginInfo.password) {
       this.toastTip('请填写密码');
       return;
     }
-    this.httpServ.login(this.loginInfo).subscribe(([token, sessionToken]) => {
-      if (token.status == 1 && sessionToken.status == 1) {
-        this.startServ.setStorage('username', this.loginInfo.member);
+    this.api.login(this.loginInfo).subscribe(([res]) => {
+      if (res && res.code === 0) {
+        this.storage.setStorage('username', this.loginInfo.username);
         // Get the redirect URL from our auth service
         // If no redirect has been set, use the default
-        let redirect = this.startServ.redirectUrl ? this.startServ.redirectUrl : '/tabs/manage';
+        let redirect = this.storage.redirectUrl ? this.storage.redirectUrl : '/home';
         // Set our navigation extras object
         // that passes on our global query params and fragment
-        let navigationExtras: NavigationExtras = {
+        let navigationExtras: NavigationExtras | AnimationOptions = {
           queryParamsHandling: 'preserve',
-          preserveFragment: true
+          preserveFragment: true,
+          animated: true
         };
         // Redirect the user
-        this.navCtrl.navigateForward([redirect], navigationExtras);
+        this.navCtrl.navigateRoot([redirect], navigationExtras).then(() => {
+          this.loginInfo.password = '';
+          this.loginInfo.captcha = '';
+        });
+      } else {
+        this.getCaptcha();//更新验证码
       }
     });
   }
-
+  getCaptcha() {
+    this.loginInfo.captcha = '';
+    this.loginInfo.uuid = this.myUtils.getUUID();
+    this.captchaPath = baseurl + (`/captcha.jpg?uuid=${this.loginInfo.uuid}`)
+  }
   async toastTip(message: string) {
     let toast = await this.toastCtrl.create({
       message: message,
