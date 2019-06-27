@@ -36,13 +36,22 @@ export class ApiService {
       })
     );
   }
-  logout(data = {}, options: HttpOptions = {}) {
+  logout(data = {}, options: HttpOptions = {}) {//退出登录
     return this.http.post('/sys/logout', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
   }
-  menuNav(data = {}, options: HttpOptions = {}) {
+  menuNav(data = {}, options: HttpOptions = {}) {//导航列表
     return this.http.get('/sys/menu/nav', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
   }
-  userInfo(data = {}, options: HttpOptions = {}) {
+  userInfo(data = {}, options: HttpOptions = {}) {//用户信息
     return this.http.get('/sys/user/info', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+  }
+  online(data = {}, options: HttpOptions = {}) {//在线人数
+    return this.http.get('/common/online', data, { showLoading: false, showToast: true, openDefultdata: true, ...options });
+  }
+  todayData(data = {}, options: HttpOptions = {}) {//数据表格
+    return this.http.get('/common/today', data, { showLoading: false, showToast: true, openDefultdata: true, ...options });
+  }
+  diagram(data = {}, options: HttpOptions = {}) {//获取折线图列表
+    return this.http.get('/common/diagram', data, { showLoading: false, showToast: true, openDefultdata: true, ...options });
   }
 }

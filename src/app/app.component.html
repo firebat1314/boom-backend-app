@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-menu type="push">
+  <ion-menu #menu type="push">
     <ion-header>
       <ion-toolbar>
         <ion-title>
@@ -9,22 +9,23 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-
+      <List className="my-list">
+        <ListItem (click)="menu.close()" [routerDirection]="'root'" [routerLink]="['/home']" routerLinkActive="active">
+          <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="'assets/svg/icon-shouye.svg'"></ion-icon>
+          <span style="vertical-align: middle;">首页</span>
+        </ListItem>
+      </List>
       <Accordion [accordion]="true" (onChange)="onChange($event)">
         <AccordionPanel *ngFor="let item of menuList; let i = index;" [key]="i" [header]="item.icon">
           <List className="my-list">
-            <ListItem *ngFor="let content of item.child">
-              <ion-menu-toggle auto-hide="false">
-                <!-- <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="content.icon"></ion-icon> -->
-                <span style="vertical-align: middle;">{{content.title}}</span>
-              </ion-menu-toggle>
+            <ListItem *ngFor="let content of item.child" (click)="menu.close()" [routerDirection]="'root'"
+              [routerLink]="[content.url]" routerLinkActive="active">
+              <!-- <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="content.icon"></ion-icon> -->
+              <span style="vertical-align: middle;">{{content.title}}</span>
             </ListItem>
           </List>
         </AccordionPanel>
       </Accordion>
-      <ng-template #title1>
-        <div>Title 1</div>
-      </ng-template>
     </ion-content>
     <ion-footer>
       <ion-menu-toggle auto-hide="false">

@@ -64,7 +64,7 @@ export class AppComponent {
               title: item1[j].name,
               icon: `assets/svg/icon-${item1[j].icon}.svg`,
               menuId: item1[j].menuId,
-              url: item1[j].url
+              url: '/' + item1[j].url
             })
           }
           menuList.push({
