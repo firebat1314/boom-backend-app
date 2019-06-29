@@ -9,12 +9,11 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <List className="my-list">
-        <ListItem (click)="menu.close()" [routerDirection]="'root'" [routerLink]="['/home']" routerLinkActive="active">
-          <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="'assets/svg/icon-shouye.svg'"></ion-icon>
-          <span style="vertical-align: middle;">首页</span>
-        </ListItem>
-      </List>
+      <ListItem no-lines (click)="menu.close()" [routerDirection]="'root'" [routerLink]="['/home']"
+        routerLinkActive="active">
+        <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="'assets/svg/icon-shouye.svg'"></ion-icon>
+        <span style="vertical-align: middle;">首页</span>
+      </ListItem>
       <Accordion [accordion]="true" (onChange)="onChange($event)">
         <AccordionPanel *ngFor="let item of menuList; let i = index;" [key]="i" [header]="item.icon">
           <List className="my-list">

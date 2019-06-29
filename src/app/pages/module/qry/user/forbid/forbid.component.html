@@ -1,0 +1,37 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>设置游戏黑名单</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>设置状态</ion-label>
+      <ion-select [(ngModel)]="status" okText="确认" cancelText="取消">
+        <ion-select-option value="0">关闭</ion-select-option>
+        <ion-select-option value="1">定量开启</ion-select-option>
+        <ion-select-option value="2">持续开启</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>目标数值</ion-label>
+      <ion-input [(ngModel)]="point" placeholder="请设置封杀目标点数" (keyup)="keyup()">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>游戏类型</ion-label>
+      <ion-select [(ngModel)]="gameChecked" multiple="true" cancelText="取消" okText="确认">
+        <ion-select-option *ngFor="let game of gamesArr;" [value]="game.value">{{game.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <div class="submit" padding>
+    <ion-button expand="block" (click)="submit()">确认</ion-button>
+  </div>
+</ion-content>

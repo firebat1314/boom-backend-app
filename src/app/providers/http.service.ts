@@ -8,10 +8,14 @@ import { StorageService } from './storage/storage.service';
 import { NavController } from '@ionic/angular';
 
 export interface HttpOptions {
-  showLoading?: boolean;
-  timeout?: number;
-  showToast?: boolean;
-  openDefultdata?: boolean;
+  showLoading?: Boolean;
+  timeout?: Number;
+  showToast?: Boolean;
+  openDefultdata?: Boolean;
+  postParamsByBody?: Boolean;
+  params?: HttpParams | {
+    [param: string]: string | string[];
+  };
 }
 
 @Injectable({
@@ -36,7 +40,7 @@ export class HttpService {
  *  GET请求处理（一般用于获取数据）
  * @param url 后台接口api 例如：/api/test/6
  */
-  get(url: string, data = {}, options: HttpOptions ): Observable<any> {
+  get(url: string, data = {}, options: HttpOptions): Observable<any> {
     return from(this.myAlert.loading()).pipe(
       switchMap(loadingElm => {
         options.showLoading && loadingElm && loadingElm.present();
@@ -73,15 +77,15 @@ export class HttpService {
   post(url: string, data = {}, options: HttpOptions): Observable<any> {
 
     return from(this.myAlert.loading()).pipe(
-        switchMap(loadingElm => {
+      switchMap(loadingElm => {
         loadingElm && loadingElm.present();
 
         let defaults = {
           't': new Date().getTime()
         }
-        options.openDefultdata ? Object.assign(data, defaults) : data;
+        options.openDefultdata && data ? Object.assign(data, defaults) : data;
 
-        return this.http.post(url, data).pipe(
+        return this.http.post(url, data, { params: options.params }).pipe(
           map((res) => {
             return this.extractData(res, options);
           }),

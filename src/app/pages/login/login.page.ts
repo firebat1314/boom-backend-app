@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Host, Inject, forwardRef } from '@angular/core';
 import { NavigationExtras, ActivatedRoute } from '@angular/router';
 import { NavController, ToastController } from '@ionic/angular';
 import { UtilsService } from 'src/app/providers/utils/utils.service';
@@ -6,6 +6,7 @@ import { baseurl } from 'src/app/providers/default.interceptor';
 import { StorageService } from 'src/app/providers/storage/storage.service';
 import { ApiService } from 'src/app/providers/api.service';
 import { AnimationOptions } from '@ionic/angular/dist/providers/nav-controller';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'sss-login',
@@ -13,7 +14,6 @@ import { AnimationOptions } from '@ionic/angular/dist/providers/nav-controller';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
   showPsw: boolean = false;
   public loginInfo = {
     'username': 'superAdmin',
@@ -24,13 +24,13 @@ export class LoginPage implements OnInit {
   captchaPath: any;
 
   constructor(
-    public api: ApiService,
-    public route: ActivatedRoute,
-    public toastCtrl: ToastController,
-    public navCtrl: NavController,
-    public storage: StorageService,
-    public myUtils: UtilsService,
-
+    private api: ApiService,
+    private route: ActivatedRoute,
+    private toastCtrl: ToastController,
+    private navCtrl: NavController,
+    private storage: StorageService,
+    private myUtils: UtilsService,
+    @Host() @Inject(forwardRef(() => AppComponent)) private childView: AppComponent
   ) { }
 
   ngOnInit() {
@@ -59,6 +59,7 @@ export class LoginPage implements OnInit {
       return;
     }
     this.api.login(this.loginInfo).subscribe(([res]) => {
+      this.childView.ngOnInit()
       if (res && res.code === 0) {
         this.storage.setStorage('username', this.loginInfo.username);
         // Get the redirect URL from our auth service

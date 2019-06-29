@@ -5,6 +5,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
   providedIn: 'root'
 })
 export class AlertService {
+  showToastTime: any = true;//防止重复提醒
 
   constructor(
     public loadingController: LoadingController,
@@ -12,7 +13,7 @@ export class AlertService {
   ) {
 
   }
- loading(message = '') {
+  loading(message = '') {
     return this.loadingController.create({
       duration: 20000,
       message: message,
@@ -21,13 +22,19 @@ export class AlertService {
     });
   }
   async toast(message, showCloseButton = true) {
-    const toast = await this.toastController.create({
-      duration: 2000,
-      message: message,
-      showCloseButton: showCloseButton,
-      position: 'top',
-      closeButtonText: '取消'
-    });
-    toast.present();
+    if (this.showToastTime) {
+      const toast = await this.toastController.create({
+        duration: 2000,
+        message: message,
+        showCloseButton: showCloseButton,
+        position: 'top',
+        closeButtonText: '取消'
+      });
+      toast.present();
+      this.showToastTime = false;
+      setTimeout(() => {
+        this.showToastTime = true;
+      }, 2000);
+    }
   }
 }

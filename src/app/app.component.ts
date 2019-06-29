@@ -12,19 +12,8 @@ import { UtilsService } from './providers/utils/utils.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
-    }
-  ];
-  menuList;
+
+  menuList: Array<any> = [];
   userName: any;
   userId: any;
 
@@ -40,20 +29,11 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  accordions: Array<any> = [];
-
-
   onChange(event) {
     // console.log(event);
   }
-  @ViewChild('title1') title1: ViewChild;
 
   ngOnInit() {
-    this.accordions = [
-      { title: this.title1, child: ['content 1', 'content 1', 'content 1'] },
-      { title: `<img src="/assets/img/logo.svg" style="width:36px"/>`, child: ['content 2', 'content 2', 'content 2'], inactive: false },
-      { title: 'Title 3', child: ['content 3', 'content 3', 'content 3'], inactive: true }
-    ];
     this.api.menuNav().subscribe((data) => {
       if (data && data.code === 0) {
         let menuList = [];

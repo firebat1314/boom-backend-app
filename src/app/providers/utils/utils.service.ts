@@ -23,6 +23,20 @@ export class UtilsService {
   }
 
   /**
+   * 是否有权限
+   * @param {*} key
+   */
+  async isAuth(key: any) {
+    const data = await this.storage.getStorage('permissions');
+    return JSON.parse(data || '[]').indexOf(key) !== -1 || false;
+  }
+
+  async isAdmin() {
+    const data = await this.storage.getStorage('_id_');
+    return data.toString() === '1';
+  }
+
+  /**
    * 树形数据转换
    * @param {*} data
    * @param {*} id

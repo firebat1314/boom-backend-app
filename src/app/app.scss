@@ -5,8 +5,15 @@
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
 
-ion-menu{
-    .active{
+ion-menu {
+    .active {
         background: #e0e0e0;
+    }
+
+    ion-footer {
+        ion-button {
+            // background: linear-gradient(90deg, #7DD2FE 0%, #026CFF 100%);
+
+        }
     }
 }

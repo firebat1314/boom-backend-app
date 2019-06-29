@@ -9,6 +9,7 @@ export class StorageService {
 
   token: any;
   redirectUrl: string;//记录登录前路由链接用于登陆后重定向
+  isLogin: Boolean;
 
   constructor(
     public storage: Storage,
@@ -46,6 +47,7 @@ export class StorageService {
   }
 
   clearLoginInfo() {
+    this.isLogin = false;
     return zip(
       from(this.removeToken()),
       from(this.removeStorage('LOGIN_INFO')),
