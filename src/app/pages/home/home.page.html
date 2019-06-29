@@ -4,11 +4,65 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>
-      Home
+      首页
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    
+  <div class="chart-wrap">
+    <div #eCharts style="width: 80%;height: 280px;"></div>
+  </div>
+  <div class="today-data">
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.pToDay}}</p>
+        <p>今日总存款</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.pYesterDay}}</p>
+        <p>昨日总存款</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.tToDay}}</p>
+        <p>今日总提现</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.tYesterDay}}</p>
+        <p>昨日总提现</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.taToDay}}</p>
+        <p>今日总抽水</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.taYesterDay}}</p>
+        <p>昨日总抽水</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.rToDay}}</p>
+        <p>今日总注册</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <p>{{dataListDay?.rYesterDay}}</p>
+        <p>昨日总注册</p>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+
 </ion-content>

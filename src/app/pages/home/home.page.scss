@@ -1,4 +1,43 @@
-.welcome-card ion-img {
-  max-height: 35vh;
-  overflow: hidden;
+.chart-wrap {
+  margin-top: 16px;
+}
+
+.today-data {
+  background: rgb(244, 248, 251);
+  display: flex;
+  flex-wrap: wrap;
+  padding: 4%;
+  padding-bottom: 0;
+  justify-content: space-between;
+
+  ion-card {
+    width: 48%;
+    margin: 0;
+    background: #ffffff;
+    margin-bottom: 4%;
+    text-align: center;
+
+    ion-card-content {
+      p {
+        &:first-child {
+          margin-bottom: 8px;
+          font-size: 18px;
+        }
+
+        &:nth-child(2) {
+          font-size: 12px;
+        }
+      }
+    }
+
+    &:nth-child(1) {
+      background: rgb(143, 173, 246);
+      color: #ffffff;
+    }
+
+    &:nth-child(2) {
+      background: rgb(144, 120, 244);
+      color: #ffffff;
+    }
+  }
 }

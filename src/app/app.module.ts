@@ -25,7 +25,9 @@ export function StartupServiceFactory(startupService: StartupService): Function 
   entryComponents: [],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      backButtonText: '',
+    }),
     IonicStorageModule.forRoot({
       name: '__mydb',
       // driverOrder: ['indexeddb', 'sqlite', 'websql']

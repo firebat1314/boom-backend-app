@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { UserPage } from './user.page';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { ForbidComponent } from './forbid/forbid.component';
 
 const routes: Routes = [
   {
@@ -19,8 +22,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule,
+    NgZorroAntdMobileModule,
   ],
-  declarations: [UserPage]
+  declarations: [UserPage, ForbidComponent],
+  entryComponents: [ForbidComponent]
 })
-export class UserPageModule {}
+export class UserPageModule { }
