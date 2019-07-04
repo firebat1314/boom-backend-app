@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'adv', loadChildren: '../qry/adv/adv.module#AdvPageModule' },
   { path: 'reply', loadChildren: '../qry/reply/reply.module#ReplyPageModule' },
   { path: 'wadv', loadChildren: '../qry/wadv/wadv.module#WadvPageModule' },
+  { path: '', redirectTo: 'user' },
 ];
 
 @NgModule({

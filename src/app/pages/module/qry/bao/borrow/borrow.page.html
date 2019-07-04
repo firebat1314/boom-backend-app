@@ -1,0 +1,51 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>查询借款</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let game of dataList;">
+        <CardBody>
+
+          <div class="item">
+            <div class="label">借款：</div>
+            <div class="prop">{{game.borrow / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总借款：</div>
+            <div class="prop">{{game.total / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总利息：</div>
+            <div class="prop">{{game.fee / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">首次借款时间：</div>
+            <div class="prop">{{game.crtTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">最后借款时间：</div>
+            <div class="prop">{{game.updTime}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>

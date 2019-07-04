@@ -6,6 +6,7 @@
 
     .searchbar-wrap {
         display: flex;
+        align-items: center;
 
         .search-options {
             flex-shrink: 0;
@@ -15,7 +16,6 @@
     SearchBar,
     ion-searchbar {
         flex: 1;
-        height: auto;
     }
 }
 

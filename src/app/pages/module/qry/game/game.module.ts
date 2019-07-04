@@ -6,21 +6,22 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { GamePage } from './game.page';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: GamePage
-  }
-];
+import { SearchPageModule } from './search/search.module';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { GameRoutingModule } from './game-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    SearchPageModule,
+    GameRoutingModule,
+    NgZorroAntdMobileModule,
+    ComponentsModule,
   ],
   declarations: [GamePage]
+
 })
-export class GamePageModule {}
+export class GamePageModule { }

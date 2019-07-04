@@ -13,7 +13,7 @@
   </ion-toolbar>
   <ion-toolbar class="searchbar">
     <div class="searchbar-wrap">
-      <ion-select class="search-options" [(ngModel)]="searchType" value="uaid" okText="确定" cancelText="取消">
+      <ion-select class="search-options" [interfaceOptions]="{header:'查询类型'}" [(ngModel)]="searchType" value="uaid" okText="确定" cancelText="取消">
         <ion-select-option value="uaid">账号ID查询</ion-select-option>
         <ion-select-option value="roleid">游戏ID查询</ion-select-option>
         <ion-select-option value="Account">玩家账号查询</ion-select-option>
@@ -26,11 +26,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+<ion-content >
+  <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
       refreshingText="刷新中..."></ion-refresher-content>
-  </ion-refresher> -->
+  </ion-refresher>
 
   <div class="no-body" *ngIf="!dataList?.length">
     <ion-icon src="assets/svg/sousuo.svg"></ion-icon>

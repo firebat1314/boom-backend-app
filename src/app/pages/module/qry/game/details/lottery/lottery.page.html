@@ -1,0 +1,45 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>
+      开心彩进出桌游戏记录
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <WingBlank>
+    <Card *ngFor="let item of dataList;">
+      <CardBody>
+        <div class="item">
+          <div class="label"><span class="text">期号</span><span>：</span></div>
+          <div class="prop">{{item?.openDate}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">开奖</span><span>：</span></div>
+          <div class="prop">{{item?.name}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">倍率</span><span>：</span></div>
+          <div class="prop">{{item?.rate}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">进桌余额</span><span>：</span></div>
+          <div class="prop">{{item?.inScore / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">出桌余额</span><span>：</span></div>
+          <div class="prop">{{item?.outScore / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">开奖时间</span><span>：</span></div>
+          <div class="prop">{{item?.crtTime}}</div>
+        </div>
+      </CardBody>
+    </Card>
+  </WingBlank>
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>

@@ -16,6 +16,7 @@ export interface HttpOptions {
   params?: HttpParams | {
     [param: string]: string | string[];
   };
+  url?: string;
 }
 
 @Injectable({
@@ -41,9 +42,15 @@ export class HttpService {
  * @param url 后台接口api 例如：/api/test/6
  */
   get(url: string, data = {}, options: HttpOptions): Observable<any> {
-    return from(this.myAlert.loading()).pipe(
+    let pms: Promise<any>;
+    if (options.showLoading) {
+      pms = this.myAlert.loading()
+    } else {
+      pms = new Promise(resolve => resolve(false));
+    }
+    return from(pms).pipe(
       switchMap(loadingElm => {
-        options.showLoading && loadingElm && loadingElm.present();
+        loadingElm && loadingElm.present();
 
         let defaults = {
           't': new Date().getTime()
@@ -57,7 +64,7 @@ export class HttpService {
             return this.extractData(res, options);
           }),
           finalize(() => {
-            options.showLoading && loadingElm && loadingElm.dismiss();
+            loadingElm && loadingElm.dismiss();
           }),
           catchError((err: HttpErrorResponse) => {
             return this.handleData(err, options);
@@ -78,7 +85,7 @@ export class HttpService {
 
     return from(this.myAlert.loading()).pipe(
       switchMap(loadingElm => {
-        loadingElm && loadingElm.present();
+        options.showLoading && loadingElm && loadingElm.present();
 
         let defaults = {
           't': new Date().getTime()
@@ -93,8 +100,6 @@ export class HttpService {
             loadingElm && loadingElm.dismiss();
           }),
           catchError((err: HttpErrorResponse) => {
-            loadingElm && loadingElm.dismiss();
-            console.log(err)
             return this.handleData(err, options);
           })
         );

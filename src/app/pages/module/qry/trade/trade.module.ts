@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { TradePage } from './trade.page';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { SearchPageModule } from './search/search.module';
 
 const routes: Routes = [
   {
@@ -19,8 +22,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SearchPageModule,
+    ComponentsModule,
+    NgZorroAntdMobileModule
   ],
   declarations: [TradePage]
 })
-export class TradePageModule {}
+export class TradePageModule { }

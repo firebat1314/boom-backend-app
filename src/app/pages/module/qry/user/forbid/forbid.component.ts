@@ -62,9 +62,8 @@ export class ForbidComponent implements OnInit {
 
   ngOnInit() {
     this.point = this.gameForbid.point || 0
-    if (this.gameForbid.status === 2) {
-      this.status = '2'
-    }
+    this.status = this.gameForbid.status + '';
+
     if (this.gameForbid.gamesArr) {
       this.gameChecked = this.gameForbid.gamesArr;
     }
@@ -84,11 +83,11 @@ export class ForbidComponent implements OnInit {
     let checked = {};
     for (let i = 0; i < this.gamesArr.length; i++) {
       const ele = this.gamesArr[i];
-      checked['gameChecked' + i] = false;
+      checked['gameChecked' + (i + 1)] = false;
       for (let j = 0; j < this.gameChecked.length; j++) {
         const c = this.gameChecked[j];
         if (c == ele.value) {
-          checked['gameChecked' + i] = true;
+          checked['gameChecked' + (i + 1)] = true;
         }
       }
     }

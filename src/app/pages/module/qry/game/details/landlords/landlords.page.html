@@ -1,0 +1,52 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>
+      进出桌斗地主游戏记录
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <WingBlank>
+    <Card *ngFor="let item of dataList;">
+      <CardBody>
+        <div class="item">
+          <div class="label"><span class="text">赢钱</span><span>：</span></div>
+          <div class="prop">{{item?.win / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">是否地主</span><span>：</span></div>
+          <div class="prop">
+            <ion-chip color="success" size="small" *ngIf="item.isLord==='1'">
+              <ion-label>地主</ion-label>
+            </ion-chip>
+            <ion-chip color="warning" size="small" *ngIf="item.isLord!=='1'">
+              <ion-label>农民</ion-label>
+            </ion-chip>
+          </div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">总倍数</span><span>：</span></div>
+          <div class="prop">{{item?.finalTimes}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">抢庄次数</span><span>：</span></div>
+          <div class="prop">{{item?.robCount}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">炸弹数</span><span>：</span></div>
+          <div class="prop">{{item?.bonusCount}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">底分</span><span>：</span></div>
+          <div class="prop">{{item?.bottomTimes}}</div>
+        </div>
+      </CardBody>
+    </Card>
+  </WingBlank>
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>

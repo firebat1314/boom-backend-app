@@ -1,0 +1,53 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>
+      {{dataForm?.gameType === 5 ? '进出桌百人牛牛游戏记录' : '进出桌龙虎斗游戏记录'}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <WingBlank>
+    <Card *ngFor="let item of dataList;">
+      <CardBody>
+        <div class="item">
+          <div class="label"><span class="text">庄家ID</span><span>：</span></div>
+          <div class="prop">{{item?.bannerId }}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">总共赢钱</span><span>：</span></div>
+          <div class="prop">{{item?.flowCount / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">抽水</span><span>：</span></div>
+          <div class="prop">{{item?.taxCount / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">游戏时间</span><span>：</span></div>
+          <div class="prop">{{item?.startTime}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">玩家数量</span><span>：</span></div>
+          <div class="prop">{{item?.playerCount}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">库存值</span><span>：</span></div>
+          <div class="prop">{{item?.stockScore}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">庄家赢</span><span>：</span></div>
+          <div class="prop">{{item?.bannerWin / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">详情</span><span>：</span></div>
+          <div class="prop" [innerHTML]="item?.detailDesc"></div>
+        </div>
+      </CardBody>
+    </Card>
+  </WingBlank>
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>

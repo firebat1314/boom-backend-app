@@ -47,7 +47,7 @@ export class UserPage implements OnInit {
   ngAfterViewInit() {
     setTimeout(() => {
       this.searchBar.setFocus();
-    }, 5000);
+    }, 200);
   }
   onSearchKeyUp(e: KeyboardEvent) {
     e.preventDefault();
@@ -56,7 +56,7 @@ export class UserPage implements OnInit {
       this.getDataList();
     }
   }
-  getDataList() {
+  getDataList(options?) {
     if (this.keyword.trim() === '') {
       this.alert.toast('请输入关键字')
       return
@@ -69,26 +69,35 @@ export class UserPage implements OnInit {
     } else if (this.searchType = 'Account') {
       foo = 'searchByAccount';
     }
-    this.apiServ[foo]({
-      'keyword': this.keyword
-    }).subscribe((data: any) => {
-      if (data && data.code === 0) {
-        let dataList = data.list;
-        for (let i = 0; i < dataList.length; i++) {
-          dataList[i].sumPay = dataList[i].sumPay / 100.0
-          dataList[i].gold = dataList[i].gold / 100.0
-          dataList[i].bankGold = dataList[i].bankGold / 100.0
-          dataList[i].withdraw = dataList[i].withdraw / 100.0
-          this.accountId = dataList[i].accountId;
-          if (!dataList[i].gameForbid) {
-            dataList[i].gameForbid = this.gameForbid;
-            dataList[i].gameForbid.roleId = dataList[i].roleId;
+    return new Promise((resolve, reject) => {
+      this.apiServ[foo]({
+        'keyword': this.keyword
+      }, options).subscribe((data: any) => {
+        if (data && data.code === 0) {
+          resolve()
+          let dataList = data.list;
+          for (let i = 0; i < dataList.length; i++) {
+            dataList[i].sumPay = dataList[i].sumPay / 100.0
+            dataList[i].gold = dataList[i].gold / 100.0
+            dataList[i].bankGold = dataList[i].bankGold / 100.0
+            dataList[i].withdraw = dataList[i].withdraw / 100.0
+            this.accountId = dataList[i].accountId;
+            if (!dataList[i].gameForbid) {
+              dataList[i].gameForbid = this.gameForbid;
+              dataList[i].gameForbid.roleId = dataList[i].roleId;
+            }
           }
+          this.dataList = dataList;
+        } else {
+          reject()
+          this.dataList = []
         }
-        this.dataList = dataList;
-      } else {
-        this.dataList = []
-      }
+      })
+    })
+  }
+  doRefresh(event) {
+    this.getDataList({ showLoading: false }).then(() => {
+      event.target.complete();
     })
   }
   async operateForUaid(user: any) {

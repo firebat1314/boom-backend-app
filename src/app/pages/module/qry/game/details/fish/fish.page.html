@@ -1,0 +1,53 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>
+      捕鱼进出桌游戏记录
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <WingBlank>
+    <Card *ngFor="let item of dataList;">
+      <CardBody>
+        <div class="item">
+          <div class="label"><span class="text">进桌余额</span><span>：</span></div>
+          <div class="prop">{{item?.inTotalGold / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">出桌余额</span><span>：</span></div>
+          <div class="prop">{{item?.outTotalGold / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">使用</span><span>：</span></div>
+          <div class="prop">{{item?.useGold / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">获得</span><span>：</span></div>
+          <div class="prop">{{item?.getGold / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">抽水</span><span>：</span></div>
+          <div class="prop">{{item?.tax / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">进桌时间</span><span>：</span></div>
+          <div class="prop">{{item?.inTime}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">出桌时间</span><span>：</span></div>
+          <div class="prop">{{item?.outTime}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">详情</span><span>：</span></div>
+          <div class="prop" [innerHTML]="item?.detailDesc"></div>
+        </div>
+      </CardBody>
+    </Card>
+  </WingBlank>
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>

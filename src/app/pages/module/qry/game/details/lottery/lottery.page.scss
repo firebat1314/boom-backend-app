@@ -1,0 +1,43 @@
+WingBlank {
+
+    Card {
+        margin: 12px 0;
+
+        CardBody {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 8px;
+            font-size: 12px;
+
+            .item {
+                display: flex;
+                align-items: flex-start;
+                padding: 4px 8px;
+                min-width: 100%;
+
+                .label {
+                    white-space: nowrap;
+                    flex-basis: 83px;
+
+                    .text {
+                        width: 88%;
+                        display: inline-block;
+                        text-align: justify;
+                        text-align-last: justify;
+                    }
+                }
+
+                .prop {
+                    color: #999;
+
+                    ion-chip {
+                        font-size: 12px;
+                        padding: 4px 8px;
+                        height: auto;
+                        margin: 2px;
+                    }
+                }
+            }
+        }
+    }
+}

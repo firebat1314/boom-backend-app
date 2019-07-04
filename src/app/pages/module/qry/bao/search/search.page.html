@@ -1,0 +1,28 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>搜索</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <List [className]="'date-picker-list'">
+    <ListItem DatePicker [extra]="currentDateFormat(beginTime, 'yyyy-mm-dd')" [arrow]="'horizontal'" [mode]="'date'"
+      [(ngModel)]="beginTime" (onOk)="onOk1($event)" title="开始日期">
+      开始日期
+      <Brief>{{ this.formData.beginTime||'请选择' }}</Brief>
+    </ListItem>
+    <ListItem DatePicker [extra]="currentDateFormat(endTime, 'yyyy-mm-dd')" [arrow]="'horizontal'" [mode]="'date'"
+      [(ngModel)]="endTime" (onOk)="onOk2($event)" title="结束日期">
+      结束日期
+      <Brief>{{ this.formData.endTime||'请选择' }}</Brief>
+    </ListItem>
+  </List>
+  <div class="submit" padding>
+    <ion-button expand="block" (click)="submit()">确认</ion-button>
+  </div>
+</ion-content>

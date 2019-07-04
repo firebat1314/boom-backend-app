@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>查询存款</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let game of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">存款类型：</div>
+            <div class="prop">
+              <ion-chip color="success" size="small" *ngIf="game.type===1">
+                <ion-label>定期10天</ion-label>
+              </ion-chip>
+              <ion-chip color="success" size="small" *ngIf="game.type===2">
+                <ion-label>定期30天</ion-label>
+              </ion-chip>
+              <ion-chip color="success" size="small" *ngIf="game.type===3">
+                <ion-label>定期90天</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">利率：</div>
+            <div class="prop">{{game.typeFee}}</div>
+          </div>
+          <div class="item">
+            <div class="label">金额：</div>
+            <div class="prop">{{game.gold / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">利息：</div>
+            <div class="prop">{{game.fee / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">状态：</div>
+            <div class="prop">
+              <ion-chip color="success" size="small" *ngIf="game.status===0">
+                <ion-label>存入中</ion-label>
+              </ion-chip>
+              <ion-chip color="success" size="small" *ngIf="game.status===1">
+                <ion-label>已退出</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">开始时间：</div>
+            <div class="prop">{{game.startTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">结束时间：</div>
+            <div class="prop">
+              <ion-chip color="primary">{{game.endTime}}</ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">更新时间：</div>
+            <div class="prop">{{game.updTime}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

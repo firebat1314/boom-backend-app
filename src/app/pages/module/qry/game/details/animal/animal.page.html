@@ -1,0 +1,69 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>
+      飞禽走兽进出桌游戏记录
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <WingBlank>
+    <Card *ngFor="let item of dataList;">
+      <CardBody>
+        <div class="item">
+          <div class="label"><span class="text">开奖动物</span><span>：</span></div>
+          <div class="prop">{{item?.lotteryAnimal}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">奖励动物</span><span>：</span></div>
+          <div class="prop">{{item?.rewardAnimal}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">奖励附加倍率</span><span>：</span></div>
+          <div class="prop">{{item?.attachOdds}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">开始库存</span><span>：</span></div>
+          <div class="prop">{{item?.startStorage}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">结束库存</span><span>：</span></div>
+          <div class="prop">{{item?.endStorage}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">开始彩金池</span><span>：</span></div>
+          <div class="prop">{{item?.startBonus}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">结束彩金池</span><span>：</span></div>
+          <div class="prop">{{item?.endBonus}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">庄家赢钱</span><span>：</span></div>
+          <div class="prop">{{item?.bankerWin / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">抽水比例</span><span>：</span></div>
+          <div class="prop">{{item?.profitPercent}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">抽水</span><span>：</span></div>
+          <div class="prop">{{item?.profitValue / 100.0}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">游戏时间</span><span>：</span></div>
+          <div class="prop">{{item?.crtTime}}</div>
+        </div>
+        <div class="item">
+          <div class="label"><span class="text">详情</span><span>：</span></div>
+          <div class="prop" [innerHTML]="item?.detailDesc"></div>
+        </div>
+      </CardBody>
+    </Card>
+  </WingBlank>
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>

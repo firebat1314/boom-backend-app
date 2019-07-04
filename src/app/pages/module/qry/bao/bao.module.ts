@@ -6,12 +6,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { BaoPage } from './bao.page';
+import { SearchPageModule } from './search/search.module';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 const routes: Routes = [
   {
     path: '',
     component: BaoPage
-  }
+  },
+  { path: 'borrow', loadChildren: './borrow/borrow.module#BorrowPageModule' },
+  { path: 'deposit', loadChildren: './deposit/deposit.module#DepositPageModule' },
 ];
 
 @NgModule({
@@ -19,8 +24,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SearchPageModule,
+    ComponentsModule,
+    NgZorroAntdMobileModule
   ],
   declarations: [BaoPage]
 })
-export class BaoPageModule {}
+export class BaoPageModule { }
