@@ -124,4 +124,10 @@ export class ApiService {
   getDataListByAccount(data = {}, options: HttpOptions = {}) {//资金流 玩家账号查询
     return this.http.get(options.url || '/qry/trade/list/act', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
   }
+  bankList(data = {}, options: HttpOptions = {}) {//银行查询
+    return this.http.get(options.url || '/qry/bank/list', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+  }
+  baexchgList(data = {}, options: HttpOptions = {}) {//提现查询
+    return this.http.get(options.url || '/qry/exchg/list', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+  }
 }

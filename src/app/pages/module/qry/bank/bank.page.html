@@ -1,13 +1,92 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>bank</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>银行查询</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let game of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">账号ID：</div>
+            <div class="prop">{{game.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">操作类型：</div>
+            <div class="prop">
+              <ion-chip color="primary" size="small" *ngIf="game.type===1">
+                <ion-label>存</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="game.type===0">
+                <ion-label>取</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="game.type===3">
+                <ion-label>送出</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="game.type===4">
+                <ion-label>获赠</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">操作前身上金币：</div>
+            <div class="prop">{{game.inGold / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">操作后身上金币：</div>
+            <div class="prop">{{game.outGold / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">变动后金币：</div>
+            <div class="prop">{{game.lastVal}}</div>
+          </div>
+          <div class="item">
+            <div class="label">操作前银行金币：</div>
+            <div class="prop">{{game.inBank / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">操作后银行金币：</div>
+            <div class="prop">{{game.outBank / 100.0}}</div>
+          </div>
+          <div class="item">
+            <div class="label">获赠人ID：</div>
+            <div class="prop">{{game.toAccount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">赠送人ID：</div>
+            <div class="prop">{{game.frAccount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">操作时间：</div>
+            <div class="prop">{{game.crtTime}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

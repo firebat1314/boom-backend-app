@@ -1,13 +1,107 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>exchg</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>提现查询</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">ID：</div>
+            <div class="prop">{{item.ID}}</div>
+          </div>
+          <div class="item">
+            <div class="label">账号ID：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">提现金额：</div>
+            <div class="prop">{{item.gold / 100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">到账金额：</div>
+            <div class="prop">{{item.giveMoney / 100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">玩家渠道：</div>
+            <div class="prop" [innerHTML]="item.channel"></div>
+          </div>
+          <div class="item">
+            <div class="label">提现状态：</div>
+            <div class="prop">
+              <ion-chip color="primary" size="small" *ngIf="item.status===0">
+                <ion-label>初始</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.status===2">
+                <ion-label>代付中</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.status===3">
+                <ion-label>提现成功</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.status===4">
+                <ion-label>财务打款</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.status===5">
+                <ion-label>已退回</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.status===7">
+                <ion-label>风控拒绝</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.status===8">
+                <ion-label>风控通过</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">操作：</div>
+            <div class="prop"><span tappable (click)="trackHandler(item.id)"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">跟踪</span>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">备注：</div>
+            <div class="prop">{{item.remark}}</div>
+          </div>
+          <div class="item">
+            <div class="label">提现时间：</div>
+            <div class="prop">{{item.crtTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">修改时间：</div>
+            <div class="prop">{{item.updTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">提现地址：</div>
+            <div class="prop" [innerHTML]="item.address"></div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

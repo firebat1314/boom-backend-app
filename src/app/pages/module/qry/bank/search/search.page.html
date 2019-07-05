@@ -5,30 +5,30 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>筛选</ion-title>
+    <ion-title>搜索</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-
     <ion-item>
-      <ion-label position="fixed">游戏类型</ion-label>
-      <ion-select [(ngModel)]="formData.gameType" slot="end" multiple="false" cancelText="取消" okText="确认">
-        <ion-select-option [value]="'0'">无</ion-select-option>
-        <ion-select-option *ngFor="let item of options" [value]="item.value">{{item.label}}</ion-select-option>
+      <ion-label>操作类型</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.type" okText="确定" cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option value="1">存</ion-select-option>
+        <ion-select-option value="0">取</ion-select-option>
+        <ion-select-option value="2">送出或赠送</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label position="fixed">开始日期</ion-label>
-      <ion-datetime [(ngModel)]="formData.beginTime" slot="end" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"
-        cancelText="取消" doneText="确定">
+      <ion-datetime [(ngModel)]="formData.beginTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消"
+        doneText="确定">
       </ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label position="fixed">结束日期</ion-label>
-      <ion-datetime [(ngModel)]="formData.endTime" slot="end" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"
-        cancelText="取消" doneText="确定">
+      <ion-datetime [(ngModel)]="formData.endTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
       </ion-datetime>
     </ion-item>
     <ion-item>
@@ -36,6 +36,7 @@
       <ion-input [(ngModel)]="formData.keyword" style="text-align: right;" slot="end"></ion-input>
     </ion-item>
   </ion-list>
+
   <div class="submit" padding>
     <ion-button expand="block" (click)="submit()">确认</ion-button>
   </div>

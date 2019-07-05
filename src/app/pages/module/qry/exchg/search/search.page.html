@@ -1,0 +1,65 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>搜索</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>提现方式</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.type" okText="确定" cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option value="1">支付宝</ion-select-option>
+        <ion-select-option value="2">银行</ion-select-option>
+        <ion-select-option value="3">推广员提现</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>提现渠道</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.channel" okText="确定" cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option value="xinfutong">信付通</ion-select-option>
+        <ion-select-option value="tongfu">通付</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>提现状态</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.status" okText="确定" cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option value="0">初始</ion-select-option>
+        <ion-select-option value="2">代付中</ion-select-option>
+        <ion-select-option value="3">提现成功</ion-select-option>
+        <ion-select-option value="4">财务处理</ion-select-option>
+        <ion-select-option value="5">已退回</ion-select-option>
+        <ion-select-option value="6">风控中</ion-select-option>
+        <ion-select-option value="7">风控拒绝</ion-select-option>
+        <ion-select-option value="8">风控通过</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">开始日期</ion-label>
+      <ion-datetime [(ngModel)]="formData.beginTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消"
+        doneText="确定">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">结束日期</ion-label>
+      <ion-datetime [(ngModel)]="formData.endTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">账号ID</ion-label>
+      <ion-input [(ngModel)]="formData.keyword" style="text-align: right;" slot="end"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="submit" padding>
+    <ion-button expand="block" (click)="submit()">确认</ion-button>
+  </div>
+</ion-content>
