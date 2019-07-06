@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalController, IonInfiniteScroll, NavController, IonContent, IonRefresher } from '@ionic/angular';
 import { SearchPage } from './search/search.page';
-import { AlertService } from 'src/app/providers/alert/alert.service';
+import { PopupService } from 'src/app/providers/popup/popup.service';
 import { ApiService } from 'src/app/providers/api.service';
 import { catchError, finalize, map } from 'rxjs/operators';
 import { HttpOptions } from 'src/app/providers/http.service';
@@ -39,7 +39,7 @@ export class GamePage implements OnInit {
   dataList: any = [];
   listServ: Subscription;
   constructor(
-    private alert: AlertService,
+    private popupServ: PopupService,
     public modalController: ModalController,
     public apiServ: ApiService,
     public navController: NavController,

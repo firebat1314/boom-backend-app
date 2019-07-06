@@ -1,13 +1,221 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>pay</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>存款查询</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">账号ID：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">玩家渠道：</div>
+            <div class="prop">{{item.channelName}}</div>
+          </div>
+          <div class="item">
+            <div class="label">存款金额：</div>
+            <div class="prop">{{item.payMoney}}</div>
+          </div>
+          <div class="item">
+            <div class="label">payType：</div>
+            <div class="prop">
+              <ion-chip color="primary" size="small" *ngIf="item.payType === 2">
+                <ion-label>支付宝</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType === 3">
+                <ion-label>微信</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType === 4">
+                <ion-label>QQ</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType === 5">
+                <ion-label>京东</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType === 6">
+                <ion-label>云闪付</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType === 8">
+                <ion-label>微信扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType === 9">
+                <ion-label>支付宝扫码</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">存款渠道：</div>
+            <div class="prop">
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===0">
+                <ion-label>后台存款</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===2">
+                <ion-label>支付宝-汇丰-h5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===38">
+                <ion-label>微信-汇丰-h5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===39">
+                <ion-label>微信-汇丰-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===40">
+                <ion-label>支付宝-汇丰-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===57">
+                <ion-label>支付宝-汇丰-PC扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===60">
+                <ion-label>微信-汇丰-PC扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===70">
+                <ion-label>支付宝-汇丰-扫码转银行卡</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelIds===5">
+                <ion-label>支付宝-汇鼎-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===49">
+                <ion-label>支付宝-汇鼎-h5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===55">
+                <ion-label>支付宝-汇鼎-PC扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===67">
+                <ion-label>支付宝-汇鼎-扫码转银行卡</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===68">
+                <ion-label>支付宝-汇鼎-PC扫码转银行卡</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===71">
+                <ion-label>微信-汇鼎-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===74">
+                <ion-label>云闪付-汇鼎-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===12">
+                <ion-label>支付宝-全时-H5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===13">
+                <ion-label>微信-全时-H5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===14">
+                <ion-label>支付宝-全时-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===15">
+                <ion-label>微信-全时-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===56">
+                <ion-label>支付宝-全时-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===59">
+                <ion-label>微信-全时-PC扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===23">
+                <ion-label>支付宝-020-h5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===28">
+                <ion-label>支付宝-微付</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===29">
+                <ion-label>支付宝-微付-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===32">
+                <ion-label>微信-JustOnline-T20301</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===34">
+                <ion-label>微信-JustOnline-T20114</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===35">
+                <ion-label>支付宝-JustOnline-T20104</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===36">
+                <ion-label>支付宝-聚宝盆-h5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===37">
+                <ion-label>支付宝-聚宝盆-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===51">
+                <ion-label>支付宝-汇丰原生-h5</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===52">
+                <ion-label>支付宝-汇丰原生-扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===72">
+                <ion-label>支付宝-易支付</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.channelId===73">
+                <ion-label>微信-易支付</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">内部订单：</div>
+            <div class="prop">{{item.orderId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">外部订单：</div>
+            <div class="prop">{{item.serialId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">存款时间：</div>
+            <div class="prop">{{item.crtTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">状态：</div>
+            <div class="prop">
+              <ion-chip color="primary" size="small" *ngIf="item.statusId === 0">
+                <ion-label>创建待确认</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.statusId === 1">
+                <ion-label>支付成功</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.statusId === 2">
+                <ion-label>支付成功已发放</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.statusId === 3">
+                <ion-label>确认失败</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">操作：</div>
+            <div class="prop">
+              <span tappable *ngIf="item.statusId === 0" (click)="repairHandler(item.id,item.channelId)"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">第三方订单查询</span>&nbsp;
+              <!-- utilsServ.isAuth('qry:pay:caiwuRepair') &&  -->
+              <span tappable *ngIf="item.statusId === 0" (click)="caiwuRepairHandler(item.id,item.payMoney)"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">财务手动补单</span>
+              <!-- utilsServ.isAuth('qry:pay:caiwuRepair') &&  -->
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

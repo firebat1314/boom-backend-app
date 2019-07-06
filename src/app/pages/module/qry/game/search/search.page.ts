@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AlertService } from 'src/app/providers/alert/alert.service';
+import { PopupService } from 'src/app/providers/popup/popup.service';
 import { ApiService } from 'src/app/providers/api.service';
 import { qryGameForm } from '../game.page';
 
@@ -22,7 +22,7 @@ export class SearchPage implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    public alert: AlertService,
+    private popupServ: PopupService,
     public apiServ: ApiService
   ) {
   }
@@ -52,12 +52,12 @@ export class SearchPage implements OnInit {
   }
   submit() {
     if (this.formData.keyword.trim() === '') {
-      this.alert.toast('请输入关键字');
+      this.popupServ.toast('请输入关键字');
       return
     }
 
     if (!this.formData.beginTime || !this.formData.endTime) {
-      this.alert.toast('请输入开始时间和结束时间');
+      this.popupServ.toast('请输入开始时间和结束时间');
       return
     }
     this.formData.beginTime = this.formData.beginTime.split('T')[0];

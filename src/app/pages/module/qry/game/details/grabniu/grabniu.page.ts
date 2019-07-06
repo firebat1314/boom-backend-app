@@ -22,7 +22,7 @@ export class GrabniuPage implements OnInit {
     this.route.queryParamMap.subscribe(params => {
       this.id = params.get('id');
       this.type = params.get('type');
-      this.apiServ.gameDetail({}, { url: '/qry/game/detail/' + this.id }).subscribe(data => {
+      this.apiServ.gameDetail({}, { urlParam: this.id }).subscribe(data => {
         if (data && data.code === 0) {
           this.dataList = data.list;
         }

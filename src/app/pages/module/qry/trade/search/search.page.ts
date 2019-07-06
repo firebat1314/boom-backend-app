@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AlertService } from 'src/app/providers/alert/alert.service';
+import { PopupService } from 'src/app/providers/popup/popup.service';
 
 @Component({
   selector: 'sss-search',
@@ -31,7 +31,7 @@ export class SearchPage implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    public alert: AlertService,
+    private popupServ: PopupService,
   ) { }
 
   onOk3(result) {
@@ -70,7 +70,7 @@ export class SearchPage implements OnInit {
 
   submit() {
     if (!this.formData.beginTime || !this.formData.endTime) {
-      this.alert.toast('请输入开始时间和结束时间');
+      this.popupServ.toast('请输入开始时间和结束时间');
       return
     }
     this.dismiss(this.formData);

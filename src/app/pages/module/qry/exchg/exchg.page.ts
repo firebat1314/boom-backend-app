@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonRefresher, IonInfiniteScroll, IonContent, ModalController } from '@ionic/angular';
+import { IonRefresher, IonInfiniteScroll, IonContent, ModalController, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/providers/api.service';
-import { AlertService } from 'src/app/providers/alert/alert.service';
+import { PopupService } from 'src/app/providers/popup/popup.service';
 import { SearchPage } from './search/search.page';
 import { HttpOptions } from 'src/app/providers/http.service';
 import { map, finalize } from 'rxjs/operators';
@@ -36,7 +36,8 @@ export class ExchgPage implements OnInit {
     public modalController: ModalController,
     private route: ActivatedRoute,
     private apiServ: ApiService,
-    public alert: AlertService,
+    private popupServ: PopupService,
+    public navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -73,7 +74,7 @@ export class ExchgPage implements OnInit {
 
   getDataList(data = {}, options?: HttpOptions) {
 
-    return this.apiServ.baexchgList(Object.assign(this.formData, data), options).pipe(
+    return this.apiServ.exchgList(Object.assign(this.formData, data), options).pipe(
       map((res: any) => {
         if (res && res.code === 0) {
           this.data = res;
@@ -90,7 +91,7 @@ export class ExchgPage implements OnInit {
   doRefresh(event?: any) {
     if (!this.formData.beginTime || !this.formData.endTime) {
       this.refresher.complete();//ajax完成时、发生错误或者取消订阅时取消刷新
-      this.alert.toast('请输入开始时间和结束时间');
+      this.popupServ.toast('请输入开始时间和结束时间');
       this.search();
       return false;
     }
@@ -120,5 +121,7 @@ export class ExchgPage implements OnInit {
       event.target.disabled = true;
     }
   }
-
+  trackHandler(id: any) {
+    this.navCtrl.navigateForward(['qry/exchg/track', id]);
+  }
 }

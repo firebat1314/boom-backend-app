@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertService } from 'src/app/providers/alert/alert.service';
+import { PopupService } from 'src/app/providers/popup/popup.service';
 import { ApiService } from 'src/app/providers/api.service';
 import { UtilsService } from 'src/app/providers/utils/utils.service';
 import { IonSearchbar, ActionSheetController, AlertController, NavController, ModalController } from '@ionic/angular';
@@ -31,7 +31,7 @@ export class UserPage implements OnInit {
     gamesArr: [],
   }
   constructor(
-    private alert: AlertService,
+    private popupServ: PopupService,
     private apiServ: ApiService,
     private utils: UtilsService,
     public actionSheetController: ActionSheetController,
@@ -58,7 +58,7 @@ export class UserPage implements OnInit {
   }
   getDataList(options?) {
     if (this.keyword.trim() === '') {
-      this.alert.toast('请输入关键字')
+      this.popupServ.toast('请输入关键字')
       return
     }
     let foo: string;
@@ -227,7 +227,7 @@ export class UserPage implements OnInit {
   async frozenHandler(accountId: any) {
     let auth = await this.utils.isAuth('qry:user:frozen');
     if (!auth) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '冻结账号',
@@ -255,7 +255,7 @@ export class UserPage implements OnInit {
               'remark': e.frozen
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -268,7 +268,7 @@ export class UserPage implements OnInit {
   // 解冻
   async unfrozenHandler(id: any, remark: any) {
     if (!await this.utils.isAuth('qry:user:frozen')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '解冻账号',
@@ -288,7 +288,7 @@ export class UserPage implements OnInit {
               'userId': id
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -302,7 +302,7 @@ export class UserPage implements OnInit {
   async bindHandler(accountId: any, isBind: number) {
     let auth = await this.utils.isAuth('qry:user:bind');
     if (!auth) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: isBind === 1 ? '修改手机' : '绑定手机',
@@ -325,7 +325,7 @@ export class UserPage implements OnInit {
           text: '确定',
           handler: (e) => {
             if (!(/^1[3456789]\d{9}$/.test(e.mobile))) {
-              this.alert.toast("请填写正确的手机号");
+              this.popupServ.toast("请填写正确的手机号");
               return false;
             }
             this.apiServ.bindMobile({
@@ -333,7 +333,7 @@ export class UserPage implements OnInit {
               'phone': e.mobile
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -346,7 +346,7 @@ export class UserPage implements OnInit {
   // 改密
   async pwdHandler(accountId: string | string[]) {
     if (!await this.utils.isAuth('qry:user:chgPwd')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '修改密码',
@@ -373,10 +373,10 @@ export class UserPage implements OnInit {
           text: '确定',
           handler: (e) => {
             if (!/\S/.test(e.psw)) {
-              this.alert.toast('确认密码不能为空');
+              this.popupServ.toast('确认密码不能为空');
               return false;
             } else if (e.psw !== e.pswc) {
-              this.alert.toast('确认密码与密码输入不一致');
+              this.popupServ.toast('确认密码与密码输入不一致');
               return false;
             }
             this.apiServ.chgPwd(null, {
@@ -386,7 +386,7 @@ export class UserPage implements OnInit {
               }
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -399,7 +399,7 @@ export class UserPage implements OnInit {
   // 修改设备标识
   async chgDeviceNoHandler(accountId: string | string[]) {
     if (!await this.utils.isAuth('qry:user:chgDeviceNo')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '修改设备标识',
@@ -422,7 +422,7 @@ export class UserPage implements OnInit {
           text: '确定',
           handler: (e) => {
             if (!/^([a-zA-Z0-9_-])/.test(e.psw)) {
-              this.alert.toast('请输入正确的设备标识');
+              this.popupServ.toast('请输入正确的设备标识');
               return false;
             }
             this.apiServ.chgDeviceNo({
@@ -430,7 +430,7 @@ export class UserPage implements OnInit {
               'deviceNo': e.deviceNo
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -443,7 +443,7 @@ export class UserPage implements OnInit {
   // 修改体现信息
   async withdrawHandler(roleId: string | string[]) {
     if (!await this.utils.isAuth('qry:user:chgWithdraw')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '修改提现信息',
@@ -486,7 +486,7 @@ export class UserPage implements OnInit {
               'cardName': e.cardName,
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -501,7 +501,7 @@ export class UserPage implements OnInit {
   // 扣除余额
   async deductHandler(roleId: any) {
     if (!await this.utils.isAuth('qry:user:deduct')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '扣除余额',
@@ -524,7 +524,7 @@ export class UserPage implements OnInit {
           text: '确定',
           handler: (e) => {
             if (!/^((0{1}\.\d+)|([1-9]\d*\.{1}\d+)|([1-9]+\d*))$/.test(e.deduct)) {
-              this.alert.toast('金额只能为大于0的数字');
+              this.popupServ.toast('金额只能为大于0的数字');
               return false;
             }
             this.apiServ.deduct({
@@ -532,7 +532,7 @@ export class UserPage implements OnInit {
               'value': e.deduct
             }, { openDefultdata: false }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -545,7 +545,7 @@ export class UserPage implements OnInit {
   // 扣除银行余额
   async bankdeductHandler(roleId: any) {
     if (!await this.utils.isAuth('qry:user:bankdeduct')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '扣除银行余额',
@@ -568,7 +568,7 @@ export class UserPage implements OnInit {
           text: '确定',
           handler: (e) => {
             if (!/^((0{1}\.\d+)|([1-9]\d*\.{1}\d+)|([1-9]+\d*))$/.test(e.value)) {
-              this.alert.toast('金额只能为大于0的数字');
+              this.popupServ.toast('金额只能为大于0的数字');
               return false;
             }
             this.apiServ.bankdeduct({
@@ -576,7 +576,7 @@ export class UserPage implements OnInit {
               'value': e.value
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -589,7 +589,7 @@ export class UserPage implements OnInit {
   // 设置VIP等级
   async setVupLvlHandler(roleId: any) {
     if (!await this.utils.isAuth('qry:user:setVupLvl')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '设置VIP等级',
@@ -612,7 +612,7 @@ export class UserPage implements OnInit {
           text: '确定',
           handler: (e) => {
             if (!/^(([0-9]+\d*))$/.test(e.value)) {
-              this.alert.toast('VIP等级为不小于0的数字');
+              this.popupServ.toast('VIP等级为不小于0的数字');
               return false;
             }
             this.apiServ.vipSet({
@@ -620,7 +620,7 @@ export class UserPage implements OnInit {
               'vipLvl': e.value
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -633,14 +633,14 @@ export class UserPage implements OnInit {
   // 资金流查询
   async tradeHandler(roleId: any) {
     if (!await this.utils.isAuth('qry:user:trade')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     this.navCtrl.navigateForward(['/qry/trade'], { queryParams: { roleId: roleId } });
   }
   // 踢出游戏
   async kickout(roleId: any) {
     if (!await this.utils.isAuth('qry:user:trade')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
       header: '踢出游戏',
@@ -660,7 +660,7 @@ export class UserPage implements OnInit {
               'roleId': roleId,
             }).subscribe(res => {
               if (res && res.code === 0) {
-                this.alert.toast('操作成功');
+                this.popupServ.toast('操作成功');
                 this.getDataList();
               }
             })
@@ -673,7 +673,7 @@ export class UserPage implements OnInit {
   //设置游戏黑名单
   async gamesForbid(roleId: any, gameForbid: any) {
     if (!await this.utils.isAuth('qry:user:trade')) {
-      return this.alert.toast("没有权限，请联系管理员授权");
+      return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     const modal = await this.modalController.create({
       component: ForbidComponent,

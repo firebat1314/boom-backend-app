@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http'
 
 import { Observable, of, throwError, from, zip } from 'rxjs';
 import { catchError, map, tap, finalize, switchMap, mergeMap } from 'rxjs/operators';
-import { AlertService } from './alert/alert.service';
+import { PopupService } from './popup/popup.service';
 import { StorageService } from './storage/storage.service';
 import { NavController } from '@ionic/angular';
 
@@ -16,7 +16,7 @@ export interface HttpOptions {
   params?: HttpParams | {
     [param: string]: string | string[];
   };
-  url?: string;
+  urlParam?: string;
 }
 
 @Injectable({
@@ -29,7 +29,7 @@ export class HttpService {
     private http: HttpClient,
     private storage: StorageService,
     private injector: Injector,
-    private myAlert: AlertService,
+    private popupServ: PopupService,
   ) {
 
   }
@@ -41,10 +41,14 @@ export class HttpService {
  *  GET请求处理（一般用于获取数据）
  * @param url 后台接口api 例如：/api/test/6
  */
-  get(url: string, data = {}, options: HttpOptions): Observable<any> {
+  get(url: string, data = {}, options?: HttpOptions): Observable<any> {
+    let opt = {
+      showLoading: true, showToast: true, openDefultdata: true,
+      ...options
+    }
     let pms: Promise<any>;
-    if (options.showLoading) {
-      pms = this.myAlert.loading()
+    if (opt.showLoading) {
+      pms = this.popupServ.loading()
     } else {
       pms = new Promise(resolve => resolve(false));
     }
@@ -55,19 +59,19 @@ export class HttpService {
         let defaults = {
           't': new Date().getTime()
         }
-        options.openDefultdata ? Object.assign(data, defaults) : data;
+        opt.openDefultdata ? Object.assign(data, defaults) : data;
 
-        return this.http.get(`${url}`, {
+        return this.http.get(`${url}${opt.urlParam ? `/` + opt.urlParam : ``}`, {
           params: data
         }).pipe(
           map((res) => {
-            return this.extractData(res, options);
+            return this.extractData(res, opt);
           }),
           finalize(() => {
             loadingElm && loadingElm.dismiss();
           }),
           catchError((err: HttpErrorResponse) => {
-            return this.handleData(err, options);
+            return this.handleData(err, opt);
           })
         );
 
@@ -81,26 +85,36 @@ export class HttpService {
    * @param url 后台接口api
    * @param data 参数
    */
-  post(url: string, data = {}, options: HttpOptions): Observable<any> {
-
-    return from(this.myAlert.loading()).pipe(
+  post(url: string, data = {}, options?: HttpOptions): Observable<any> {
+    let opt = {
+      showLoading: true, showToast: true, openDefultdata: true,
+      ...options
+    }
+    let pms: Promise<any>;
+    if (opt.showLoading) {
+      pms = this.popupServ.loading()
+    } else {
+      pms = new Promise(resolve => resolve(false));
+    }
+    return from(pms).pipe(
       switchMap(loadingElm => {
-        options.showLoading && loadingElm && loadingElm.present();
+        loadingElm && loadingElm.present();
 
         let defaults = {
           't': new Date().getTime()
         }
-        options.openDefultdata && data ? Object.assign(data, defaults) : data;
+        opt.openDefultdata ? Object.assign(data, defaults) : data;
+        opt.openDefultdata ? Object.assign(opt.params, defaults) : opt.params;
 
-        return this.http.post(url, data, { params: options.params }).pipe(
+        return this.http.post(`${url}${opt.urlParam ? `/` + opt.urlParam : ``}`, data, { params: opt.params }).pipe(
           map((res) => {
-            return this.extractData(res, options);
+            return this.extractData(res, opt);
           }),
           finalize(() => {
             loadingElm && loadingElm.dismiss();
           }),
           catchError((err: HttpErrorResponse) => {
-            return this.handleData(err, options);
+            return this.handleData(err, opt);
           })
         );
       })
@@ -111,15 +125,40 @@ export class HttpService {
    * @param url 后台接口api 例如：/api/test/6
    * @param data 参数
    */
-  put(url: string, data = {}): Observable<any> {
-    return this.http.put(url, data).pipe(
-      map((res) => {
-        return this.extractData(res);
-      }),
-      catchError((err: HttpErrorResponse) => {
-        return this.handleData(err);
+  put(url: string, data = {}, options: HttpOptions): Observable<any> {
+    let opt = {
+      showLoading: true, showToast: true, openDefultdata: true,
+      ...options
+    }
+    let pms: Promise<any>;
+    if (opt.showLoading) {
+      pms = this.popupServ.loading()
+    } else {
+      pms = new Promise(resolve => resolve(false));
+    }
+    return from(pms).pipe(
+      switchMap(loadingElm => {
+        loadingElm && loadingElm.present();
+
+        let defaults = {
+          't': new Date().getTime()
+        }
+        opt.openDefultdata && data ? Object.assign(data, defaults) : data;
+
+        return this.http.put(`${url}${opt.urlParam ? `/` + opt.urlParam : ``}`, data, { params: opt.params }).pipe(
+          map((res) => {
+            return this.extractData(res, opt);
+          }),
+          finalize(() => {
+            loadingElm && loadingElm.dismiss();
+          }),
+          catchError((err: HttpErrorResponse) => {
+            return this.handleData(err, opt);
+          })
+        );
       })
-    );
+    )
+
   }
   /**
    * DELETE请求处理（一般用于删除数据）
@@ -143,13 +182,13 @@ export class HttpService {
   private extractData(res, options?: HttpOptions) {
     let body = res;
     if (body.code == 500) {
-      options.showToast && this.myAlert.toast(body.msg);
+      options.showToast && this.popupServ.toast(body.msg);
     } else if (body.code == 401) {
-      options.showToast && this.myAlert.toast(body.msg);
+      options.showToast && this.popupServ.toast(body.msg);
       this.storage.clearLoginInfo().subscribe(() => {//退出登录
         this.goTo('/login');
       });
-      options.showToast && this.myAlert.toast(body.msg);
+      options.showToast && this.popupServ.toast(body.msg);
     }
     return body || {};
   }
@@ -163,20 +202,20 @@ export class HttpService {
 
         break;
       case 401: // 未登录状态码
-        this.myAlert.toast('401');
+        this.popupServ.toast('401');
         this.storage.clearLoginInfo().subscribe(() => {//退出登录
           this.goTo('/login');
         });
         break;
       case 403:
-        this.myAlert.toast('403');
+        this.popupServ.toast('403');
         break;
       case 404:
-        this.myAlert.toast('NOT FOUND');
+        this.popupServ.toast('NOT FOUND');
         break;
       case 500:
-        this.myAlert.toast('500');
-        // this.goTo(`/${event.status}`);
+        this.popupServ.toast('500');
+        // this.goTo(`/ ${ event.status }`);
         break;
     }
     return of(error);

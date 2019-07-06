@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>新增</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">用户名</ion-label>
+      <ion-input [(ngModel)]="formData.userName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">密码</ion-label>
+      <ion-input [(ngModel)]="formData.password" type="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">确认密码</ion-label>
+      <ion-input [(ngModel)]="formData.comfirmPassword" type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <div class="submit" padding>
+    <ion-button expand="block" (click)="submit()">确认</ion-button>
+  </div>
+</ion-content>

@@ -16,7 +16,7 @@ export class ApiService {
 
   login(data = {}, options: HttpOptions = {}) {
     return zip(
-      this.http.post(options.url || '/sys/login', data, { showLoading: true, showToast: true, openDefultdata: true, ...options }),
+      this.http.post('/sys/login', data, options),
     ).pipe(
       mergeMap(([res]) => {
         if (res.code === 0) {
@@ -25,7 +25,7 @@ export class ApiService {
             from(this.storage.setToken(res.token)),
           ).pipe(//
             map((token) => {
-              // if (!token) this.myAlert.toast('token存储异常');
+              // if (!token) this.popupServ.toast('token存储异常');
               return [res];
             })
           )
@@ -38,96 +38,132 @@ export class ApiService {
     );
   }
   logout(data = {}, options: HttpOptions = {}) {//退出登录
-    return this.http.post(options.url || '/sys/logout', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.post('/sys/logout', data, options);
   }
   menuNav(data = {}, options: HttpOptions = {}) {//导航列表
-    return this.http.get(options.url || '/sys/menu/nav', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/sys/menu/nav', data, options);
   }
   userInfo(data = {}, options: HttpOptions = {}) {//用户信息
-    return this.http.get(options.url || '/sys/user/info', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/sys/user/info', data, options);
   }
   online(data = {}, options: HttpOptions = {}) {//在线人数
-    return this.http.get(options.url || '/common/online', data, { showLoading: false, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/common/online', data, options);
   }
   todayData(data = {}, options: HttpOptions = {}) {//数据表格
-    return this.http.get(options.url || '/common/today', data, { showLoading: false, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/common/today', data, options);
   }
   diagram(data = {}, options: HttpOptions = {}) {//获取折线图列表
-    return this.http.get(options.url || '/common/diagram', data, { showLoading: false, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/common/diagram', data, options);
   }
   searchByuaid(data = {}, options: HttpOptions = {}) {//游戏ID查询
-    return this.http.get(options.url || '/qry/user/list/uaid', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/list/uaid', data, options);
   }
   searchByroleid(data = {}, options: HttpOptions = {}) {//账号ID查询
-    return this.http.get(options.url || '/qry/user/list/roleid', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/list/roleid', data, options);
   }
   searchByAccount(data = {}, options: HttpOptions = {}) {//玩家账号查询
-    return this.http.get(options.url || '/qry/user/list/account', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/list/account', data, options);
   }
   frozen(data = {}, options: HttpOptions = {}) {//冻结账号
-    return this.http.get(options.url || '/qry/user/frozen', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/frozen', data, options);
   }
   unfrozen(data = {}, options: HttpOptions = {}) {//解冻账号
-    return this.http.get(options.url || '/qry/user/unfrozen', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/unfrozen', data, options);
   }
   bindMobile(data = {}, options: HttpOptions = {}) {//绑定手机
-    return this.http.get(options.url || '/qry/user/bind', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/bind', data, options);
   }
   chgPwd(data = {}, options: HttpOptions = {}) {//修改密码
-    return this.http.post(options.url || '/qry/user/chgPwd', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.post('/qry/user/chgPwd', data, options);
   }
   chgDeviceNo(data = {}, options: HttpOptions = {}) {//修改设备标识
-    return this.http.get(options.url || '/qry/user/chgDeviceNo', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/chgDeviceNo', data, options);
   }
   chgWithdraw(data = {}, options: HttpOptions = {}) {//修改提现信息
-    return this.http.get(options.url || '/qry/user/chgWithdraw', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/chgWithdraw', data, options);
   }
   deduct(data = {}, options: HttpOptions = {}) {//扣除余额
-    return this.http.get(options.url || '/qry/user/deduct', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/deduct', data, options);
   }
   bankdeduct(data = {}, options: HttpOptions = {}) {//扣除银行余额
-    return this.http.get(options.url || '/qry/user/bankdeduct', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/bankdeduct', data, options);
   }
   vipSet(data = {}, options: HttpOptions = {}) {//设置vip等级
-    return this.http.get(options.url || '/qry/user/vip/set', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/vip/set', data, options);
   }
   kickout(data = {}, options: HttpOptions = {}) {//提出游戏
-    return this.http.get(options.url || '/qry/user/kickout', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/user/kickout', data, options);
   }
   forbidgames(data = {}, options: HttpOptions = {}) {//设置黑名单
-    return this.http.post(options.url || '/qry/user/forbidgames', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.post('/qry/user/forbidgames', data, options);
   }
   gameList(data = {}, options: HttpOptions = {}) {//游戏查询
-    return this.http.get(options.url || '/qry/game/list', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/game/list', data, options);
   }
   gameType(data = {}, options: HttpOptions = {}) {//游戏类型
-    return this.http.get(options.url || '/qry/game/type', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/game/type', data, options);
   }
   gameDetail(data = {}, options: HttpOptions = {}) {//游戏详情
-    return this.http.get(options.url || '/qry/game/detail', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/game/detail', data, options);
   }
   baoInfo(data = {}, options: HttpOptions = {}) {//畅玩宝查询
-    return this.http.get(options.url || '/qry/bao/info', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/bao/info', data, options);
   }
   baoBorrow(data = {}, options: HttpOptions = {}) {//查询借款
-    return this.http.get(options.url || '/qry/bao/borrow', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/bao/borrow', data, options);
   }
   baoDeposit(data = {}, options: HttpOptions = {}) {//查询存款
-    return this.http.get(options.url || '/qry/bao/list/deposit', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/bao/list/deposit', data, options);
   }
   getDataListByUAId(data = {}, options: HttpOptions = {}) {//资金流 ID查询
-    return this.http.get(options.url || '/qry/trade/list/aid', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/trade/list/aid', data, options);
   }
   getDataListByRoleId(data = {}, options: HttpOptions = {}) {//资金流 游戏ID查询
-    return this.http.get(options.url || '/qry/trade/list/rid', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/trade/list/rid', data, options);
   }
   getDataListByAccount(data = {}, options: HttpOptions = {}) {//资金流 玩家账号查询
-    return this.http.get(options.url || '/qry/trade/list/act', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/trade/list/act', data, options);
   }
   bankList(data = {}, options: HttpOptions = {}) {//银行查询
-    return this.http.get(options.url || '/qry/bank/list', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+    return this.http.get('/qry/bank/list', data, options);
   }
-  baexchgList(data = {}, options: HttpOptions = {}) {//提现查询
-    return this.http.get(options.url || '/qry/exchg/list', data, { showLoading: true, showToast: true, openDefultdata: true, ...options });
+  exchgList(data = {}, options: HttpOptions = {}) {//提现查询
+    return this.http.get('/qry/exchg/list', data, options);
+  }
+  exchgInfo(data = {}, options: HttpOptions = {}) {//提现状态跟踪
+    return this.http.get('/qry/exchg/info', data, options);
+  }
+  payList(data = {}, options: HttpOptions = {}) {//存款查询
+    return this.http.get('/qry/pay/list', data, options);
+  }
+  payCaiwuRepair(data = {}, options: HttpOptions = {}) {//补单
+    return this.http.put('/qry/pay/caiwuRepair', data, options);
+  }
+  payRepair(data = {}, options: HttpOptions = {}) {//补单
+    return this.http.put('/qry/pay/repair', data, options);
+  }
+  payInfoList(data = {}, options: HttpOptions = {}) {//支付方式
+    return this.http.get('/qry/pay/list/payInfo', data, options);
+  }
+  mailList(data = {}, options: HttpOptions = {}) {//邮件查询
+    return this.http.get('/qry/mail/list', data, options);
+  }
+  mailFrozen(data = {}, options: HttpOptions = {}) {//冻结
+    return this.http.put('/qry/mail/frozen', data, options);
+  }
+  agentList(data = {}, options: HttpOptions = {}) {//代理查询
+    return this.http.get('/qry/agent/list', data, options);
+  }
+  agentAddBalance(data = {}, options: HttpOptions = {}) {//存款
+    return this.http.post('/qry/agent/addBalance', data, options);
+  }
+  agentFrozen(data = {}, options: HttpOptions = {}) {//冻结
+    return this.http.put('/qry/agent/frozen', data, options);
+  }
+  agentResetPwd(data = {}, options: HttpOptions = {}) {//重置密码
+    return this.http.post('/qry/agent/resetPwd', data, options);
+  }
+  agentInfo(data = {}, options: HttpOptions = {}) {//
+    return this.http.get('/qry/agent/info', data, options);
   }
 }

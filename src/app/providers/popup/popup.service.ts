@@ -4,7 +4,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 @Injectable({
   providedIn: 'root'
 })
-export class AlertService {
+export class PopupService {
   showToastTime: any = true;//防止重复提醒
 
   constructor(

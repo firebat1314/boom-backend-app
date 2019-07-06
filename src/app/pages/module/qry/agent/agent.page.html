@@ -1,13 +1,86 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>agent</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>代理查询</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addOrUpdateHandler()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">用户ID：</div>
+            <div class="prop">{{item.userId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">用户名：</div>
+            <div class="prop">{{item.username}}</div>
+          </div>
+          <div class="item">
+            <div class="label">余额：</div>
+            <div class="prop">{{item.balance / 100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">状态：</div>
+            <div class="prop">
+              <ion-chip color="success" size="small" *ngIf="item.status===1">
+                <ion-label>正常</ion-label>
+              </ion-chip>
+              <ion-chip color="warning" size="small" *ngIf="item.status===0">
+                <ion-label>禁用</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">备注：</div>
+            <div class="prop">{{item.remark}}</div>
+          </div>
+          <div class="item">
+            <div class="label">创建时间：</div>
+            <div class="prop">{{item.createTime}}</div>
+          </div>
+          <div class="item" *ngIf="item.forbid === 0">
+            <div class="label">操作：</div>
+            <div class="prop">
+              <span tappable (click)="addBalanceHandler(item.userId)"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">存款</span>
+              <span tappable (click)="resetHandler(item.userId)"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">重置密码</span>
+              <span tappable (click)="frozenHandler(item.id,0,item.remark)"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">冻结</span>
+              <span tappable (click)="frozenHandler(item.id,1,item.remark)"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">恢复</span>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

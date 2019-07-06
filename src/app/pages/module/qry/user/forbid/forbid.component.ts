@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/providers/api.service';
-import { AlertService } from 'src/app/providers/alert/alert.service';
+import { PopupService } from 'src/app/providers/popup/popup.service';
 
 @Component({
   selector: 'sss-forbid',
@@ -56,7 +56,7 @@ export class ForbidComponent implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    public alert: AlertService,
+    private popupServ: PopupService,
     public apiServ: ApiService
   ) { }
 
@@ -100,7 +100,7 @@ export class ForbidComponent implements OnInit {
       }
     }).subscribe((data) => {
       if (data && data.code === 0) {
-        this.alert.toast('操作成功').then(() => {
+        this.popupServ.toast('操作成功').then(() => {
           this.dismiss({
             'dismissed': true
           });

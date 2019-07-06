@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/providers/api.service';
 import { SearchPage } from '../search/search.page';
 import { HttpOptions } from 'src/app/providers/http.service';
 import { map, finalize } from 'rxjs/operators';
-import { AlertService } from 'src/app/providers/alert/alert.service';
+import { PopupService } from 'src/app/providers/popup/popup.service';
 
 export interface QryBaoDepositForm {
   'page'?: number
@@ -40,7 +40,7 @@ export class DepositPage implements OnInit {
     public modalController: ModalController,
     private route: ActivatedRoute,
     private apiServ: ApiService,
-    public alert: AlertService,
+    private popupServ: PopupService,
   ) { }
 
   ngOnInit() {
@@ -98,7 +98,7 @@ export class DepositPage implements OnInit {
   doRefresh(event?: any) {
     if (!this.formData.beginTime || !this.formData.endTime) {
       this.refresher.complete();//ajax完成时、发生错误或者取消订阅时取消刷新
-      this.alert.toast('请输入开始时间和结束时间');
+      this.popupServ.toast('请输入开始时间和结束时间');
       this.search();
       return false;
     }
