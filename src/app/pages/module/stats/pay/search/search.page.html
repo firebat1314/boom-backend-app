@@ -1,0 +1,56 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>搜索</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="fixed">开始日期</ion-label>
+      <ion-datetime [(ngModel)]="formData.beginTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消"
+        doneText="确定">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">结束日期</ion-label>
+      <ion-datetime [(ngModel)]="formData.endTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>渠道号</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.channel" (ionChange)="channelChange($event)" okText="确定"
+        cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option *ngFor="let item of optionsPayInfo" [value]="item.value">{{item.label}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>支付方式</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.payType" (ionChange)="payTypeChange($event)"
+        [disabled]="optionsPayInfo&&!formData.channel" okText="确定" cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option *ngFor="let item of optionspayType" [value]="item.value">
+          {{item.label}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>支付方式</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.payCh" [disabled]="!formData.payType" okText="确定"
+        cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option *ngFor="let item of optionspayPayCh" [value]="item.value">
+          {{item.label}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div class="submit" padding>
+    <ion-button expand="block" (click)="submit()">确认</ion-button>
+  </div>
+</ion-content>

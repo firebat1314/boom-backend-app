@@ -1,13 +1,68 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>operate</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>运营数据统计</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">渠道ID：</div>
+            <div class="prop">{{item.channelId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">日期：</div>
+            <div class="prop">{{item.date}}</div>
+          </div>
+          <div class="item">
+            <div class="label">余玩家总金币：</div>
+            <div class="prop">{{item.totalGold/100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">备库存总差值：</div>
+            <div class="prop">{{item.stockDifferenceValue/100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总赠送金币：</div>
+            <div class="prop">{{item.giveAmount/100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总税收：</div>
+            <div class="prop">{{item.totalProfitToday/100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总衰减：</div>
+            <div class="prop">{{item.totalProfitoToday/100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总杀数：</div>
+            <div class="prop">{{item.totalKill/100}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
 </ion-content>

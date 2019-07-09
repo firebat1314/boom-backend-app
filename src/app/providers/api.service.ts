@@ -166,4 +166,73 @@ export class ApiService {
   agentInfo(data = {}, options: HttpOptions = {}) {//
     return this.http.get('/qry/agent/info', data, options);
   }
-}
+  statsProfit(data = {}, options: HttpOptions = {}) {//分润统计
+    return this.http.get('/stats/profit', data, options);
+  }
+  statsGoldChgRank(data = {}, options: HttpOptions = {}) {//输赢提现排行
+    return this.http.get('/stats/goldChgRank', data, options);
+  }
+  operateChannel(data = {}, options: HttpOptions = {}) {//获得channel信息
+    return this.http.get('/stats/operate/getChannel', data, options);
+  }
+  operateList(data = {}, options: HttpOptions = {}) {//运营数据统计
+    return this.http.get('/stats/operate/list', data, options);
+  }
+  statsGame(data = {}, options: HttpOptions = {}) {//游戏统计
+    return this.http.get('/stats/game', data, options);
+  }
+  statsChannel(data = {}, options: HttpOptions = {}) {//获取渠道选项
+    return this.http.get('/stats/getChannel', data, options);
+  }
+  statsOnline(data = {}, options: HttpOptions = {}) {//在线人数
+    return this.http.get('/stats/online', data, options);
+  }
+  payListInfo(data = {}, options: HttpOptions = {}) {//存款统计
+    return this.http.get('/qry/pay/list/payInfo', data, options);
+  }
+  paySuccess(data = {}, options: HttpOptions = {}) {//获取成功订单
+    return this.http.get('/stats/pay', data, options);
+  }
+  payStatsList(data = {}, options: HttpOptions = {}) {//存款统计列表
+    return this.http.get('/stats/list', data, options);
+  }
+  statsCoin(data = {}, options: HttpOptions = {}) {//货币统计
+    return this.http.get('/stats/coin', data, options);
+  }
+  statsExchg(data = {}, options: HttpOptions = {}) {//提现统计
+    return this.http.get('/stats/exchg', data, options);
+  }
+  statsExchgChannel(data = {}, options: HttpOptions = {}) {//渠道信息
+    return this.http.get('/stats/exchg/getChannel', data, options);
+  }
+  statsUser(data = {}, options: HttpOptions = {}) {//用户统计
+    return this.http.get('/stats/user', data, options);
+  }
+  statsUserChannel(data = {}, options: HttpOptions = {}) {//渠道信息
+    return this.http.get('/stats/user/getChannel', data, options);
+  }
+  statsTax(data = {}, options: HttpOptions = {}) {//抽水统计
+    return this.http.get('/stats/tax', data, options);
+  }
+  statsKeep(data = {}, options: HttpOptions = {}) {//注册留存统计
+    return this.http.get('/stats/keep', data, options);
+  }
+  statsKeepDetail(data = {}, options: HttpOptions = {}) {//注册留存统计详情
+    return this.http.get('/stats/keep/detail', data, options);
+  }
+  statsFlow(data = {}, options: HttpOptions = {}) {//游戏流水统计
+    return this.http.get('/stats/flow', data, options);
+  }
+  statsWadvSalary(data = {}, options: HttpOptions = {}) {//佣金流水排行统计--
+    return this.http.get('/stats/wadv/salary', data, options);
+  }
+  statsWadvChild(data = {}, options: HttpOptions = {}) {//会员排行统计-----
+    return this.http.get('/stats/wadv/child', data, options);
+  }
+  statsFirst(data = {}, options: HttpOptions = {}) {//注册首冲统计-
+    return this.http.get('/stats/first', data, options);
+  }
+  statsChfirst(data = {}, options: HttpOptions = {}) {//详情-
+    return this.http.get('/stats/chfirst', data, options);
+  }
+} 

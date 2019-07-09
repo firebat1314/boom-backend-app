@@ -1,0 +1,74 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>成功订单</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">玩家ID：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">存款方式：</div>
+            <div class="prop">
+              <ion-chip color="primary" size="small" *ngIf="item.payType===2">
+                <ion-label>支付宝</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType===9">
+                <ion-label>支付宝扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType===3">
+                <ion-label>微信</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType===8">
+                <ion-label>微信扫码</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType===4">
+                <ion-label>QQ</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.payType===5">
+                <ion-label>京东</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">邮件内容：</div>
+            <div class="prop" [innerHTML]="item.content"></div>
+          </div>
+          <div class="item">
+            <div class="label">附总存款：</div>
+            <div class="prop">{{item.payAmount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总订单：</div>
+            <div class="prop">{{item.orderCount}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

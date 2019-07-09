@@ -1,0 +1,62 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>搜索</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>游戏类型</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.gameType" okText="确定" cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option value="1">打地鼠</ion-select-option>
+        <ion-select-option value="2">开心彩</ion-select-option>
+        <ion-select-option value="3">水果</ion-select-option>
+        <ion-select-option value="4">水浒传</ion-select-option>
+        <ion-select-option value="5">百人牛牛</ion-select-option>
+        <ion-select-option value="6">飞禽走兽</ion-select-option>
+        <ion-select-option value="7">奔驰宝马</ion-select-option>
+        <ion-select-option value="8">抢庄牛牛</ion-select-option>
+        <ion-select-option value="9">龙虎斗</ion-select-option>
+        <ion-select-option value="10">捕鱼</ion-select-option>
+        <ion-select-option value="11">扫雷红包</ion-select-option>
+        <ion-select-option value="12">斗地主</ion-select-option>
+        <ion-select-option value="13">扎金花</ion-select-option>
+        <ion-select-option value="14">百家乐</ion-select-option>
+        <ion-select-option value="15">2D捕鱼</ion-select-option>
+        <ion-select-option value="16">二八杠</ion-select-option>
+        <ion-select-option value="17">红黑大战</ion-select-option>
+        <ion-select-option value="18">视讯百家乐</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>渠道</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.channelId" okText="确定" cancelText="取消">
+        <ion-select-option value="">无</ion-select-option>
+        <ion-select-option *ngFor="let item of channelList" [value]="item.channelId">
+          {{item.channelId+' '+item.channelName}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">开始日期</ion-label>
+      <ion-datetime [(ngModel)]="formData.beginTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消"
+        doneText="确定">
+      </ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">结束日期</ion-label>
+      <ion-datetime [(ngModel)]="formData.endTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+      </ion-datetime>
+    </ion-item>
+  </ion-list>
+
+  <div class="submit" padding>
+    <ion-button expand="block" (click)="submit()">确认</ion-button>
+  </div>
+</ion-content>

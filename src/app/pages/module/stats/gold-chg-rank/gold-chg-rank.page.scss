@@ -1,0 +1,48 @@
+.no-body {
+    opacity: .3;
+    padding-top: 50px;
+    text-align: center;
+
+    ion-icon {
+        font-size: 144px;
+    }
+}
+
+
+WingBlank {
+    Card {
+        margin: 12px 0;
+        min-height: auto;
+    }
+
+    CardBody {
+        display: flex;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 8px;
+        font-size: 12px;
+
+        .item {
+            display: flex;
+            align-items: flex-start;
+            padding: 4px 8px;
+            min-width: 50%;
+
+            .label {
+                white-space: nowrap;
+            }
+
+            .prop {
+                color: #999;
+
+                ion-chip {
+                    font-size: 12px;
+                    padding: 4px 8px;
+                    height: auto;
+                    margin: 2px;
+                    margin-top: 0px;
+                }
+            }
+        }
+    }
+}

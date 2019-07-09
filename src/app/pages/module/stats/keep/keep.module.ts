@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { KeepPage } from './keep.page';
+import { SearchPageModule } from './search/search.module';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 const routes: Routes = [
   {
@@ -19,7 +22,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SearchPageModule,
+    ComponentsModule,
+    NgZorroAntdMobileModule
   ],
   declarations: [KeepPage]
 })

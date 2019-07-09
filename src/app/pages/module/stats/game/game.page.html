@@ -1,13 +1,115 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>game</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>游戏统计</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">渠道：</div>
+            <div class="prop">{{item.channel}}</div>
+          </div>
+          <div class="item">
+            <div class="label">游戏类型：</div>
+            <div class="prop">
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 1">
+                <ion-label>打地鼠</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 2">
+                <ion-label>开心彩</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 3">
+                <ion-label>水果</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 4">
+                <ion-label>水浒传</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 5">
+                <ion-label>百人牛牛</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 6">
+                <ion-label>飞禽走兽</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 7">
+                <ion-label>奔驰宝马</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 8">
+                <ion-label>抢庄牛牛</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 9">
+                <ion-label>龙虎斗</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 10">
+                <ion-label>捕鱼</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 11">
+                <ion-label>扫雷红包</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 12">
+                <ion-label>斗地主</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 13">
+                <ion-label>扎金花</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 14">
+                <ion-label>百家乐</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 15">
+                <ion-label>2D捕鱼</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 16">
+                <ion-label>二八杠</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 17">
+                <ion-label>红黑大战</ion-label>
+              </ion-chip>
+              <ion-chip color="primary" size="small" *ngIf="item.gameType === 18">
+                <ion-label>视讯百家乐</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">游戏人数：</div>
+            <div class="prop">{{item.playCount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">游戏总投注：</div>
+            <div class="prop">{{item.totalUseGold / 100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">游戏有效流水：</div>
+            <div class="prop">{{item.totalValidGold / 100}}</div>
+          </div>
+          <div class="item">
+            <div class="label">日期：</div>
+            <div class="prop">{{item.dateTime}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
 </ion-content>

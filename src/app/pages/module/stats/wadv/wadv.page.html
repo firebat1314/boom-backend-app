@@ -1,13 +1,121 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>wadv</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>游戏流水统计</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment value="" [(ngModel)]="dataListType" (ionChange)="dataListTypeChanged($event)">
+      <ion-segment-button value="salary">
+        <ion-label>佣金流水排行</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="child">
+        <ion-label>会员排行</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="content-wrap" [ngSwitch]="dataListType">
+
+    <div class="no-body" *ngIf="!dataListSalary?.length">
+      <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+      <!-- <div class="text">请使用搜索功能</div> -->
+    </div>
+    <WingBlank [size]="'lg'" *ngSwitchCase="'salary'">
+      <Card *ngFor="let item of dataListSalary;">
+        <CardBody>
+          <div class="item">
+            <div class="label">账号ID：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总佣金：</div>
+            <div class="prop">{{item.sumSalary}}</div>
+          </div>
+          <div class="item">
+            <div class="label">总佣金：</div>
+            <div class="prop">{{item.sumSalary}}</div>
+          </div>
+          <div class="item">
+            <div class="label">可领佣金：</div>
+            <div class="prop">{{item.balance}}</div>
+          </div>
+          <div class="item">
+            <div class="label">本周佣金：</div>
+            <div class="prop">{{item.salary}}</div>
+          </div>
+          <div class="item">
+            <div class="label">下级佣金：</div>
+            <div class="prop">{{item.subSalary}}</div>
+          </div>
+          <div class="item">
+            <div class="label">本周总流水：</div>
+            <div class="prop">{{item.achieve}}</div>
+          </div>
+          <div class="item">
+            <div class="label">直属流水：</div>
+            <div class="prop">{{item.bachieve}}</div>
+          </div>
+          <div class="item">
+            <div class="label">次级流水：</div>
+            <div class="prop">{{item.cachieve}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+    <WingBlank [size]="'lg'" *ngSwitchCase="'child'">
+      <div class="no-body" *ngIf="!dataListChild?.length">
+        <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+        <!-- <div class="text">请使用搜索功能</div> -->
+      </div>
+      <Card *ngFor="let item of dataListChild;">
+        <CardBody>
+          <div class="item">
+            <div class="label">账号ID：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">直属数量：</div>
+            <div class="prop">{{item.bnum}}</div>
+          </div>
+          <div class="item">
+            <div class="label">本周新增直属：</div>
+            <div class="prop">{{item.weekBNum}}</div>
+          </div>
+          <div class="item">
+            <div class="label">本月新增直属：</div>
+            <div class="prop">{{item.monthBNum}}</div>
+          </div>
+          <div class="item">
+            <div class="label">次级数量：</div>
+            <div class="prop">{{item.cnum}}</div>
+          </div>
+          <div class="item">
+            <div class="label">本周新增次级：</div>
+            <div class="prop">{{item.weekCNum}}</div>
+          </div>
+          <div class="item">
+            <div class="label">本月新增次级：</div>
+            <div class="prop">{{item.monthCNum}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
 </ion-content>

@@ -1,13 +1,79 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>pay</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>存款统计</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">渠道号：</div>
+            <div class="prop">{{item.userChId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">成功付款人数：</div>
+            <div class="prop">{{item.successPayCount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">成功付款订单数：</div>
+            <div class="prop">{{item.payAmount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">成功订单总金额：</div>
+            <div class="prop">{{item.orderCount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">当日新增付款人数：</div>
+            <div class="prop">{{item.toDayNewPayManCount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">当日新增付款订单数：</div>
+            <div class="prop">{{item.toDayNewPayOrderCount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">当日新增订单总金额：</div>
+            <div class="prop">{{item.toDayNewOrderSumMoney}}</div>
+          </div>
+          <div class="item">
+            <div class="label">未支付订单数：</div>
+            <div class="prop">{{item.unpaidOrderCount}}</div>
+          </div>
+          <div class="item">
+            <div class="label">未支付订单总金额：</div>
+            <div class="prop">{{item.unpaidOrderSumMoney}}</div>
+          </div>
+          <div class="item">
+            <div class="label">操作：</div>
+            <div class="prop">
+              <span tappable (click)="viewOrder()"
+                style="text-decoration: underline;color: rgb(0, 0, 204);">查看成功订单</span>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
 </ion-content>

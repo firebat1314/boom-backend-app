@@ -43,9 +43,9 @@ export class AddOrUpdatePage implements OnInit {
   submit() {
     this.http.post(`/qry/${this.flag === 'agent' ? 'agent' : 'adv'}/${!this.id ? 'save' : 'update'}`, {}, {
       params: {
-        'userId': this.id,
         'username': this.formData.userName,
         'password': this.formData.password,
+        'comfirmPassword': this.formData.comfirmPassword,
         'salt': this.formData.salt
       }
     }).subscribe(res => {

@@ -1,13 +1,87 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>goldChgRank</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>输赢提现排行</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="search()">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <!-- Default Segment -->
+    <ion-segment value="" [(ngModel)]="dataListType" (ionChange)="dataListTypeChanged($event)">
+      <ion-segment-button value="dataListWin">
+        <ion-label>赢利排行</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="dataListLose">
+        <ion-label>输钱排行</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="dataListExchg">
+        <ion-label>提现排行</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!exchgRankList?.length||!loseRankList?.length||!winRankList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap" [ngSwitch]="dataListType">
+    <WingBlank [size]="'lg'" *ngSwitchCase="'dataListWin'">
+      <Card *ngFor="let item of exchgRankList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">玩家：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">盈利：</div>
+            <div class="prop">{{item.amount/100}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+    <WingBlank [size]="'lg'" *ngSwitchCase="'dataListLose'">
+      <Card *ngFor="let item of loseRankList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">玩家：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">输钱：</div>
+            <div class="prop">{{item.amount/100}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+    <WingBlank [size]="'lg'" *ngSwitchCase="'dataListExchg'">
+      <Card *ngFor="let item of winRankList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">玩家：</div>
+            <div class="prop">{{item.accountId}}</div>
+          </div>
+          <div class="item">
+            <div class="label">盈利：</div>
+            <div class="prop">{{item.amount/100}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
 </ion-content>

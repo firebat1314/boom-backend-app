@@ -6,6 +6,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PayPage } from './pay.page';
+import { SearchPageModule } from './search/search.module';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { SuccessOrderPageModule } from './success-order/success-order.module';
 
 const routes: Routes = [
   {
@@ -19,8 +23,12 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SearchPageModule,
+    SuccessOrderPageModule,
+    ComponentsModule,
+    NgZorroAntdMobileModule,
   ],
   declarations: [PayPage]
 })
-export class PayPageModule {}
+export class PayPageModule { }

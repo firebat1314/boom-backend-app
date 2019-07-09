@@ -1,0 +1,44 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>渠道数据</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+
+          <div class="item">
+            <div class="label">日期：</div>
+            <div class="prop">{{item.date}}</div>
+          </div>
+          <div class="item">
+            <div class="label">渠道：</div>
+            <div class="prop">{{item.channelName}}</div>
+          </div>
+          <div class="item">
+            <div class="label">首充人数：</div>
+            <div class="prop">{{item.firstPayCnt}}</div>
+          </div>
+          <div class="item">
+            <div class="label">首充总额：</div>
+            <div class="prop">{{item.firstPaySum}}</div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>
