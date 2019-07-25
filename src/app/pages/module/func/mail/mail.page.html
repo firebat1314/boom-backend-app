@@ -1,13 +1,82 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>mail</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>发送邮件</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">标题：</div>
+            <div class="prop">{{item.title}}</div>
+          </div>
+          <div class="item">
+            <div class="label">内容：</div>
+            <div class="prop" [innerHTML]="item.content"></div>
+          </div>
+          <div class="item">
+            <div class="label">开始时间：</div>
+            <div class="prop">{{item.beginTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">结束时间：</div>
+            <div class="prop">{{item.endTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">当前有效：</div>
+            <div class="prop">
+              <ion-chip color="success" size="small" *ngIf="item.valid === 0">
+                <ion-label>是</ion-label>
+              </ion-chip>
+              <ion-chip color="warning" size="small" *ngIf="item.valid !== 0">
+                <ion-label>否</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+          <div class="item">
+            <div class="label">创建时间：</div>
+            <div class="prop">{{item.crtTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">状态：</div>
+            <div class="prop">
+              <ion-chip color="success" size="small" *ngIf="item.forbid === 0">
+                <ion-label>正常</ion-label>
+              </ion-chip>
+              <ion-chip color="warning" size="small" *ngIf="item.forbid !== 0">
+                <ion-label>冻结</ion-label>
+              </ion-chip>
+            </div>
+          </div>
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="sendEmail()">发送邮件</ion-button>
+  </ion-toolbar>
+</ion-footer>

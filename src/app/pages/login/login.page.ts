@@ -6,7 +6,6 @@ import { baseurl } from 'src/app/providers/default.interceptor';
 import { StorageService } from 'src/app/providers/storage/storage.service';
 import { ApiService } from 'src/app/providers/api.service';
 import { AnimationOptions } from '@ionic/angular/dist/providers/nav-controller';
-import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'sss-login',
@@ -30,7 +29,6 @@ export class LoginPage implements OnInit {
     private navCtrl: NavController,
     private storage: StorageService,
     private myUtils: UtilsService,
-    @Host() @Inject(forwardRef(() => AppComponent)) private childView: AppComponent
   ) { }
 
   ngOnInit() {
@@ -59,7 +57,6 @@ export class LoginPage implements OnInit {
       return;
     }
     this.api.login(this.loginInfo).subscribe(([res]) => {
-      this.childView.ngOnInit()
       if (res && res.code === 0) {
         this.storage.setStorage('username', this.loginInfo.username);
         // Get the redirect URL from our auth service

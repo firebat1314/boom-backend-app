@@ -10,6 +10,8 @@ import { Storage } from '@ionic/storage';
 
 /*设置请求的基地址，方便替换*/
 export const baseurl: string = 'http://192.168.0.100:8082';
+// export const baseurl: string = 'http://192.168.0.102:8081';
+
 
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
@@ -38,7 +40,7 @@ export class DefaultInterceptor implements HttpInterceptor {
                 const newReq = req.clone({
                     url: url,
                     setHeaders: {
-                        'token': token ? 'e2e9ec93732b10b0f98267813d966862' : 'e2e9ec93732b10b0f98267813d966862',
+                        'token': token ? '763448270617c8157f32c895432c07b6' : '763448270617c8157f32c895432c07b6',
                         'Content-Type': 'application/json;charset=UTF-8;'
                     }
                     // params: req.params.set('session', authInfo.sessiontoken),

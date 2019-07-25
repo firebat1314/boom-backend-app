@@ -1,0 +1,35 @@
+<ion-split-pane contentId="menu-content">
+  <ion-menu contentId="menu-content" #menu type="push" *ngIf="1">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>
+          <!-- <img src="assets/imgs/avatar.png" style="width: 20px;border-radius: 50%;border: 1px solid #e0e0e0;" alt=""> -->
+          <span>{{menuListServ.userName}}</span>
+        </ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ListItem no-lines (click)="routerLink('/module/home',menu);" routerLinkActive="active">
+        <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="'assets/svg/icon-shouye.svg'"></ion-icon>
+        <span style="vertical-align: middle;">首页</span>
+      </ListItem>
+      <Accordion [accordion]="true" (onChange)="onChange($event)">
+        <AccordionPanel *ngFor="let item of menuListServ.menuList; let i = index;" [key]="i" [header]="item.icon">
+          <List className="my-list">
+            <ListItem *ngFor="let content of item.child" (click)="routerLink('/module/'+content.url,menu);"
+              routerLinkActive="active">
+              <!-- <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="content.icon"></ion-icon> -->
+              <span style="vertical-align: middle;">{{content.title}}</span>
+            </ListItem>
+          </List>
+        </AccordionPanel>
+      </Accordion>
+    </ion-content>
+    <ion-footer>
+      <ion-menu-toggle auto-hide="false">
+        <ion-button no-margin (click)="logout()" expand="full">退出</ion-button>
+      </ion-menu-toggle>
+    </ion-footer>
+  </ion-menu>
+  <ion-router-outlet id="menu-content"></ion-router-outlet>
+</ion-split-pane>

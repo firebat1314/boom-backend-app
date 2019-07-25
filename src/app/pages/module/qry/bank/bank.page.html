@@ -23,62 +23,88 @@
     <!-- <div class="text">请使用搜索功能</div> -->
   </div>
   <div class="content-wrap">
+
     <WingBlank [size]="'lg'">
       <Card *ngFor="let game of dataList;">
         <CardBody>
-          <div class="item">
-            <div class="label">账号ID：</div>
-            <div class="prop">{{game.accountId}}</div>
-          </div>
-          <div class="item">
-            <div class="label">操作类型：</div>
-            <div class="prop">
-              <ion-chip color="primary" size="small" *ngIf="game.type===1">
-                <ion-label>存</ion-label>
-              </ion-chip>
-              <ion-chip color="primary" size="small" *ngIf="game.type===0">
-                <ion-label>取</ion-label>
-              </ion-chip>
-              <ion-chip color="primary" size="small" *ngIf="game.type===3">
-                <ion-label>送出</ion-label>
-              </ion-chip>
-              <ion-chip color="primary" size="small" *ngIf="game.type===4">
-                <ion-label>获赠</ion-label>
-              </ion-chip>
-            </div>
-          </div>
-          <div class="item">
-            <div class="label">操作前身上金币：</div>
-            <div class="prop">{{game.inGold / 100.0}}</div>
-          </div>
-          <div class="item">
-            <div class="label">操作后身上金币：</div>
-            <div class="prop">{{game.outGold / 100.0}}</div>
-          </div>
-          <div class="item">
-            <div class="label">变动后金币：</div>
-            <div class="prop">{{game.lastVal}}</div>
-          </div>
-          <div class="item">
-            <div class="label">操作前银行金币：</div>
-            <div class="prop">{{game.inBank / 100.0}}</div>
-          </div>
-          <div class="item">
-            <div class="label">操作后银行金币：</div>
-            <div class="prop">{{game.outBank / 100.0}}</div>
-          </div>
-          <div class="item">
-            <div class="label">获赠人ID：</div>
-            <div class="prop">{{game.toAccount}}</div>
-          </div>
-          <div class="item">
-            <div class="label">赠送人ID：</div>
-            <div class="prop">{{game.frAccount}}</div>
-          </div>
-          <div class="item">
-            <div class="label">操作时间：</div>
-            <div class="prop">{{game.crtTime}}</div>
-          </div>
+          <ion-grid>
+            <ion-row>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">账号ID：</div>
+                  <div class="prop">{{game.accountId}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">操作类型：</div>
+                  <div class="prop">
+                    <ion-chip color="primary" size="small" *ngIf="game.type===1">
+                      <ion-label>存</ion-label>
+                    </ion-chip>
+                    <ion-chip color="primary" size="small" *ngIf="game.type===0">
+                      <ion-label>取</ion-label>
+                    </ion-chip>
+                    <ion-chip color="primary" size="small" *ngIf="game.type===3">
+                      <ion-label>送出</ion-label>
+                    </ion-chip>
+                    <ion-chip color="primary" size="small" *ngIf="game.type===4">
+                      <ion-label>获赠</ion-label>
+                    </ion-chip>
+                  </div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">操作前身上金币：</div>
+                  <div class="prop">{{game.inGold / 100.0}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">操作后身上金币：</div>
+                  <div class="prop">{{game.outGold / 100.0}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">变动后金币：</div>
+                  <div class="prop">{{game.lastVal}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">操作前银行金币：</div>
+                  <div class="prop">{{game.inBank / 100.0}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">操作后银行金币：</div>
+                  <div class="prop">{{game.outBank / 100.0}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">获赠人ID：</div>
+                  <div class="prop">{{game.toAccount}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">赠送人ID：</div>
+                  <div class="prop">{{game.frAccount}}</div>
+                </div>
+              </ion-col>
+              <ion-col size-xs="6" size-xl="2" size-lg="4" size-md="5" size-sm="6">
+                <div class="item">
+                  <div class="label">操作时间：</div>
+                  <div class="prop">{{game.crtTime}}</div>
+                </div>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
         </CardBody>
       </Card>
     </WingBlank>

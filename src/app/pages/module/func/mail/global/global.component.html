@@ -1,0 +1,41 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>搜索</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #globalForm="ngForm" (ngSubmit)="submit(globalForm)">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating"><span class="imp" style="color:#e60000">*</span> 标题</ion-label>
+        <ion-input required clearInput [(ngModel)]="formData.title" name="title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"><span class="imp" style="color:#e60000">*</span> 内容</ion-label>
+        <ion-textarea required autoGrow="true" [(ngModel)]="formData.content" name="content"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label>开始日期</ion-label>
+        <ion-datetime placeholder="请选择" [(ngModel)]="formData.beginTime" name="beginTime" slot="end"
+          display-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>结束日期</ion-label>
+        <ion-datetime placeholder="请选择" [(ngModel)]="formData.endTime" name="endTime" slot="end"
+          display-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+        </ion-datetime>
+      </ion-item>
+    </ion-list>
+
+    <div class="submit" padding>
+      <ion-button type="submit" expand="block">发送</ion-button>
+    </div>
+  </form>
+</ion-content>

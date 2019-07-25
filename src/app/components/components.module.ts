@@ -4,9 +4,10 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 
 const coms: any[] = [
-  ScrollToTopComponent
+  ScrollToTopComponent,
 ]
 
 @NgModule({
@@ -15,6 +16,7 @@ const coms: any[] = [
     FormsModule,
     IonicModule,
     RouterModule,
+    NgZorroAntdMobileModule
   ],
   declarations: [
     ...coms,

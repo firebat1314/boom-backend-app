@@ -235,4 +235,19 @@ export class ApiService {
   statsChfirst(data = {}, options: HttpOptions = {}) {//详情-
     return this.http.get('/stats/chfirst', data, options);
   }
+  funcMailList(data = {}, options: HttpOptions = {}) {//全部邮件列表
+    return this.http.get('/func/mail/global/list', data, options);
+  }
+  funcMailTarget(data = {}, options: HttpOptions = {}) {//发送邮件-
+    return this.http.post('/func/mail/target', data, options);
+  }
+  funcMailGlobal(data = {}, options: HttpOptions = {}) {//全局发送
+    return this.http.post('/func/mail/global', data, options);
+  }
+  funcReplyList(data = {}, options: HttpOptions = {}) {//咨询回复
+    return this.http.get('/func/reply/list', data, options);
+  }
+  funcMailInfo(data = {}, options: HttpOptions = {}) {//邮件详情
+    return this.http.get('/func/mail/info', data, options);
+  }
 } 

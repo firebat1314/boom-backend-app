@@ -6,14 +6,15 @@ import { ApiService } from 'src/app/providers/api.service';
 import { catchError, finalize, map } from 'rxjs/operators';
 import { HttpOptions } from 'src/app/providers/http.service';
 import { Subscription, of } from 'rxjs';
+import { UtilsService } from 'src/app/providers/utils/utils.service';
 
 export interface qryGameForm {
   'page'?: number
   'limit'?: number
   'keyword'?: string;
   'gameType'?: string;
-  'beginTime'?: string;
-  'endTime'?: string;
+  'beginTime'?: any;
+  'endTime'?: any;
 }
 @Component({
   selector: 'sss-game',
@@ -27,57 +28,85 @@ export class GamePage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonContent) content: IonContent;
 
+
   formData: qryGameForm = {
     page: 1,
-    limit: 5,
+    limit: 10,
     gameType: '0',
     keyword: '35563',
     beginTime: '2019-04-01',
     endTime: '2019-07-01',
   };
+  beginTime = '';
+  endTime = '';
+
   data: any;
   dataList: any = [];
   listServ: Subscription;
+  options: any[];
+  showPopup: boolean = false;
   constructor(
     private popupServ: PopupService,
+    private utils: UtilsService,
     public modalController: ModalController,
     public apiServ: ApiService,
     public navController: NavController,
-  ) { }
+
+  ) {
+  }
 
   ngOnInit() {
+    let curDate = new Date(new Date().getTime());
+    let nextDate = new Date(curDate.getTime() + 24 * 60 * 60 * 1000); //后一天
+    this.beginTime = this.utils.dateFormat(curDate, 'YYYY-MM-DDTHH:mm+08:00');
+    this.endTime = this.utils.dateFormat(nextDate, 'YYYY-MM-DDTHH:mm+08:00');
+    this.formData.beginTime = this.utils.dateFormat(curDate, 'YYYY-MM-DD');
+    this.formData.endTime = this.utils.dateFormat(nextDate, 'YYYY-MM-DD');
+
     /* this.listServ = this.getDataList().subscribe(res => {
       this.dataList = res.page.list;
     }); */
+    this.doRefresh();
+    this.apiServ.gameType().subscribe(data => {
+      if (data && data.code === 0) {
+        var options = new Array()
+        for (let i = 0; i < data.gameType.length; i++) {
+          var item = { value: data.gameType[i].id, label: '' + data.gameType[i].name }
+          options.push(item)
+        }
+        this.options = options;
+      } else {
+        this.options = [];
+      }
+    })
+  }
+  dateChange() {
+    this.formData.beginTime = this.beginTime.split('T')[0];
+    this.formData.endTime = this.endTime.split('T')[0];
   }
 
-  //搜索弹窗
-  async gamesSearch() {
-    let formData = this.formData;
-    formData.page = 1;
+  searchRequest() {
+    if (this.formData.keyword.trim() === '') {
+      this.popupServ.toast('请输入关键字');
+      return
+    }
 
-    const modal = await this.modalController.create({
-      component: SearchPage,
-      componentProps: {
-        formData: formData
+    if (!this.formData.beginTime || !this.formData.endTime) {
+      this.popupServ.toast('请输入开始时间和结束时间');
+      return
+    }
+
+    this.showPopup = false;
+    this.listServ && this.listServ.unsubscribe();//取消搜索之前的接口请求
+    this.formData.page = 1;
+    this.listServ = this.getDataList().subscribe((res) => {
+      if (res && res.code === 0) {
+        this.infiniteScroll.disabled = false;
+        this.content.scrollToTop(0);//搜索回调页面返回顶部
+        this.dataList = res.page.list;
+      } else {
       }
     });
-    modal.onWillDismiss().then(({ data }) => {
-      if (data) {
-        this.formData = data;
-        this.listServ && this.listServ.unsubscribe();//取消搜索之前的接口请求
-        this.listServ = this.getDataList().subscribe((res) => {
-          if (res && res.code === 0) {
-            this.infiniteScroll.disabled = false;
-            this.content.scrollToTop(0);//搜索回调页面返回顶部
-            this.dataList = res.page.list;
-          } else {
-          }
-        });
-      }
-    });
-
-    return await modal.present();
   }
   getDataList(data = {}, options?: HttpOptions) {
     return this.apiServ.gameList(Object.assign(this.formData, data), options).pipe(
@@ -94,7 +123,7 @@ export class GamePage implements OnInit {
     )
   }
 
-  doRefresh(event: any) {
+  doRefresh(event?: any) {
     this.listServ = this.getDataList({
       page: 1,
     }, { showLoading: false }).subscribe(res => {

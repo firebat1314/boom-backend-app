@@ -1,13 +1,60 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>reply</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>咨询回复</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <WingBlank [size]="'lg'">
+      <Card *ngFor="let item of dataList;">
+        <CardBody>
+          <div class="item">
+            <div class="label">账号ID：</div>
+            <div class="prop">{{item.title}}</div>
+          </div>
+          <div class="item">
+            <div class="label">内容：</div>
+            <div class="prop" [innerHTML]="item.content"></div>
+          </div>
+          <div class="item">
+            <div class="label">提问时间：</div>
+            <div class="prop">{{item.beginTime}}</div>
+          </div>
+          <div class="item">
+            <div class="label">操作：</div>
+            <div class="prop">
+              <span tappable (click)="frozenHandler(item.id)" style="text-decoration: underline;color: rgb(0, 0, 204);"
+                (click)="replyHandler(item.id)">冻结</span>
+            </div>
+          </div>
+
+        </CardBody>
+      </Card>
+    </WingBlank>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="batchHandler()" [disabled]="dataListSelections?.length == 0">批量回复</ion-button>
+  </ion-toolbar>
+</ion-footer>

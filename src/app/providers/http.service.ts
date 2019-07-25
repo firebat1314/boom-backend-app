@@ -104,7 +104,7 @@ export class HttpService {
           't': new Date().getTime()
         }
         opt.openDefultdata ? Object.assign(data, defaults) : data;
-        opt.openDefultdata ? Object.assign(opt.params, defaults) : opt.params;
+        // opt.openDefultdata ? Object.assign(opt.params, defaults) : opt.params;
 
         return this.http.post(`${url}${opt.urlParam ? `/` + opt.urlParam : ``}`, data, { params: opt.params }).pipe(
           map((res) => {
