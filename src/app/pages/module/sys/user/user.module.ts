@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { UserPage } from './user.page';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { AddAdminComponent } from './add-admin/add-admin.component';
 
 const routes: Routes = [
   {
@@ -19,8 +21,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule
   ],
-  declarations: [UserPage]
+  declarations: [UserPage, AddAdminComponent],
+  entryComponents: [AddAdminComponent]
 })
 export class UserPageModule {}

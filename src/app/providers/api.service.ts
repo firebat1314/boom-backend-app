@@ -250,4 +250,34 @@ export class ApiService {
   funcMailInfo(data = {}, options: HttpOptions = {}) {//邮件详情
     return this.http.get('/func/mail/info', data, options);
   }
-} 
+  gameChannel(data = {}, options: HttpOptions = {}) {//游戏配置管理
+    return this.http.get('/game/getChannel', data, options);
+  }
+  gameSort(data = {}, options: HttpOptions = {}) {//游戏配置管理排序
+    return this.http.get('/game/getSort', data, options);
+  }
+  gameEditSort(data = {}, options: HttpOptions = {}) {//游戏配置管理修改排序
+    return this.http.get('/game/sort', data, options);
+  }
+  gameData(data = {}, options: HttpOptions = {}) {//游戏配置管理网址修改
+    return this.http.get('/game/web/getDate', data, options);
+  }
+  gameAdmin(data = {}, options: HttpOptions = {}) {//游戏配置管理网址修改
+    return this.http.get('/cha/admin/official', data, options);
+  }
+  funcData(data = {}, options: HttpOptions = {}) {//功能管理
+    return this.http.get('/game/func/getData', data, options);
+  }
+  funcManage(data = {}, options: HttpOptions = {}) {//功能管理
+    return this.http.get('/game/func/funcManage', data, options);
+  }
+  giveData(data = {}, options: HttpOptions = {}) {//z赠送管理
+    return this.http.get('/game/give/getDate', data, options);
+  }
+  sysUserList(data = {}, options: HttpOptions = {}) {//管理员列表
+    return this.http.get('/sys/user/list', data, options);
+  }
+  sysUserDelete(data = {}, options: HttpOptions = {}) {//管理员删除
+    return this.http.get('/sys/user/delete', data, options);
+  }
+}

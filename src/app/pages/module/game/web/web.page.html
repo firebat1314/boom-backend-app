@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>web</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>网站修改</ion-title>
+    <ion-buttons slot="end" *ngIf="channel">
+      <ion-button (click)="editor = !editor;">{{editor?'取消':'编辑'}}</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item lines="full">
+      <ion-label>渠道</ion-label>
+      <ion-select placeholder="渠道" [(ngModel)]="channel" (ionChange)="channelChange()" okText="确定" cancelText="取消">
+        <ion-select-option [value]="item.channelId" *ngFor="let item of optionsChannel">
+          {{item.channelName+item.channelId}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>官网地址</ion-label>
+      <ion-input placeholder="请输入网址" clearInput style="text-align: right;" *ngIf="editor" slot="end" #sortInput [value]="url">
+      </ion-input>
+      <div slot="end" *ngIf="!editor">{{url}}</div>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
+
+<ion-footer *ngIf="editor">
+  <ion-button expand="full" color="primary" no-margin (click)="confirm()">确认修改</ion-button>
+</ion-footer>

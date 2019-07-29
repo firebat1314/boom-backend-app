@@ -1,9 +1,45 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>游戏排序</ion-title>
+    <ion-buttons slot="end" *ngIf="channel">
+      <ion-button (click)="editor = !editor;sortSort(gameSort)">{{editor?'取消':'编辑'}}</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <ion-item lines="full">
+      <ion-label>渠道</ion-label>
+      <ion-select placeholder="渠道" [(ngModel)]="channel" (ionChange)="channelChange()" okText="确定" cancelText="取消">
+        <ion-select-option [value]="item.channelId" *ngFor="let item of optionsChannel">
+          {{item.channelName+item.channelId}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label>排序</ion-label>
+      <ion-input style="text-align: right;" *ngIf="editor" slot="end" #sortInput [value]="gameSort"
+        (input)="sortSort(sortInput.value)">
+      </ion-input>
+      <div slot="end" *ngIf="!editor">{{gameSort}}</div>
+    </ion-item>
+  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of dataList">
+        <div class="minDiv" *ngFor="let item2 of item">
+          {{ item2.name }}
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+
+<ion-footer *ngIf="editor">
+  <ion-button expand="full" color="primary" no-margin (click)="confirm()">确认排序</ion-button>
+</ion-footer>

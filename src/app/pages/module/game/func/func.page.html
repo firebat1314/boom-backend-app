@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>func</ion-title>
+    <ion-title>功能管理</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <!--     <ion-list-header>
+      <ion-label>渠道号</ion-label>
+    </ion-list-header> -->
+    <ion-item-divider>
+      <ion-label>渠道号</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>渠道</ion-label>
+      <ion-select placeholder="渠道" [(ngModel)]="channel" (ionChange)="channelChange()" okText="确定" cancelText="取消">
+        <ion-select-option [value]="item.channelId" *ngFor="let item of optionsChannel">
+          {{item.channelName+item.channelId}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <!--   <ion-list-header>
+      <ion-label>功能列表</ion-label>
+    </ion-list-header> -->
+    <ion-item-divider>
+      <ion-label>功能列表</ion-label>
+    </ion-item-divider>
+    <ion-item *ngFor="let item of dataList;let index = index;">
+      <ion-label>{{item.paramName}}</ion-label>
+      <ion-toggle [(ngModel)]="item.state" (click)="stateChange(item.state,index)"></ion-toggle>
+    </ion-item>
+  </ion-list>
 </ion-content>

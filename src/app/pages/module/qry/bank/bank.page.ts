@@ -38,7 +38,7 @@ export class BankPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.doRefresh();
   }
 
   //搜索弹窗

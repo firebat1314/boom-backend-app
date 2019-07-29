@@ -6,15 +6,12 @@
   background: rgb(244, 248, 251);
   display: flex;
   flex-wrap: wrap;
-  padding: 4%;
-  padding-bottom: 0;
+  padding: 0;
   justify-content: space-between;
 
   ion-card {
-    width: 48%;
     margin: 0;
     background: #ffffff;
-    margin-bottom: 4%;
     text-align: center;
 
     ion-card-content {
@@ -30,12 +27,12 @@
       }
     }
 
-    &:nth-child(1) {
+    &.color1 {
       background: rgb(143, 173, 246);
       color: #ffffff;
     }
 
-    &:nth-child(2) {
+    &.color2 {
       background: rgb(144, 120, 244);
       color: #ffffff;
     }

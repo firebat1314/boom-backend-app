@@ -1,0 +1,23 @@
+ion-row {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+
+    ion-col {
+        min-width: 125px;
+
+        .minDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            padding: 24px 8px;
+            font-size: 12px;
+            background: #f75903;
+            border-radius: 4px;
+
+            &:first-child {
+                margin-bottom: 8px;
+            }
+        }
+    }
+}

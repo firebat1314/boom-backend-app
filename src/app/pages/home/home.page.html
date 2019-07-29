@@ -14,55 +14,75 @@
     <div #eCharts style="width: 80%;height: 280px;"></div>
   </div>
   <div class="today-data">
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.pToDay}}</p>
-        <p>今日总存款</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.pYesterDay}}</p>
-        <p>昨日总存款</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.tToDay}}</p>
-        <p>今日总提现</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.tYesterDay}}</p>
-        <p>昨日总提现</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.taToDay}}</p>
-        <p>今日总抽水</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.taYesterDay}}</p>
-        <p>昨日总抽水</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.rToDay}}</p>
-        <p>今日总注册</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        <p>{{dataListDay?.rYesterDay}}</p>
-        <p>昨日总注册</p>
-      </ion-card-content>
-    </ion-card>
 
+    <ion-grid>
+      <ion-row class="ion-justify-content-start">
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card class="color1">
+            <ion-card-content>
+              <p>{{dataListDay?.pToDay}}</p>
+              <p>今日总存款</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card class="color2">
+            <ion-card-content>
+              <p>{{dataListDay?.pYesterDay}}</p>
+              <p>昨日总存款</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <p>{{dataListDay?.tToDay}}</p>
+              <p>今日总提现</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <p>{{dataListDay?.tYesterDay}}</p>
+              <p>昨日总提现</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <p>{{dataListDay?.taToDay}}</p>
+              <p>今日总抽水</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <p>{{dataListDay?.taYesterDay}}</p>
+              <p>昨日总抽水</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <p>{{dataListDay?.rToDay}}</p>
+              <p>今日总注册</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="3" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <p>{{dataListDay?.rYesterDay}}</p>
+              <p>昨日总注册</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
 </ion-content>
