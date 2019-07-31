@@ -5,9 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { PopupSearchComponent } from './popup-search/popup-search.component';
 
 const coms: any[] = [
   ScrollToTopComponent,
+  PopupSearchComponent,
 ]
 
 @NgModule({
@@ -23,7 +25,6 @@ const coms: any[] = [
   ],
   exports: [
     ...coms,
-  ],
-  entryComponents: [],
+  ]
 })
 export class ComponentsModule { }

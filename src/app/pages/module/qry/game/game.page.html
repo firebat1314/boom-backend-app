@@ -11,40 +11,33 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <div class="popup" [ngClass]="{'show':showPopup}">
-    <div class="popup-backdrop" tappable (click)="showPopup = false"></div>
-    <div class="popup-wrap">
-      <ion-list>
-        <ion-item>
-          <ion-label position="fixed">游戏类型</ion-label>
-          <ion-select [(ngModel)]="formData.gameType" slot="end" multiple="false" cancelText="取消" okText="确认">
-            <ion-select-option [value]="'0'">无</ion-select-option>
-            <ion-select-option *ngFor="let item of options" [value]="item.value">{{item.label}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed">开始日期</ion-label>
-          <ion-datetime [(ngModel)]="beginTime" (ionChange)="dateChange()" slot="end" display-format="YYYY-MM-DD"
-            picker-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
-          </ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed">结束日期</ion-label>
-          <ion-datetime [(ngModel)]="endTime" (ionChange)="dateChange()" slot="end" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"
-            cancelText="取消" doneText="确定">
-          </ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label position="fixed">账号ID</ion-label>
-          <ion-input [(ngModel)]="formData.keyword" style="text-align: right;" slot="end"></ion-input>
-        </ion-item>
-      </ion-list>
-      <div class="submit">
-        <ion-button expand="full" mode="ios" (click)="showPopup = !showPopup" color="light">取消</ion-button>
-        <ion-button expand="full" mode="ios" (click)="searchRequest()">确认</ion-button>
-      </div>
-    </div>
-  </div>
+  <sss-popup-search [(showPopup)]="showPopup" (submit)="searchRequest()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="fixed">游戏类型</ion-label>
+        <ion-select [(ngModel)]="formData.gameType" slot="end" multiple="false" cancelText="取消" okText="确认">
+          <ion-select-option [value]="'0'">无</ion-select-option>
+          <ion-select-option *ngFor="let item of options" [value]="item.value">{{item.label}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">开始日期</ion-label>
+        <ion-datetime [(ngModel)]="beginTime" (ionChange)="dateChange()" slot="end" display-format="YYYY-MM-DD"
+          picker-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">结束日期</ion-label>
+        <ion-datetime [(ngModel)]="endTime" (ionChange)="dateChange()" slot="end" display-format="YYYY-MM-DD"
+          picker-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+        </ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="fixed">账号ID</ion-label>
+        <ion-input [(ngModel)]="formData.keyword" style="text-align: right;" slot="end"></ion-input>
+      </ion-item>
+    </ion-list>
+  </sss-popup-search>
 </ion-header>
 
 <ion-content>
