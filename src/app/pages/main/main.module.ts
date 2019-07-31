@@ -15,6 +15,9 @@ const routes: Routes = [
         component: MainPage,
         children: [
             {
+                path: '', redirectTo: 'home', pathMatch: 'full'
+            },
+            {
                 path: 'home', loadChildren: '../home/home.module#HomePageModule'
             },
             {
@@ -49,10 +52,6 @@ const routes: Routes = [
             },
             {
                 path: 'page404', loadChildren: '../page404/page404.module#Page404PageModule'
-            },
-
-            {
-                path: '', redirectTo: 'home', pathMatch: 'full'
             },
             {
                 path: '**', redirectTo: 'page404'

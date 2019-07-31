@@ -278,6 +278,21 @@ export class ApiService {
     return this.http.get('/sys/user/list', data, options);
   }
   sysUserDelete(data = {}, options: HttpOptions = {}) {//管理员删除
-    return this.http.get('/sys/user/delete', data, options);
+    return this.http.post('/sys/user/delete', data, options);
+  }
+  sysUserChannels(data = {}, options: HttpOptions = {}) {//新增管理员 渠道
+    return this.http.get('/sys/user/channels', data, options);
+  }
+  sysUserSave(data = {}, options: HttpOptions = {}) {//新增管理员 
+    return this.http.post('/sys/user/save', data, options);
+  }
+  sysUserUpdate(data = {}, options: HttpOptions = {}) {//修改管理员
+    return this.http.post('/sys/user/update', data, options);
+  }
+  sysUserInfo(data = {}, options: HttpOptions = {}) {//管理员信息
+    return this.http.get('/sys/user/info', data, options);
+  }
+  sysRoleSelect(data = {}, options: HttpOptions = {}) {//角色权限
+    return this.http.get('/sys/role/select', data, options);
   }
 }

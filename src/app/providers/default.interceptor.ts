@@ -40,7 +40,7 @@ export class DefaultInterceptor implements HttpInterceptor {
                 const newReq = req.clone({
                     url: url,
                     setHeaders: {
-                        'token': token ? 'fbc1fbbff7cb0019bf51768a7477d8e1' : 'fbc1fbbff7cb0019bf51768a7477d8e1',
+                        'token': token ? '745e3e3d9a142f80832b736c353b23a8' : '745e3e3d9a142f80832b736c353b23a8',
                         'Content-Type': 'application/json;charset=UTF-8;'
                     }
                     // params: req.params.set('session', authInfo.sessiontoken),

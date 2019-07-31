@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'page404', loadChildren: './page404/page404.module#Page404PageModule' },
 
-  { path: '', redirectTo: '/module', pathMatch: 'full' },
+  { path: '', redirectTo: '/module/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/page404' },
 ];
 

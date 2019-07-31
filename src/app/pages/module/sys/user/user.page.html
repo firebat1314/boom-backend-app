@@ -6,7 +6,8 @@
     </ion-buttons>
     <ion-title>管理员列表</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="add()">
+      <ion-button (click)="toggleMultiple()">{{multiple?'取消':'多选'}}</ion-button>
+      <ion-button (click)="addAdmin()">
         <ion-icon name="add-circle-outline"></ion-icon>
       </ion-button>
       <ion-button (click)="select()">
@@ -39,7 +40,7 @@
             </ion-col>
             <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
               <div class="item">
-                <div class="label">操用户名：</div>
+                <div class="label">用户名：</div>
                 <div class="prop">{{item.username}}</div>
               </div>
             </ion-col>
@@ -70,7 +71,7 @@
             </ion-col>
             <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
               <div class="item">
-                <div class="label">操创建时间：</div>
+                <div class="label">创建时间：</div>
                 <div class="prop">{{item.createTime}}</div>
               </div>
             </ion-col>
@@ -78,9 +79,15 @@
         </ion-grid>
       </ion-card-content>
       <ion-grid class="operate">
-        <ion-row class="ion-justify-content-end">
-          <ion-button fill="outline" size="small" (click)="addOrUpdateHandle(item.userId)">修改</ion-button>
-          <ion-button fill="outline" size="small" (click)="deleteHandle(item.userId)">删除</ion-button>
+        <ion-row class=" ion-align-items-center">
+          <ion-col>
+            <ion-checkbox *ngIf="multiple" [(ngModel)]="item.checked" (ionChange)="checkOneBox($event,item)">
+            </ion-checkbox>
+          </ion-col>
+          <ion-col style="text-align:right;white-space:nowrap;">
+            <ion-button fill="outline" size="small" (click)="addOrUpdateHandle(item.userId)">修改</ion-button>
+            <ion-button fill="outline" size="small" (click)="deleteHandle(item.userId)">删除</ion-button>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card>
@@ -93,3 +100,16 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+
+<ion-footer *ngIf="multiple">
+  <ion-toolbar>
+    <label slot="start" class="selectall">
+      <ion-checkbox [(ngModel)]="selectAll" (ionChange)="checkAll($event)"></ion-checkbox>
+      <span>全选</span>
+    </label>
+    <ion-buttons slot="end">
+      <ion-button expand="full" color="primary" no-margin (click)="deleteInBatches()" [disabled]="!selectAllIds?.length">
+        批量删除</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

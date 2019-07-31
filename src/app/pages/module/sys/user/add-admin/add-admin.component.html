@@ -5,35 +5,59 @@
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>搜索</ion-title>
+    <ion-title>新增管理员</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
     <ion-item>
-      <ion-label>操作类型</ion-label>
-      <ion-select placeholder="请选择" [(ngModel)]="formData.type" okText="确定" cancelText="取消">
+      <ion-label position="fixed">用户名</ion-label>
+      <ion-input placeholder="请输入" type="text" [(ngModel)]="formData.userName" style="text-align: right;" slot="end">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">密码</ion-label>
+      <ion-input placeholder="请输入" type="password" [(ngModel)]="formData.password" style="text-align: right;"
+        slot="end"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">确认密码</ion-label>
+      <ion-input placeholder="请输入" type="password" [(ngModel)]="formData.comfirmPassword" style="text-align: right;"
+        slot="end">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">邮箱</ion-label>
+      <ion-input placeholder="请输入" type="email" [(ngModel)]="formData.email" style="text-align: right;" slot="end">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="fixed">手机号</ion-label>
+      <ion-input placeholder="请输入" type="phone" [(ngModel)]="formData.mobile" style="text-align: right;" slot="end">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>渠道</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.channelId" okText="确定" cancelText="取消">
         <ion-select-option value="">无</ion-select-option>
-        <ion-select-option value="1">存</ion-select-option>
-        <ion-select-option value="0">取</ion-select-option>
-        <ion-select-option value="2">送出或赠送</ion-select-option>
+        <ion-select-option [value]="ch.channelId" *ngFor="let ch of options">{{ch.channelId+' '+ch.channelName}}
+        </ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="fixed">开始日期</ion-label>
-      <ion-datetime [(ngModel)]="formData.beginTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消"
-        doneText="确定">
-      </ion-datetime>
+      <ion-label>角色</ion-label>
+      <ion-select placeholder="请选择" multiple="true" [(ngModel)]="formData.roleIdList" okText="确定" cancelText="取消">
+        <ion-select-option [value]="role.roleId" *ngFor="let role of roleList">{{role.roleName}}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="fixed">结束日期</ion-label>
-      <ion-datetime [(ngModel)]="formData.endTime" slot="end" display-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
-      </ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label position="fixed">账号ID</ion-label>
-      <ion-input [(ngModel)]="formData.keyword" style="text-align: right;" slot="end"></ion-input>
+      <ion-label>状态</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="formData.status" okText="确定" cancelText="取消">
+        <ion-select-option [value]="0">禁用</ion-select-option>
+        <ion-select-option [value]="1">正常</ion-select-option>
+      </ion-select>
     </ion-item>
   </ion-list>
 
