@@ -9,7 +9,7 @@ import { PopupService } from 'src/app/providers/popup/popup.service';
   styleUrls: ['./sort.page.scss'],
 })
 export class SortPage implements OnInit {
-  @ViewChild('sortInput') input: IonInput;
+  @ViewChild('sortInput', { static: false }) input: IonInput;
 
   optionsChannel: any;
   channel: any;

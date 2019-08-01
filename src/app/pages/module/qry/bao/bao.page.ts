@@ -16,10 +16,10 @@ export interface qryBaoForm {
 })
 export class BaoPage implements OnInit {
 
-  @ViewChild(IonRefresher) refresher: IonRefresher;
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  @ViewChild(IonContent) content: IonContent;
-  @ViewChild(IonSearchbar) searchBar: IonSearchbar
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
+  @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
+  @ViewChild(IonSearchbar, { static: false }) searchBar: IonSearchbar
 
   formData: qryBaoForm = {
     keyword: '35563',

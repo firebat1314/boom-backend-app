@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   
-  { path: 'qry', loadChildren: '../adv/qry/qry.module#QryPageModule' },
-  { path: 'visit', loadChildren: '../adv/visit/visit.module#VisitPageModule' },
+  { path: 'qry', loadChildren: () =>import('../adv/qry/qry.module').then(mod => mod.QryPageModule) },
+  { path: 'visit', loadChildren: () =>import('../adv/visit/visit.module').then(mod => mod.VisitPageModule) },
 ];
 
 @NgModule({

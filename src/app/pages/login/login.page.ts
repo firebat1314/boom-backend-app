@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
         this.storage.setStorage('username', this.loginInfo.username);
         // Get the redirect URL from our auth service
         // If no redirect has been set, use the default
-        let redirect = this.storage.redirectUrl ? this.storage.redirectUrl : '/home';
+        let redirect = this.storage.redirectUrl ? this.storage.redirectUrl : '/module/home';
         // Set our navigation extras object
         // that passes on our global query params and fragment
         let navigationExtras: NavigationExtras | AnimationOptions = {

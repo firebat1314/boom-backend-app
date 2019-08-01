@@ -15,8 +15,8 @@ import { map, finalize } from 'rxjs/operators';
 })
 export class WadvPage implements OnInit {
 
-  @ViewChild(IonRefresher) refresher: IonRefresher;
-  @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
   formData = {
     salary: {
       orderBy: '',

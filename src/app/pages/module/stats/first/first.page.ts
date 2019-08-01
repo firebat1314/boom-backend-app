@@ -16,8 +16,8 @@ import { ChfirstPage } from './chfirst/chfirst.page';
 })
 export class FirstPage implements OnInit {
 
-  @ViewChild(IonRefresher) refresher: IonRefresher;
-  @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
   formData = {
     'page': 1,
     'limit': 10,

@@ -12,7 +12,7 @@ import { ForbidComponent } from './forbid/forbid.component';
 })
 export class UserPage implements OnInit {
 
-  @ViewChild(IonSearchbar) searchBar: IonSearchbar
+  @ViewChild(IonSearchbar, { static: false }) searchBar: IonSearchbar
   keyword = '35606';
   searchType = 'uaid';
   data: any;

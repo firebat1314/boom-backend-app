@@ -12,8 +12,8 @@ import { map, finalize } from 'rxjs/operators';
 })
 export class BorrowPage implements OnInit {
 
-  @ViewChild(IonRefresher) refresher: IonRefresher;
-  @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
   roleId: string;
   data: any;
   dataList: Array<any> = [];

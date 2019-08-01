@@ -15,8 +15,8 @@ const routes: Routes = [
     path: '',
     component: BaoPage
   },
-  { path: 'borrow', loadChildren: './borrow/borrow.module#BorrowPageModule' },
-  { path: 'deposit', loadChildren: './deposit/deposit.module#DepositPageModule' },
+  { path: 'borrow', loadChildren: () => import('./borrow/borrow.module').then(mod => mod.BorrowPageModule) },
+  { path: 'deposit', loadChildren: () => import('./deposit/deposit.module').then(mod => mod.DepositPageModule) },
 ];
 
 @NgModule({

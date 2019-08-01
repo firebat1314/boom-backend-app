@@ -14,8 +14,8 @@ import { SearchPage } from './search/search.page';
 })
 export class OnlinePage implements OnInit {
 
-  @ViewChild(IonRefresher) refresher: IonRefresher;
-  @ViewChild('eCharts') chart: ElementRef;
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
+  @ViewChild('eCharts', { static: false }) chart: ElementRef;
   myChart: any;
   onlineChartOption;
 

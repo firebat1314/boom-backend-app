@@ -14,9 +14,9 @@ import { AddAdminComponent } from './add-admin/add-admin.component';
   styleUrls: ['./user.page.scss'],
 })
 export class UserPage implements OnInit {
-  @ViewChild(IonRefresher) refresher: IonRefresher;
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
+  @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
 
   dataList: Array<any> = [];
   selectAll: boolean = false;
@@ -72,7 +72,6 @@ export class UserPage implements OnInit {
     }, options).pipe(
       map((res: any) => {
         if (res && res.code === 0) {
-          this.content.scrollToTop(0);//搜索回调页面返回顶部
           this.data = res;
         }
         return res;
@@ -87,6 +86,7 @@ export class UserPage implements OnInit {
       page: 1,
     }, { showLoading: false, ...options }).subscribe(res => {
       if (res && res.code === 0) {
+        this.content.scrollToTop(0);//
         this.refresher.complete();//ajax完成时、发生错误或者取消订阅时取消刷新
         this.infiniteScroll.disabled = false;
         this.dataList = res.page.list;

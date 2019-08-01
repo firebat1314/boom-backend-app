@@ -7,13 +7,13 @@ const routes: Routes = [
         path: '',
         component: GamePage,
     },
-    { path: 'dragon', loadChildren: './details/dragon/dragon.module#DragonPageModule' },
-    { path: 'grabniu', loadChildren: './details/grabniu/grabniu.module#GrabniuPageModule' },
-    { path: 'animal', loadChildren: './details/animal/animal.module#AnimalPageModule' },
-    { path: 'car', loadChildren: './details/car/car.module#CarPageModule' },
-    { path: 'fish', loadChildren: './details/fish/fish.module#FishPageModule' },
-    { path: 'lottery', loadChildren: './details/lottery/lottery.module#LotteryPageModule' },
-    { path: 'landlords', loadChildren: './details/landlords/landlords.module#LandlordsPageModule' },
+    { path: 'dragon', loadChildren: () => import('./details/dragon/dragon.module').then(mod => mod.DragonPageModule) },
+    { path: 'grabniu', loadChildren: () => import('./details/grabniu/grabniu.module').then(mod => mod.GrabniuPageModule) },
+    { path: 'animal', loadChildren: () => import('./details/animal/animal.module').then(mod => mod.AnimalPageModule) },
+    { path: 'car', loadChildren: () => import('./details/car/car.module').then(mod => mod.CarPageModule) },
+    { path: 'fish', loadChildren: () => import('./details/fish/fish.module').then(mod => mod.FishPageModule) },
+    { path: 'lottery', loadChildren: () => import('./details/lottery/lottery.module').then(mod => mod.LotteryPageModule) },
+    { path: 'landlords', loadChildren: () => import('./details/landlords/landlords.module').then(mod => mod.LandlordsPageModule) },
 
 ];
 

@@ -18,40 +18,40 @@ const routes: Routes = [
                 path: '', redirectTo: 'home', pathMatch: 'full'
             },
             {
-                path: 'home', loadChildren: '../home/home.module#HomePageModule'
+                path: 'home', loadChildren: () =>import('../home/home.module').then(mod => mod.HomePageModule)
             },
             {
-                path: 'adv', loadChildren: '../module/adv/adv.module#AdvModule'
+                path: 'adv', loadChildren: () =>import('../module/adv/adv.module').then(mod => mod.AdvModule)
             },
             {
-                path: 'cha', loadChildren: '../module/cha/cha.module#ChaModule'
+                path: 'cha', loadChildren: () =>import('../module/cha/cha.module').then(mod => mod.ChaModule)
             },
             {
-                path: 'func', loadChildren: '../module/func/func.module#FuncModule'
+                path: 'func', loadChildren: () =>import('../module/func/func.module').then(mod => mod.FuncModule)
             },
             {
-                path: 'job', loadChildren: '../module/job/job.module#JobModule'
+                path: 'job', loadChildren: () =>import('../module/job/job.module').then(mod => mod.JobModule)
             },
             {
-                path: 'mge', loadChildren: '../module/mge/mge.module#MgeModule'
+                path: 'mge', loadChildren: () =>import('../module/mge/mge.module').then(mod => mod.MgeModule)
             },
             {
-                path: 'oss', loadChildren: '../module/oss/oss.module#OssModule'
+                path: 'oss', loadChildren: () =>import('../module/oss/oss.module').then(mod => mod.OssModule)
             },
             {
-                path: 'qry', loadChildren: '../module/qry/qry.module#QryModule'
+                path: 'qry', loadChildren: () =>import('../module/qry/qry.module').then(mod => mod.QryModule)
             },
             {
-                path: 'stats', loadChildren: '../module/stats/stats.module#StatsModule'
+                path: 'stats', loadChildren: () =>import('../module/stats/stats.module').then(mod => mod.StatsModule)
             },
             {
-                path: 'sys', loadChildren: '../module/sys/sys.module#SysModule'
+                path: 'sys', loadChildren: () =>import('../module/sys/sys.module').then(mod => mod.SysModule)
             },
             {
-                path: 'game', loadChildren: '../module/game/game.module#GameModule'
+                path: 'game', loadChildren: () =>import('../module/game/game.module').then(mod => mod.GameModule)
             },
             {
-                path: 'page404', loadChildren: '../page404/page404.module#Page404PageModule'
+                path: 'page404', loadChildren: () =>import('../page404/page404.module').then(mod => mod.Page404PageModule)
             },
             {
                 path: '**', redirectTo: 'page404'

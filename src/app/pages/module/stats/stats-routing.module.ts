@@ -2,21 +2,21 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'profit', loadChildren: '../stats/profit/profit.module#ProfitPageModule' },
-  { path: 'goldChgRank', loadChildren: '../stats/gold-chg-rank/gold-chg-rank.module#GoldChgRankPageModule' },
-  { path: 'operate', loadChildren: '../stats/operate/operate.module#OperatePageModule' },
-  { path: 'game', loadChildren: '../stats/game/game.module#GamePageModule' },
-  { path: 'online', loadChildren: '../stats/online/online.module#OnlinePageModule' },
-  { path: 'pay', loadChildren: '../stats/pay/pay.module#PayPageModule' },
-  { path: 'coin', loadChildren: '../stats/coin/coin.module#CoinPageModule' },
-  { path: 'exchg', loadChildren: '../stats/exchg/exchg.module#ExchgPageModule' },
-  { path: 'user', loadChildren: '../stats/user/user.module#UserPageModule' },
-  { path: 'tax', loadChildren: '../stats/tax/tax.module#TaxPageModule' },
-  { path: 'keep', loadChildren: '../stats/keep/keep.module#KeepPageModule' },
-  { path: 'chData', loadChildren: '../stats/ch-data/ch-data.module#ChDataPageModule' },
-  { path: 'flow', loadChildren: '../stats/flow/flow.module#FlowPageModule' },
-  { path: 'wadv', loadChildren: '../stats/wadv/wadv.module#WadvPageModule' },
-  { path: 'first', loadChildren: '../stats/first/first.module#FirstPageModule' },
+  { path: 'profit', loadChildren: () =>import('../stats/profit/profit.module').then(mod => mod.ProfitPageModule) },
+  { path: 'goldChgRank', loadChildren: () =>import('../stats/gold-chg-rank/gold-chg-rank.module').then(mod => mod.GoldChgRankPageModule) },
+  { path: 'operate', loadChildren: () =>import('../stats/operate/operate.module').then(mod => mod.OperatePageModule) },
+  { path: 'game', loadChildren: () =>import('../stats/game/game.module').then(mod => mod.GamePageModule) },
+  { path: 'online', loadChildren: () =>import('../stats/online/online.module').then(mod => mod.OnlinePageModule) },
+  { path: 'pay', loadChildren: () =>import('../stats/pay/pay.module').then(mod => mod.PayPageModule) },
+  { path: 'coin', loadChildren: () =>import('../stats/coin/coin.module').then(mod => mod.CoinPageModule) },
+  { path: 'exchg', loadChildren: () =>import('../stats/exchg/exchg.module').then(mod => mod.ExchgPageModule) },
+  { path: 'user', loadChildren: () =>import('../stats/user/user.module').then(mod => mod.UserPageModule) },
+  { path: 'tax', loadChildren: () =>import('../stats/tax/tax.module').then(mod => mod.TaxPageModule) },
+  { path: 'keep', loadChildren: () =>import('../stats/keep/keep.module').then(mod => mod.KeepPageModule) },
+  { path: 'chData', loadChildren: () =>import('../stats/ch-data/ch-data.module').then(mod => mod.ChDataPageModule) },
+  { path: 'flow', loadChildren: () =>import('../stats/flow/flow.module').then(mod => mod.FlowPageModule) },
+  { path: 'wadv', loadChildren: () =>import('../stats/wadv/wadv.module').then(mod => mod.WadvPageModule) },
+  { path: 'first', loadChildren: () =>import('../stats/first/first.module').then(mod => mod.FirstPageModule) },
 ];
 
 @NgModule({

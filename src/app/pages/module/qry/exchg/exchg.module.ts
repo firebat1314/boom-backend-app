@@ -15,7 +15,7 @@ const routes: Routes = [
     path: '',
     component: ExchgPage
   },
-  { path: 'track/:id', loadChildren: './track/track.module#TrackPageModule' },
+  { path: 'track/:id', loadChildren: () => import('./track/track.module').then(mod => mod.TrackPageModule) },
 ];
 
 @NgModule({

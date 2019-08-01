@@ -11,9 +11,9 @@ import { map, finalize } from 'rxjs/operators';
   styleUrls: ['./success-order.page.scss'],
 })
 export class SuccessOrderPage implements OnInit {
-  @ViewChild(IonRefresher) refresher: IonRefresher;
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
+  @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonContent, { static: false }) content: IonContent;
 
   @Input() formData = {
     beginTime: '2019-04-01',

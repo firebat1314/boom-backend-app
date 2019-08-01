@@ -9,7 +9,7 @@ import { EChartsResponsiveOption, EChartOption, ECharts } from 'echarts';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  @ViewChild('eCharts') chart: ElementRef;
+  @ViewChild('eCharts', { static: false }) chart: ElementRef;
   onlineChartOption: any = {};
   myChart: ECharts;
   number: any;

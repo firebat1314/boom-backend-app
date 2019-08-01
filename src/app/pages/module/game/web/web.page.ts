@@ -9,7 +9,7 @@ import { IonInput } from '@ionic/angular';
   styleUrls: ['./web.page.scss'],
 })
 export class WebPage implements OnInit {
-  @ViewChild('sortInput') input: IonInput;
+  @ViewChild('sortInput', { static: false }) input: IonInput;
 
   optionsChannel: any;
   channel: any;
