@@ -15,7 +15,6 @@ import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { IonicStorageModule } from '@ionic/storage';
 import { DefaultInterceptor } from './providers/default.interceptor';
 import { StartupService } from './providers/startup.service';
-import { ComponentsModule } from './components/components.module';
 
 export function StartupServiceFactory(startupService: StartupService): Function {
   return () => startupService.load();

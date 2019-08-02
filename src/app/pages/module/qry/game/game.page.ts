@@ -7,6 +7,7 @@ import { catchError, finalize, map } from 'rxjs/operators';
 import { HttpOptions } from 'src/app/providers/http.service';
 import { Subscription, of } from 'rxjs';
 import { UtilsService } from 'src/app/providers/utils/utils.service';
+import { ActivatedRoute } from '@angular/router';
 
 export interface qryGameForm {
   'page'?: number
@@ -51,7 +52,7 @@ export class GamePage implements OnInit {
     public modalController: ModalController,
     public apiServ: ApiService,
     public navController: NavController,
-
+    private route: ActivatedRoute
   ) {
   }
 
@@ -119,7 +120,6 @@ export class GamePage implements OnInit {
       }),
       finalize(() => {
         this.infiniteScroll.complete();//ajax完成时、发生错误或者取消订阅时取消加载
-        this.refresher.complete();//ajax完成时、发生错误或者取消订阅时取消刷新
       })
     )
   }
@@ -129,6 +129,7 @@ export class GamePage implements OnInit {
       page: 1,
     }, { showLoading: false }).subscribe(res => {
       if (res && res.code === 0) {
+        this.refresher.complete();//ajax完成时、发生错误或者取消订阅时取消刷新
         this.infiniteScroll.disabled = false;
         this.dataList = res.page.list;
       } else {
@@ -154,19 +155,19 @@ export class GamePage implements OnInit {
   detailHandler(id: any, type: any) {
     let url = '';
     if (type === 5 || type === 9) {
-      url = '/qry/game/dragon';
+      url = '../dragon';
     } else if (type === 8) {
-      url = '/qry/game/grabniu';
+      url = '../grabniu';
     } else if (type === 6) {
-      url = '/qry/game/animal';
+      url = '../animal';
     } else if (type === 7) {
-      url = '/qry/game/car';
+      url = '../car';
     } else if (type === 10 || type === 15) {
-      url = '/qry/game/fish';
+      url = '../fish';
     } else if (type === 2) {
-      url = '/qry/game/lottery';
+      url = '../lottery';
     } else if (type === 12) {
-      url = '/qry/game/landlords';
+      url = '../landlords';
     } else {
       // 直接弹出来
       return false;
@@ -175,7 +176,8 @@ export class GamePage implements OnInit {
       queryParams: {
         id: id,
         type: type
-      }
+      },
+      relativeTo: this.route
     });
   }
 }

@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { RolePage } from './role.page';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { RoleAddOrUpdateComponent } from './role-add-or-update/role-add-or-update.component';
 
 const routes: Routes = [
   {
@@ -19,8 +21,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule
   ],
-  declarations: [RolePage]
+  declarations: [RolePage, RoleAddOrUpdateComponent],
+  entryComponents: [RoleAddOrUpdateComponent]
 })
 export class RolePageModule {}

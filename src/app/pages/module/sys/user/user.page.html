@@ -10,11 +10,20 @@
       <ion-button (click)="addAdmin()">
         <ion-icon name="add-circle-outline"></ion-icon>
       </ion-button>
-      <ion-button (click)="select()">
+      <ion-button (click)="showPopup = !showPopup">
         <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <sss-popup-search [(showPopup)]="showPopup" (submit)="searchRequest()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="fixed">用户名</ion-label>
+        <ion-input placeholder="请填写" clearInput [(ngModel)]="username" style="text-align: right;" slot="end">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+  </sss-popup-search>
 </ion-header>
 
 <ion-content>
@@ -81,7 +90,7 @@
       <ion-grid class="operate">
         <ion-row class=" ion-align-items-center">
           <ion-col>
-            <ion-checkbox *ngIf="multiple" [(ngModel)]="item.checked" (ionChange)="checkOneBox($event,item)">
+            <ion-checkbox *ngIf="multiple" [(ngModel)]="item.checked" (click)="checkOneBox(item)">
             </ion-checkbox>
           </ion-col>
           <ion-col style="text-align:right;white-space:nowrap;">
@@ -104,11 +113,12 @@
 <ion-footer *ngIf="multiple">
   <ion-toolbar>
     <label slot="start" class="selectall">
-      <ion-checkbox [(ngModel)]="selectAll" (ionChange)="checkAll($event)"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="selectAll" (click)="checkAll()"></ion-checkbox>
       <span>全选</span>
     </label>
     <ion-buttons slot="end">
-      <ion-button expand="full" color="primary" no-margin (click)="deleteInBatches()" [disabled]="!selectAllIds?.length">
+      <ion-button expand="full" color="primary" no-margin (click)="deleteInBatches()"
+        [disabled]="!selectAllIds?.length">
         批量删除</ion-button>
     </ion-buttons>
   </ion-toolbar>

@@ -8,23 +8,14 @@
     }
 }
 
-WingBlank {
+ion-card {
 
-    Card {
-        margin: 12px 0;
-    }
-
-    CardBody {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 8px;
-        font-size: 12px;
+    ion-card-content {
+        padding: 12px;
 
         .item {
+            font-size: 12px;
             display: flex;
-            align-items: center;
-            padding: 4px 8px;
-            min-width: 50%;
 
             .label {
                 white-space: nowrap;
@@ -32,6 +23,7 @@ WingBlank {
 
             .prop {
                 color: #999;
+                word-break: break-all;
 
                 ion-chip {
                     font-size: 12px;
@@ -41,5 +33,9 @@ WingBlank {
                 }
             }
         }
+    }
+
+    .operate {
+        border-top: 1px solid #e0e0e0;
     }
 }

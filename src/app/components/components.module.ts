@@ -6,10 +6,12 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
 import { PopupSearchComponent } from './popup-search/popup-search.component';
+import { TreeComponent } from './tree/tree.component';
 
 const coms: any[] = [
   ScrollToTopComponent,
   PopupSearchComponent,
+  TreeComponent,
 ]
 
 @NgModule({

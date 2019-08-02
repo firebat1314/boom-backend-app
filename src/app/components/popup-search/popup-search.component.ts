@@ -17,6 +17,7 @@ export class PopupSearchComponent implements OnInit {
 
   searchRequest() {
     this.submit.emit();
+    this.cancel();
   }
   cancel() {
     this.showPopup = !this.showPopup;

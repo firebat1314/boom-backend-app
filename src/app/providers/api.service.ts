@@ -295,4 +295,25 @@ export class ApiService {
   sysRoleSelect(data = {}, options: HttpOptions = {}) {//角色权限
     return this.http.get('/sys/role/select', data, options);
   }
+  sysRoleList(data = {}, options: HttpOptions = {}) {//角色管理
+    return this.http.get('/sys/role/list', data, options);
+  }
+  sysRoleDelete(data = {}, options: HttpOptions = {}) {//删除
+    return this.http.post('/sys/role/delete', data, options);
+  }
+  sysMenuList(data = {}, options: HttpOptions = {}) {//菜单列表
+    return this.http.get('/sys/menu/list', data, options);
+  }
+  sysRoleInfo(data = {}, options: HttpOptions = {}) {//
+    return this.http.get('/sys/role/info', data, options);
+  }
+  sysRoleSave(data = {}, options: HttpOptions = {}) {//
+    return this.http.post('/sys/role/save', data, options);
+  }
+  sysRoleUpdate(data = {}, options: HttpOptions = {}) {//
+    return this.http.post('/sys/role/update', data, options);
+  }
+  sysLogList(data = {}, options: HttpOptions = {}) {//log日志
+    return this.http.get('/sys/log/list', data, options);
+  }
 }

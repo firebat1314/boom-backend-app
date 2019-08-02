@@ -40,4 +40,10 @@ export class GivePage implements OnInit {
       }
     })
   }
+  detailClick(){
+
+  }
+  loanUpdateClick(){
+    
+  }
 }

@@ -24,7 +24,7 @@ export class UserPage implements OnInit {
   multiple: boolean = false;
   pageIndex: number = 1;
   pageSize: number = 20;
-  userName: string = '';
+  username: string = '';
   data: any;
   listServ: Subscription;
 
@@ -67,7 +67,7 @@ export class UserPage implements OnInit {
     return this.apiServ.sysUserList({
       'page': this.pageIndex,
       'limit': this.pageSize,
-      'username': this.userName,
+      'username': this.username,
       ...data
     }, options).pipe(
       map((res: any) => {
@@ -80,7 +80,9 @@ export class UserPage implements OnInit {
       })
     )
   }
-
+  searchRequest() {
+    this.doRefresh();
+  }
   doRefresh(event?: any, options?: HttpOptions) {
     this.listServ = this.getDataList({
       page: 1,
@@ -88,6 +90,7 @@ export class UserPage implements OnInit {
       if (res && res.code === 0) {
         this.content.scrollToTop(0);//
         this.refresher.complete();//ajax完成时、发生错误或者取消订阅时取消刷新
+        this.selectAllIds = [];//清空多选选中
         this.infiniteScroll.disabled = false;
         this.dataList = res.page.list;
       } else {
@@ -119,37 +122,40 @@ export class UserPage implements OnInit {
     this.multiple = !this.multiple;
   }
   // 全选
-  checkAll(event?) {
-    this.selectAll = event.detail.checked;
-    this.selectAllIds = []
-    this.dataList.forEach(item => {
-      item.checked = this.selectAll
-    })
-    // console.log(this.selectAllIds)
+  checkAll() {
+    setTimeout(() => {
+      this.selectAllIds = []
+      this.dataList.forEach(item => {
+        item.checked = this.selectAll;
+        item.checked && this.selectAllIds.push(item.userId);
+      })
+      // console.log(this.selectAllIds)
+    }, 100);
   }
   // 单选 使用every遍历数组每一项，每一项返回true,则最终结果为true。当任何一项返回false时，停止遍历，返回false。不改变原数组
-  checkOneBox(event, item) {
-    item.checked = event.detail.checked;
+  checkOneBox(item) {
     // 判断是否全选
-    /* if (this.dataList.every(item => item.checked === true)) {
-      this.selectAll = true
-    } else {
-      this.selectAll = false
-    } */
-    // 如果被点击则存其id
-    if (item.checked) {
-      if (this.selectAllIds.indexOf(item.userId) <= -1) {
-        this.selectAllIds.push(item.userId)
+    setTimeout(() => {
+      if (this.dataList.every(item => item.checked === true)) {
+        this.selectAll = true
+      } else {
+        this.selectAll = false
       }
-    } else {
-      // 删除数组里取消选择的id
-      for (let i = 0; i < this.selectAllIds.length; i++) {
-        if (this.selectAllIds[i] === item.userId) {
-          this.selectAllIds.splice(i, 1)
+      // 如果被点击则存其id
+      if (item.checked) {
+        if (this.selectAllIds.indexOf(item.userId) <= -1) {
+          this.selectAllIds.push(item.userId)
+        }
+      } else {
+        // 删除数组里取消选择的id
+        for (let i = 0; i < this.selectAllIds.length; i++) {
+          if (this.selectAllIds[i] === item.userId) {
+            this.selectAllIds.splice(i, 1)
+          }
         }
       }
-    }
-    // console.log(this.selectAllIds)
+      // console.log(this.selectAllIds)
+    }, 100);
   }
   addOrUpdateHandle(id) {
     this.addAdmin(id)

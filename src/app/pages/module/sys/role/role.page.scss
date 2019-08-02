@@ -1,0 +1,51 @@
+.no-body {
+    opacity: .3;
+    padding-top: 50px;
+    text-align: center;
+
+    ion-icon {
+        font-size: 144px;
+    }
+}
+
+ion-card {
+
+    ion-card-content {
+        padding: 12px;
+
+        .item {
+            font-size: 12px;
+            display: flex;
+
+            .label {
+                white-space: nowrap;
+            }
+
+            .prop {
+                color: #999;
+                word-break: break-all;
+
+                ion-chip {
+                    font-size: 12px;
+                    padding: 4px 8px;
+                    height: auto;
+                    margin: 2px;
+                }
+            }
+        }
+    }
+
+    .operate {
+        border-top: 1px solid #e0e0e0;
+    }
+}
+
+.selectall {
+    display: flex;
+    align-items: center;
+
+    ion-checkbox {
+        margin-left: 16px;
+        margin-right: 8px;
+    }
+}

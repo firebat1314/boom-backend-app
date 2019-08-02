@@ -16,7 +16,7 @@
       <Accordion [accordion]="true" (onChange)="onChange($event)">
         <AccordionPanel *ngFor="let item of menuListServ.menuList; let i = index;" [key]="i" [header]="item.icon">
           <List className="my-list">
-            <ListItem *ngFor="let content of item.child" (click)="routerLink('/module/'+content.url,menu);"
+            <ListItem *ngFor="let content of item.child" (click)="menu.close()" tappable menu-toggle [routerLink]="['/module/'+content.url]" 
               routerLinkActive="active">
               <!-- <ion-icon style="vertical-align: middle;margin-right: 6px;" [src]="content.icon"></ion-icon> -->
               <span style="vertical-align: middle;">{{content.title}}</span>

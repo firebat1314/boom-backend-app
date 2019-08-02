@@ -1,13 +1,106 @@
 <ion-header translucent>
   <ion-toolbar>
-      <ion-buttons slot="start">
-        <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>role</ion-title>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>角色管理</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleMultiple()">{{multiple?'取消':'多选'}}</ion-button>
+      <ion-button (click)="addAdmin()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="showPopup = !showPopup">
+        <ion-icon name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+  <sss-popup-search [(showPopup)]="showPopup" (submit)="searchRequest()">
+    <ion-list>
+      <ion-item>
+        <ion-label position="fixed">用户名</ion-label>
+        <ion-input placeholder="请填写" clearInput [(ngModel)]="roleName" style="text-align: right;" slot="end">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+  </sss-popup-search>
 </ion-header>
 
-<ion-content fullscreen>
-  
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+
+    <ion-card *ngFor="let item of dataList;">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
+              <div class="item">
+                <div class="label">ID：</div>
+                <div class="prop">{{item.roleId}}</div>
+              </div>
+            </ion-col>
+            <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
+              <div class="item">
+                <div class="label">角色名称：</div>
+                <div class="prop">{{item.roleName}}</div>
+              </div>
+            </ion-col>
+            <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
+              <div class="item">
+                <div class="label">备注：</div>
+                <div class="prop">{{item.remark}}</div>
+              </div>
+            </ion-col>
+            <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
+              <div class="item">
+                <div class="label">创建时间：</div>
+                <div class="prop">{{item.createTime}}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-grid class="operate">
+        <ion-row class=" ion-align-items-center">
+          <ion-col>
+            <ion-checkbox *ngIf="multiple" [(ngModel)]="item.checked" (click)="checkOneBox(item)">
+            </ion-checkbox>
+          </ion-col>
+          <ion-col style="text-align:right;white-space:nowrap;">
+            <ion-button fill="outline" size="small" (click)="addOrUpdateHandle(item.roleId)">修改</ion-button>
+            <ion-button fill="outline" size="small" (click)="deleteHandle(item.roleId)">删除</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+  <ion-infinite-scroll threshold="400px" [disabled]="!dataList?.length" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="正在加载..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+
+<ion-footer *ngIf="multiple">
+  <ion-toolbar>
+    <label slot="start" class="selectall">
+      <ion-checkbox [(ngModel)]="selectAll" (click)="checkAll()"></ion-checkbox>
+      <span>全选</span>
+    </label>
+    <ion-buttons slot="end">
+      <ion-button expand="full" color="primary" no-margin (click)="deleteInBatches()"
+        [disabled]="!selectAllIds?.length">
+        批量删除</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
