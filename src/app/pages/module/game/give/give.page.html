@@ -1,7 +1,7 @@
 <ion-header translucent>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <!--<ion-back-button defaultHref="/home" text=""></ion-back-button>-->
+      <!--<ion-back-button defaultHref="/module/home" text=""></ion-back-button>-->
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>赠送管理</ion-title>
@@ -33,7 +33,7 @@
     <ion-item-divider>
       <ion-label>渠道号</ion-label>
     </ion-item-divider> -->
-    <ion-card *ngFor="let item of dataList;">
+    <ion-card *ngFor="let item of dataList;let index = index;">
       <ion-card-content>
         <ion-grid>
           <ion-row>
@@ -46,7 +46,7 @@
             <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
               <div class="item">
                 <div class="label">赠送金额：</div>
-                <div class="prop">{{item.giftAmount}}</div>
+                <div class="prop">{{item.giftAmount / 100}}</div>
               </div>
             </ion-col>
             <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
@@ -72,8 +72,8 @@
       </ion-card-content>
       <ion-grid class="operate">
         <ion-row class="ion-justify-content-end">
-          <ion-button fill="outline" size="small" (click)="detailClick(item)">详情</ion-button>
-          <ion-button fill="outline" size="small" (click)="loanUpdateClick(item)">修改</ion-button>
+          <ion-button fill="outline" size="small" (click)="detailClick(item,index)">详情</ion-button>
+          <ion-button fill="outline" size="small" (click)="loanUpdateClick(item,index)">修改</ion-button>
         </ion-row>
       </ion-grid>
     </ion-card>

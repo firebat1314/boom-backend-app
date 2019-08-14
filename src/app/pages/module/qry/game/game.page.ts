@@ -57,7 +57,6 @@ export class GamePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.refresher)
     let curDate = new Date(new Date().getTime());
     let nextDate = new Date(curDate.getTime() + 24 * 60 * 60 * 1000); //后一天
     this.beginTime = this.utils.dateFormat(curDate, 'YYYY-MM-DDTHH:mm+08:00');

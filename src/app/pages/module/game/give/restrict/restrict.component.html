@@ -1,0 +1,73 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>赠送限制</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <!-- Default Segment -->
+    <ion-segment value="" [(ngModel)]="dataListType" (ionChange)="dataListTypeChanged($event)">
+      <ion-segment-button value="1">
+        <ion-label>ip</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        <ion-label>设备号</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="content-wrap" [ngSwitch]="dataListType">
+    <ng-container *ngSwitchCase="'1'">
+      <div class="no-body" *ngIf="!ipList?.length">
+        <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+      </div>
+      <ion-list>
+        <ion-item *ngFor="let item of ipList;">
+          <ion-label>{{item.forbidVal}}</ion-label>
+          <ion-checkbox slot="start" [(ngModel)]="item.checked" (click)="checkOneBox(item)"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+    <ng-container *ngSwitchCase="'2'">
+      <div class="no-body" *ngIf="!onDeviceList?.length">
+        <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+      </div>
+      <ion-list>
+        <ion-item *ngFor="let item of onDeviceList;">
+          <ion-label>{{item.forbidVal}}</ion-label>
+          <ion-checkbox slot="start" [(ngModel)]="item.checked" (click)="checkOneBox(item)"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <label slot="start" class="selectall">
+      <ion-checkbox [(ngModel)]="selectAll" (click)="checkAll()"></ion-checkbox>
+      <span>全选</span>
+    </label>
+    <ion-buttons slot="end">
+      <ion-button (click)="deleteInBatches()" [disabled]="!selectAllValues?.length">
+        批量删除</ion-button>
+      <ion-button (click)="batchSave()">
+        批量添加</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

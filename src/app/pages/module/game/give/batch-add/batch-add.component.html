@@ -1,0 +1,28 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>添加{{dataListType==1?'IP':'设备号'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">批量添加以英文逗号隔开</ion-label>
+      <ion-textarea autoGrow cols="20" [(ngModel)]="keyword"></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-button expand="full" color="primary" no-margin (click)="confirm()">确认添加</ion-button>
+</ion-footer>

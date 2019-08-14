@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/providers/api.service';
 import { PopupService } from 'src/app/providers/popup/popup.service';
+import { ModalController } from '@ionic/angular';
+import { RestrictComponent } from './restrict/restrict.component';
+import { ChangeComponent } from './change/change.component';
 
 @Component({
   selector: 'sss-give',
@@ -14,6 +17,7 @@ export class GivePage implements OnInit {
 
   constructor(
     private apiServ: ApiService,
+    public modalController: ModalController,
     private popupServ: PopupService
   ) { }
 
@@ -40,10 +44,36 @@ export class GivePage implements OnInit {
       }
     })
   }
-  detailClick(){
-
+  async  detailClick(item: any, index: any) {
+    const modal = await this.modalController.create({
+      component: RestrictComponent,
+      componentProps: {
+        index: index,
+        channelId: this.channel
+      }
+    });
+    modal.onWillDismiss().then(({ data }) => {
+      if (data && data.dismissed) {
+        this.getData();
+      }
+    });
+    return await modal.present();
   }
-  loanUpdateClick(){
-    
+  async loanUpdateClick(item: any, index: any) {
+    const modal = await this.modalController.create({
+      component: ChangeComponent,
+      componentProps: {
+        index: index,
+        channel: this.channel,
+        giftAmount: item.giftAmount / 100,
+        forbid: item.forbidVal
+      }
+    });
+    modal.onWillDismiss().then(({ data }) => {
+      if (data && data.dismissed) {
+        this.getData();
+      }
+    });
+    return await modal.present();
   }
 }

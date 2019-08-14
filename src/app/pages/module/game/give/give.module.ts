@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { GivePage } from './give.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { RestrictComponent } from './restrict/restrict.component';
+import { ChangeComponent } from './change/change.component';
+import { BatchAddComponent } from './batch-add/batch-add.component';
 
 const routes: Routes = [
   {
@@ -23,6 +26,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ComponentsModule
   ],
-  declarations: [GivePage]
+  declarations: [GivePage, RestrictComponent, ChangeComponent, BatchAddComponent],
+  entryComponents: [RestrictComponent, ChangeComponent, BatchAddComponent]
 })
-export class GivePageModule {}
+export class GivePageModule { }

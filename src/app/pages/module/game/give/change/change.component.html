@@ -1,0 +1,41 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>赠送管理</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label>赠送类型：</ion-label>
+      <div slot="end">{{giveType}}</div>
+    </ion-item>
+    <ion-item>
+      <ion-label>赠送金币：</ion-label>
+      <ion-input placeholder="请填写" clearInput slot="end" style="text-align: right;" [(ngModel)]="giftAmount">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>赠送范围：</ion-label>
+      <ion-select placeholder="请选择" [(ngModel)]="checkList" multiple okText="确定" cancelText="取消">
+        <ion-select-option value="安卓">安卓</ion-select-option>
+        <ion-select-option value="苹果">苹果</ion-select-option>
+        <ion-select-option value="PC">PC</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-button expand="full" color="primary" no-margin (click)="confirm()">确认添加</ion-button>
+</ion-footer>

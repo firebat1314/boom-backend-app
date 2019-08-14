@@ -1,0 +1,19 @@
+.no-body {
+    opacity: .3;
+    padding-top: 50px;
+    text-align: center;
+
+    ion-icon {
+        font-size: 144px;
+    }
+}
+
+.selectall {
+    display: flex;
+    align-items: center;
+
+    ion-checkbox {
+        margin-left: 16px;
+        margin-right: 8px;
+    }
+}

@@ -316,4 +316,16 @@ export class ApiService {
   sysLogList(data = {}, options: HttpOptions = {}) {//log日志
     return this.http.get('/sys/log/list', data, options);
   }
+  gameGiveRestriceData(data = {}, options: HttpOptions = {}) {//游戏赠送管理
+    return this.http.get('/game/give/restrict/getDate', data, options);
+  }
+  gameGiveRestriceBatchSave(data = {}, options: HttpOptions = {}) {//游戏赠送管理 批量添加
+    return this.http.get('/game/give/restrict/batchSave', data, options);
+  }
+  gameGiveRestriceBatchDel(data = {}, options: HttpOptions = {}) {//游戏赠送管理 批量删除
+    return this.http.get('/game/give/restrict/batchDel', data, options);
+  }
+  gameGiveModify(data = {}, options: HttpOptions = {}) {//游戏赠送管理 修改
+    return this.http.get('/game/give/modify', data, options);
+  }
 }

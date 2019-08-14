@@ -1,0 +1,48 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--<ion-back-button defaultHref="/module/home" text=""></ion-back-button>-->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>游戏记录</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="no-body" *ngIf="!dataList?.length">
+    <ion-icon src="assets/svg/sousuo.svg"></ion-icon>
+    <!-- <div class="text">请使用搜索功能</div> -->
+  </div>
+  <div class="content-wrap">
+    <ion-card *ngFor="let game of dataList;let index = index;">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
+              <div class="item">
+                <div class="label">入桌编号：</div>
+                <div class="prop">{{game.recordId}}</div>
+              </div>
+            </ion-col>
+            <ion-col size-xl="3" size-lg="4" size-md="5" size-sm="6" size-xs="6">
+              <div class="item">
+                <div class="label">创建时间：</div>
+                <div class="prop">{{game.crtTime}}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-grid class="operate">
+        <ion-row class=" ion-align-items-center">
+          <ion-col style="text-align:right;white-space:nowrap;">
+            <ion-button fill="outline" size="small" (click)="tableDetail(game,index)">详情</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>
