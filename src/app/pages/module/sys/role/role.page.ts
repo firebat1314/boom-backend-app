@@ -18,6 +18,7 @@ export class RolePage implements OnInit {
   @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonContent, { static: false }) content: IonContent;
 
+  showPopup = false;
   dataList: Array<any> = [];
   selectAll: boolean = false;
   selectAllIds: any[] = [];

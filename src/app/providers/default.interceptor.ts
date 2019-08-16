@@ -9,8 +9,8 @@ import { StartupService } from './startup.service';
 import { Storage } from '@ionic/storage';
 
 /*设置请求的基地址，方便替换*/
-// export const baseurl: string = 'http://192.168.0.100:8082';
-export const baseurl: string = 'http://192.168.0.102:8081';
+export const baseurl: string = 'http://192.168.0.100:8082';
+// export const baseurl: string = 'http://192.168.0.102:8081';
 
 
 /**
@@ -40,7 +40,7 @@ export class DefaultInterceptor implements HttpInterceptor {
                 const newReq = req.clone({
                     url: url,
                     setHeaders: {
-                        'token': token ? '9bacc47bc7579ed1d0dd0e38a922c79b' : '9bacc47bc7579ed1d0dd0e38a922c79b',
+                        'token': token ? 'e4b9ba07f0419cadf8b2d02071aacd3e' : 'e4b9ba07f0419cadf8b2d02071aacd3e',
                         'Content-Type': 'application/json;charset=UTF-8;'
                     }
                     // params: req.params.set('session', authInfo.sessiontoken),
@@ -54,10 +54,12 @@ export class DefaultInterceptor implements HttpInterceptor {
                         // Succeeds when there is a response; ignore other events
                         //RxJS 的 tap 操作符会捕获请求成功了还是失败了
                         event => {
+                            console.log(event);
                             ok = event instanceof HttpResponse ? 'succeeded' : '';
                         },
                         // Operation failed; error is an HttpErrorResponse
                         error => {
+                            console.log(error);
                             ok = 'failed'
                         }
                     ),

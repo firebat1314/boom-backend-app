@@ -53,7 +53,7 @@ export class RestrictComponent implements OnInit {
       event.target.complete();//ajax完成时、发生错误或者取消订阅时取消刷新
     })
   }
-  dataListTypeChanged() {
+  dataListTypeChanged(event) {
     this.selectAll = false;
     this.checkAll();
   }

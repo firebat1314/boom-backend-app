@@ -48,7 +48,7 @@ export class SearchPage implements OnInit {
   payInfoPicker() {
 
   }
-  payInfoChange() {
+  payInfoChange(event) {
     this.payInfoLabel = '';
     this.payInfoLabel = this.payInfoArr.map(item => item.label).join(',');
     this.formData.payInfo = this.payInfoArr.map(item => item.value).join(',');

@@ -12,6 +12,7 @@ export class FishPage implements OnInit {
   id: string;
   type: string;
   dataList: any;
+  item: string;
 
   constructor(
     private apiServ: ApiService,
@@ -21,12 +22,13 @@ export class FishPage implements OnInit {
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
       this.id = params.get('id');
-      this.type = params.get('type');
-      this.apiServ.gameDetail({}, { urlParam: this.id }).subscribe(data => {
+      this.item = params.get('item');
+      console.log(JSON.parse(decodeURIComponent(this.item)))
+      /* this.apiServ.gameDetail({}, { urlParam: this.id }).subscribe(data => {
         if (data && data.code === 0) {
           this.dataList = data.list;
         }
-      })
+      }) */
     });
   }
 

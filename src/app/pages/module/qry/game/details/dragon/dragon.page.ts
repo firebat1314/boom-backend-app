@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DragonPage implements OnInit {
   id: string;
-  type: string;
+  type: string | number;
   dataList: any;
 
   constructor(

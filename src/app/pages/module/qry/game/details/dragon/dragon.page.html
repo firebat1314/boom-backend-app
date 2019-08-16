@@ -1,11 +1,11 @@
 <ion-header translucent>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/module/home"></ion-back-button>
+      <ion-back-button defaultHref="/module/qry/game"></ion-back-button>
       <!-- <ion-menu-button></ion-menu-button> -->
     </ion-buttons>
     <ion-title>
-      {{dataForm?.gameType === 5 ? '进出桌百人牛牛游戏记录' : '进出桌龙虎斗游戏记录'}}
+      {{type == 5 ? '进出桌百人牛牛游戏记录' : '进出桌龙虎斗游戏记录'}}
     </ion-title>
   </ion-toolbar>
 </ion-header>

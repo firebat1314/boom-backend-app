@@ -50,7 +50,7 @@ export class GoldChgRankPage implements OnInit {
   ngOnInit() {
 
   }
-  dataListTypeChanged() {
+  dataListTypeChanged(event) {
     this.content.scrollToTop(0);//搜索回调页面返回顶部
   }
   //搜索弹窗

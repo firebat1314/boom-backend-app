@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/module/qry/game"></ion-back-button>
+      <!-- <ion-menu-button></ion-menu-button> -->
+    </ion-buttons>
+    <ion-title>{{name}}游戏详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="auto"> 牌局编号 </ion-col>
+      <ion-col> {{item?.newGameNo}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 玩家 </ion-col>
+      <ion-col> {{nick}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 平台 </ion-col>
+      <ion-col> {{channelId}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 游戏 </ion-col>
+      <ion-col> {{name}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 房间 </ion-col>
+      <ion-col> {{item?.roomId}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 下注 </ion-col>
+      <ion-col> {{totalUse}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 输赢金币 </ion-col>
+      <ion-col> {{item?.variationGold}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 进场金币 </ion-col>
+      <ion-col> {{item?.originalGold}} </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto"> 出场金币 </ion-col>
+      <ion-col> {{item?.lastGold}} </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- ———————————————————————— 百牛 ———————————————————————— -->
+
+  <!-- ———————————————————————— 水果 ———————————————————————— -->
+  <!-- ———————————————————————— 红黑大战 ———————————————————————— -->
+  <!-- ———————————————————————— 3D捕鱼 ———————————————————————— -->
+  <ng-container *ngIf="item.gameType==10">
+    <ion-grid>
+      <ion-row>
+        <ion-col>玩家</ion-col>
+        <ion-col>输赢值</ion-col>
+        <ion-col>详情</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let item of item.children">
+        <ion-col>{{item.roleId==-1?"自己":item.roleId}}</ion-col>
+        <ion-col>{{item.variationGold}}</ion-col>
+        <ion-col [innerHtml]="item.cardType"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+  <s-scroll-to-top slot="fixed"></s-scroll-to-top>
+</ion-content>

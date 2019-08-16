@@ -22,14 +22,14 @@
       </ion-item>
       <ion-item>
         <ion-label position="fixed">开始日期</ion-label>
-        <ion-datetime [(ngModel)]="beginTime" (ionChange)="dateChange()" slot="end" display-format="YYYY-MM-DD"
-          picker-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+        <ion-datetime [(ngModel)]="beginTime" (ionChange)="dateChange('beginTime',beginTime)" slot="end"
+          display-format="YYYY-MM-DD HH:mm:ss" cancelText="取消" doneText="确定">
         </ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label position="fixed">结束日期</ion-label>
-        <ion-datetime [(ngModel)]="endTime" (ionChange)="dateChange()" slot="end" display-format="YYYY-MM-DD"
-          picker-format="YYYY-MM-DD" cancelText="取消" doneText="确定">
+        <ion-datetime [(ngModel)]="endTime" (ionChange)="dateChange('endTime',endTime)" slot="end"
+          display-format="YYYY-MM-DD HH:mm:ss" cancelText="取消" doneText="确定">
         </ion-datetime>
       </ion-item>
       <ion-item>
@@ -78,25 +78,7 @@
               <div class="item">
                 <div class="label">游戏类型：</div>
                 <div class="prop">
-                  <ion-chip color="primary" *ngIf="game.gameType == 0">无</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 1">打地鼠</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 2">开心彩</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 3">水果</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 4">水浒传</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 5">百人牛牛</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 6">飞禽走兽</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 7">奔驰宝马</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 8">抢庄牛牛</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 9">龙虎斗</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 10">3D捕鱼</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 11">扫雷红包</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 12">斗地主</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 13">扎金花</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 14">百家乐</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 15">2D捕鱼</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 16">二八杠</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 17">红黑大战</ion-chip>
-                  <ion-chip color="primary" *ngIf="game.gameType == 18">视讯百家乐</ion-chip>
+                  <ion-chip color="primary">{{game.gameType | getGameNameByType}}</ion-chip>
                 </div>
               </div>
             </ion-col>
@@ -184,11 +166,10 @@
           </ion-row>
         </ion-grid>
       </ion-card-content>
-      <ion-grid class="operate"
-        *ngIf="game.gameType != 3 && game.gameType != 4 && game.gameType != 13&& game.gameType != 14&& game.gameType != 16&& game.gameType != 17&& game.gameType != 18">
+      <ion-grid class="operate">
         <ion-row class=" ion-align-items-center">
           <ion-col style="text-align:right;white-space:nowrap;">
-            <ion-button fill="outline" size="small" (click)="detailHandler(game.id,game.gameType)">详情</ion-button>
+            <ion-button fill="outline" size="small" (click)="detailHandler(game)">详情</ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>

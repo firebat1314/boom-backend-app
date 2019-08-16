@@ -15,8 +15,9 @@ export class LogPage implements OnInit {
   @ViewChild(IonRefresher, { static: false }) refresher: IonRefresher;
   @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonContent, { static: false }) content: IonContent;
-  @ViewChildren('div') div:HTMLDivElement;
+  @ViewChildren('div') div: HTMLDivElement;
 
+  showPopup = false;
   pageIndex: number = 1;
   pageSize: number = 20;
   key: string = '';
@@ -29,10 +30,10 @@ export class LogPage implements OnInit {
     private modalController: ModalController,
   ) {
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     console.log(this.div)
 
-}
+  }
   ngOnInit() {
     this.doRefresh(null, { showLoading: true });
   }

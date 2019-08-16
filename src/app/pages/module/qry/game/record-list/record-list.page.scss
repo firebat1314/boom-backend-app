@@ -8,31 +8,32 @@
     }
 }
 
+.item {
+    font-size: 12px;
+    display: flex;
+    color: #999;
+
+    .label {
+        white-space: nowrap;
+    }
+
+    .prop {
+        color: #999;
+        word-break: break-all;
+
+        ion-chip {
+            font-size: 12px;
+            padding: 4px 8px;
+            height: auto;
+            margin: 2px;
+        }
+    }
+}
+
 ion-card {
 
     ion-card-content {
         padding: 12px;
-
-        .item {
-            font-size: 12px;
-            display: flex;
-
-            .label {
-                white-space: nowrap;
-            }
-
-            .prop {
-                color: #999;
-                word-break: break-all;
-
-                ion-chip {
-                    font-size: 12px;
-                    padding: 4px 8px;
-                    height: auto;
-                    margin: 2px;
-                }
-            }
-        }
     }
 
     .operate {

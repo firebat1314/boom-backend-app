@@ -48,4 +48,4 @@ export function StartupServiceFactory(startupService: StartupService): Function 
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

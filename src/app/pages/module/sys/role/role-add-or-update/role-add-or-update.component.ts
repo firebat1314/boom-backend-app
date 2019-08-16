@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { PopupService } from 'src/app/providers/popup/popup.service';
 import { ApiService } from 'src/app/providers/api.service';
 import * as $ from 'jquery';
-import  'jstree';
+import 'jstree';
 
 @Component({
   selector: 'sss-role-add-or-update',
@@ -18,7 +18,7 @@ export class RoleAddOrUpdateComponent implements OnInit {
   }
 
   menuList: any[] = [
-    
+
   ];
   constructor(
     public modalController: ModalController,
@@ -30,9 +30,14 @@ export class RoleAddOrUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.apiServ.sysMenuList().subscribe(data => {
-        this.menuList = data;
+      this.menuList = data;
     })
   }
+  dismiss() {
 
+  }
+  submit() {
+
+  }
 
 }

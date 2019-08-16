@@ -328,4 +328,7 @@ export class ApiService {
   gameGiveModify(data = {}, options: HttpOptions = {}) {//游戏赠送管理 修改
     return this.http.get('/game/give/modify', data, options);
   }
+  qryGameNewDetail(data = {}, options: HttpOptions = {}) {//游戏记录
+    return this.http.get('/qry/game/newDetail', data, options);
+  }
 }

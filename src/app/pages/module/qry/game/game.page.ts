@@ -8,6 +8,9 @@ import { HttpOptions } from 'src/app/providers/http.service';
 import { Subscription, of } from 'rxjs';
 import { UtilsService } from 'src/app/providers/utils/utils.service';
 import { ActivatedRoute } from '@angular/router';
+import { GetGameNameByTypePipe } from 'src/app/pipes/get-game-name-by-type/get-game-name-by-type.pipe';
+
+import * as moment from 'moment';
 
 export interface qryGameForm {
   'page'?: number
@@ -21,6 +24,7 @@ export interface qryGameForm {
   selector: 'sss-game',
   templateUrl: './game.page.html',
   styleUrls: ['./game.page.scss'],
+  providers: [GetGameNameByTypePipe]
 })
 export class GamePage implements OnInit {
 
@@ -34,9 +38,9 @@ export class GamePage implements OnInit {
     page: 1,
     limit: 10,
     gameType: '0',
-    keyword: '35563',
-    beginTime: '2019-04-01',
-    endTime: '2019-07-01',
+    keyword: '35705',
+    beginTime: '',
+    endTime: '',
   };
   beginTime = '';
   endTime = '';
@@ -52,21 +56,19 @@ export class GamePage implements OnInit {
     public modalController: ModalController,
     public apiServ: ApiService,
     public navController: NavController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private getGameName: GetGameNameByTypePipe
+
   ) {
   }
 
   ngOnInit() {
-    let curDate = new Date(new Date().getTime());
-    let nextDate = new Date(curDate.getTime() + 24 * 60 * 60 * 1000); //后一天
-    this.beginTime = this.utils.dateFormat(curDate, 'YYYY-MM-DDTHH:mm+08:00');
-    this.endTime = this.utils.dateFormat(nextDate, 'YYYY-MM-DDTHH:mm+08:00');
-    this.formData.beginTime = this.utils.dateFormat(curDate, 'YYYY-MM-DD');
-    this.formData.endTime = this.utils.dateFormat(nextDate, 'YYYY-MM-DD');
 
-    /* this.listServ = this.getDataList().subscribe(res => {
-      this.dataList = res.page.list;
-    }); */
+    this.beginTime = moment('2019-07-01').format();
+    this.endTime = moment().add(1, 'days').format();//后一天
+    this.formData.beginTime = moment(this.beginTime).format('YYYY-MM-DD HH:mm:ss');
+    this.formData.endTime = moment(this.endTime).format('YYYY-MM-DD HH:mm:ss');
+
     this.doRefresh();
     this.apiServ.gameType().subscribe(data => {
       if (data && data.code === 0) {
@@ -81,9 +83,8 @@ export class GamePage implements OnInit {
       }
     })
   }
-  dateChange() {
-    this.formData.beginTime = this.beginTime.split('T')[0];
-    this.formData.endTime = this.endTime.split('T')[0];
+  dateChange(type: string, time: string) {
+    this.formData[type] = moment(time).format('YYYY-MM-DD HH:mm:ss');
   }
 
   searchRequest() {
@@ -151,32 +152,29 @@ export class GamePage implements OnInit {
       event.target.disabled = true;
     }
   }
-  detailHandler(id: any, type: any) {
-    let url = '';
-    if (type === 5 || type === 9) {
-      url = '../dragon';
-    } else if (type === 8) {
-      url = '../grabniu';
-    } else if (type === 6) {
-      url = '../animal';
-    } else if (type === 7) {
-      url = '../car';
-    } else if (type === 10 || type === 15) {
-      url = '../fish';
-    } else if (type === 2) {
-      url = '../lottery';
-    } else if (type === 12) {
-      url = '../landlords';
+  detailHandler(gameItem) {
+    let name = this.getGameName.transform(gameItem.gameType);
+    if (gameItem.gameType === 2) {
+      this.navController.navigateForward(['../lottery'], {
+        queryParams: {
+          id: gameItem.id,
+          type: gameItem.gameType,
+          name: name
+        },
+        relativeTo: this.route
+      });
     } else {
-      // 直接弹出来
-      return false;
+      this.navController.navigateForward(['./record-list'], {
+        queryParams: {
+          roleId: gameItem.roleId,
+          gameType: gameItem.gameType,
+          recordId: gameItem.recordId,
+          channelId: gameItem.channelId,
+          useGold: gameItem.useGold,
+          name: name
+        },
+        relativeTo: this.route
+      });
     }
-    this.navController.navigateForward([url], {
-      queryParams: {
-        id: id,
-        type: type
-      },
-      relativeTo: this.route
-    });
   }
 }

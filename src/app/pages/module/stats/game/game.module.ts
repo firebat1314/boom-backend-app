@@ -9,6 +9,7 @@ import { GamePage } from './game.page';
 import { SearchPageModule } from './search/search.module';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { NgZorroAntdMobileModule } from 'ng-zorro-antd-mobile';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
     SearchPageModule,
     ComponentsModule,
     NgZorroAntdMobileModule,
+    PipesModule
   ],
   declarations: [GamePage]
 })
