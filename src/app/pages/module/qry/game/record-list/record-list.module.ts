@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'fish', loadChildren: () => import('../details/fish/fish.module').then(mod => mod.FishPageModule) },
   { path: 'lottery', loadChildren: () => import('../details/lottery/lottery.module').then(mod => mod.LotteryPageModule) },
   { path: 'landlords', loadChildren: () => import('../details/landlords/landlords.module').then(mod => mod.LandlordsPageModule) },
-  { path: 'details', loadChildren: '../details/details.module#DetailsPageModule' },
+  { path: 'details', loadChildren: () => import('../details/details.module').then(mod => mod.DetailsPageModule) },
 
 ];
 

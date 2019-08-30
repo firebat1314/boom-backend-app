@@ -47,11 +47,6 @@
       <ion-col> {{item?.lastGold}} </ion-col>
     </ion-row>
   </ion-grid>
-
-  <!-- ———————————————————————— 百牛 ———————————————————————— -->
-
-  <!-- ———————————————————————— 水果 ———————————————————————— -->
-  <!-- ———————————————————————— 红黑大战 ———————————————————————— -->
   <!-- ———————————————————————— 3D捕鱼 ———————————————————————— -->
   <ng-container *ngIf="item.gameType==10">
     <ion-grid>
@@ -68,5 +63,25 @@
       </ion-row>
     </ion-grid>
   </ng-container>
+  <!-- ———————————————————————— 百牛 ———————————————————————— -->
+<!--   <ng-container *ngIf="item.gameType==5">
+    <ion-grid>
+      <ion-row>
+        <ion-col>名称</ion-col>
+        <ion-col>下注</ion-col>
+        <ion-col>输赢分</ion-col>
+        <ion-col>牌型</ion-col>
+        <ion-col>倍数</ion-col>
+        <ion-col>手牌</ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let item of item.children">
+        <ion-col>{{item.roleId==-1?"自己":item.roleId}}</ion-col>
+        <ion-col>{{item.variationGold}}</ion-col>
+        <ion-col [innerHtml]="item.cardType"></ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container> -->
+  
   <s-scroll-to-top slot="fixed"></s-scroll-to-top>
 </ion-content>

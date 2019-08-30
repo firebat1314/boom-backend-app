@@ -24,9 +24,21 @@
     <ion-list-header>
       <ion-label>授权</ion-label>
     </ion-list-header>
+    <ion-item>
+      <ion-input clearInput placeholder="搜索" [(ngModel)]="searchValue"></ion-input>
+    </ion-item>
+    <nz-tree #nzTreeComponent [nzData]="menuList" [nzSearchValue]="searchValue" nzCheckable
+      [nzCheckedKeys]="defaultCheckedKeys" [nzExpandedKeys]="defaultExpandedKeys" [nzSelectedKeys]="defaultSelectedKeys"
+      (nzClick)="nzClick($event)" (nzCheckBoxChange)="nzCheck($event)" (nzExpandChange)="nzCheck($event)">
+    </nz-tree>
   </ion-list>
 
-  <div class="submit" padding>
-    <ion-button expand="block" (click)="submit()">确认</ion-button>
-  </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="submit">
+      <ion-button expand="block" (click)="submit()">确认</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

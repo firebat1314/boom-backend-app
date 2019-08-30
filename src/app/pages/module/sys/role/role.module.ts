@@ -9,6 +9,8 @@ import { RolePage } from './role.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { RoleAddOrUpdateComponent } from './role-add-or-update/role-add-or-update.component';
 
+import { NzTreeModule } from 'ng-zorro-antd/tree';
+
 const routes: Routes = [
   {
     path: '',
@@ -22,7 +24,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    NzTreeModule
   ],
   declarations: [RolePage, RoleAddOrUpdateComponent],
   entryComponents: [RoleAddOrUpdateComponent]

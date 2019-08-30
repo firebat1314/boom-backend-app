@@ -40,7 +40,7 @@ export class DefaultInterceptor implements HttpInterceptor {
                 const newReq = req.clone({
                     url: url,
                     setHeaders: {
-                        'token': token ? 'e4b9ba07f0419cadf8b2d02071aacd3e' : 'e4b9ba07f0419cadf8b2d02071aacd3e',
+                        'token': token ? '643d1fc2a6a62c3753510313d815a764' : '643d1fc2a6a62c3753510313d815a764',
                         'Content-Type': 'application/json;charset=UTF-8;'
                     }
                     // params: req.params.set('session', authInfo.sessiontoken),
@@ -54,12 +54,10 @@ export class DefaultInterceptor implements HttpInterceptor {
                         // Succeeds when there is a response; ignore other events
                         //RxJS 的 tap 操作符会捕获请求成功了还是失败了
                         event => {
-                            console.log(event);
                             ok = event instanceof HttpResponse ? 'succeeded' : '';
                         },
                         // Operation failed; error is an HttpErrorResponse
                         error => {
-                            console.log(error);
                             ok = 'failed'
                         }
                     ),
