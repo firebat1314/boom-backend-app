@@ -5,31 +5,34 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>会员查询</ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="showPopup = !showPopup">
         <ion-icon name="search"></ion-icon>
       </ion-button>
-    </ion-buttons> -->
+    </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar class="searchbar">
-    <div class="searchbar-wrap">
-      <ion-select class="search-options" [interfaceOptions]="{header:'查询类型'}" [(ngModel)]="searchType" value="uaid" okText="确定" cancelText="取消">
-        <ion-select-option value="uaid">账号ID查询</ion-select-option>
-        <ion-select-option value="roleid">游戏ID查询</ion-select-option>
-        <ion-select-option value="Account">玩家账号查询</ion-select-option>
-      </ion-select>
-      <!-- <SearchBar [placeholder]="'请输入关键字'" [showCancelButton]="false" [maxLength]="8"></SearchBar> -->
-      <ion-searchbar [(ngModel)]="keyword" (keyup)="onSearchKeyUp($event)" [animated]="true" cancelButtonText="取消"
-        placeholder="请输入关键字" showCancelButton="focus">
-      </ion-searchbar>
-    </div>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="showModal" (ionChange)="segmentChanged($event)">
+      <ion-segment-button [value]="1">
+        <ion-label>基础信息</ion-label>
+      </ion-segment-button>
+      <ion-segment-button [value]="2">
+        <ion-label>财富信息</ion-label>
+      </ion-segment-button>
+      <ion-segment-button [value]="3">
+        <ion-label>游戏信息</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <sss-popup-search [(showPopup)]="showPopup" (submit)="searchRequest()">
+      <ion-list> </ion-list>
+    </sss-popup-search>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles"
-      refreshingText="刷新中..."></ion-refresher-content>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles"></ion-refresher-content>
   </ion-refresher>
 
   <div class="no-body" *ngIf="!dataList?.length">
@@ -37,12 +40,20 @@
     <!-- <div class="text">请使用搜索功能</div> -->
   </div>
 
-  <div class="content-wrap" *ngFor="let item of dataList;">
-    <WingBlank [size]="'lg'">
+  <div
+    class="content-wrap"
+    *ngFor="let item of dataList"
+    [ngSwitch]="showModal"
+  >
+    <WingBlank [size]="'lg'" *ngSwitchCase="1">
       <Card>
         <CardHeader [title]="'基础信息'" [extra]="extra1">
           <ng-template #extra1>
-            <ion-button (click)="operateForUaid(item)" fill="clear" size="small">
+            <ion-button
+              (click)="operateForUaid(item)"
+              fill="clear"
+              size="small"
+            >
               <ion-icon name="options"></ion-icon>
             </ion-button>
           </ng-template>
@@ -50,50 +61,50 @@
         <CardBody>
           <div class="item">
             <div class="label">账号ID：</div>
-            <div class="prop">{{item.accountId}}</div>
+            <div class="prop">{{ item.accountId }}</div>
           </div>
           <div class="item">
             <div class="label">游戏ID：</div>
-            <div class="prop">{{item.roleId}}</div>
+            <div class="prop">{{ item.roleId }}</div>
           </div>
           <div class="item">
             <div class="label">玩家账号：</div>
-            <div class="prop">{{item.account}}</div>
+            <div class="prop">{{ item.account }}</div>
           </div>
           <div class="item">
             <div class="label">昵称：</div>
-            <div class="prop">{{item.nick}}</div>
+            <div class="prop">{{ item.nick }}</div>
           </div>
           <div class="item">
             <div class="label">绑定状态：</div>
             <div class="prop">
-              <ion-chip color="success" size="small" *ngIf="item.bind===1">
+              <ion-chip color="success" size="small" *ngIf="item.bind === 1">
                 <ion-label>已绑定</ion-label>
               </ion-chip>
-              <ion-chip color="warning" size="small" *ngIf="item.bind===0">
+              <ion-chip color="warning" size="small" *ngIf="item.bind === 0">
                 <ion-label>未绑定</ion-label>
               </ion-chip>
             </div>
           </div>
           <div class="item">
             <div class="label">注册时间：</div>
-            <div class="prop">{{item.crtTime}}</div>
+            <div class="prop">{{ item.crtTime }}</div>
           </div>
           <div class="item">
             <div class="label">注册IP：</div>
-            <div class="prop">{{item.regIp}}</div>
+            <div class="prop">{{ item.regIp }}</div>
           </div>
           <div class="item">
             <div class="label">渠道：</div>
-            <div class="prop">{{item.regChName}}</div>
+            <div class="prop">{{ item.regChName }}</div>
           </div>
           <div class="item">
             <div class="label">账号状态：</div>
             <div class="prop">
-              <ion-chip color="warning" size="small" *ngIf="item.forbid===1">
+              <ion-chip color="warning" size="small" *ngIf="item.forbid === 1">
                 <ion-label>冻结</ion-label>
               </ion-chip>
-              <ion-chip color="success" size="small" *ngIf="item.forbid===0">
+              <ion-chip color="success" size="small" *ngIf="item.forbid === 0">
                 <ion-label>正常</ion-label>
               </ion-chip>
             </div>
@@ -101,11 +112,15 @@
         </CardBody>
       </Card>
     </WingBlank>
-    <WingBlank [size]="'lg'">
+    <WingBlank [size]="'lg'" *ngSwitchCase="2">
       <Card>
         <CardHeader [title]="'财富信息'" [extra]="extra2">
           <ng-template #extra2>
-            <ion-button (click)="operateForRoleid(item)" fill="clear" size="small">
+            <ion-button
+              (click)="operateForRoleid(item)"
+              fill="clear"
+              size="small"
+            >
               <ion-icon name="options"></ion-icon>
             </ion-button>
           </ng-template>
@@ -113,52 +128,56 @@
         <CardBody>
           <div class="item">
             <div class="label">携带金额：</div>
-            <div class="prop">{{item.gold}}</div>
+            <div class="prop">{{ item.gold }}</div>
           </div>
           <div class="item">
             <div class="label">银行金额：</div>
-            <div class="prop">{{item.bankGold}}</div>
+            <div class="prop">{{ item.bankGold }}</div>
           </div>
           <div class="item">
             <div class="label">总存款金额：</div>
-            <div class="prop">{{item.sumPay}}</div>
+            <div class="prop">{{ item.sumPay }}</div>
           </div>
           <div class="item">
             <div class="label">总提现金额：</div>
-            <div class="prop">{{item.withdraw}}</div>
+            <div class="prop">{{ item.withdraw }}</div>
           </div>
           <div class="item">
             <div class="label">VIP等级：</div>
-            <div class="prop">{{item.vipLvl}}</div>
+            <div class="prop">{{ item.vipLvl }}</div>
           </div>
           <div class="item">
             <div class="label">游戏积分：</div>
-            <div class="prop">{{item.integral}}</div>
+            <div class="prop">{{ item.integral }}</div>
           </div>
           <div class="item">
             <div class="label">支付宝账号：</div>
-            <div class="prop">{{item.aliAccount || '无'}}</div>
+            <div class="prop">{{ item.aliAccount || "无" }}</div>
           </div>
           <div class="item">
             <div class="label">支付宝昵称：</div>
-            <div class="prop">{{item.aliName || '无'}}</div>
+            <div class="prop">{{ item.aliName || "无" }}</div>
           </div>
           <div class="item">
             <div class="label">银行卡账号：</div>
-            <div class="prop">{{item.cardNum || '无'}}</div>
+            <div class="prop">{{ item.cardNum || "无" }}</div>
           </div>
           <div class="item">
             <div class="label">银行卡户名：</div>
-            <div class="prop">{{item.cardName || '无'}}</div>
+            <div class="prop">{{ item.cardName || "无" }}</div>
           </div>
         </CardBody>
       </Card>
     </WingBlank>
-    <WingBlank [size]="'lg'">
+    <WingBlank [size]="'lg'" *ngSwitchCase="3">
       <Card>
         <CardHeader [title]="'游戏信息'" [extra]="extra3">
           <ng-template #extra3>
-            <ion-button (click)="operateForAccount(item)" fill="clear" size="small">
+            <ion-button
+              (click)="operateForAccount(item)"
+              fill="clear"
+              size="small"
+            >
               <ion-icon name="options"></ion-icon>
             </ion-button>
           </ng-template>
@@ -174,20 +193,34 @@
                   <ion-chip color="primary" *ngIf="game == 2">开心彩</ion-chip>
                   <ion-chip color="primary" *ngIf="game == 3">水果</ion-chip>
                   <ion-chip color="primary" *ngIf="game == 4">水浒传</ion-chip>
-                  <ion-chip color="primary" *ngIf="game == 5">百人牛牛</ion-chip>
-                  <ion-chip color="primary" *ngIf="game == 6">飞禽走兽</ion-chip>
-                  <ion-chip color="primary" *ngIf="game == 7">奔驰宝马</ion-chip>
-                  <ion-chip color="primary" *ngIf="game == 8">抢庄牛牛</ion-chip>
+                  <ion-chip color="primary" *ngIf="game == 5"
+                    >百人牛牛</ion-chip
+                  >
+                  <ion-chip color="primary" *ngIf="game == 6"
+                    >飞禽走兽</ion-chip
+                  >
+                  <ion-chip color="primary" *ngIf="game == 7"
+                    >奔驰宝马</ion-chip
+                  >
+                  <ion-chip color="primary" *ngIf="game == 8"
+                    >抢庄牛牛</ion-chip
+                  >
                   <ion-chip color="primary" *ngIf="game == 9">龙虎斗</ion-chip>
                   <ion-chip color="primary" *ngIf="game == 10">3D捕鱼</ion-chip>
-                  <ion-chip color="primary" *ngIf="game == 11">扫雷红包</ion-chip>
+                  <ion-chip color="primary" *ngIf="game == 11"
+                    >扫雷红包</ion-chip
+                  >
                   <ion-chip color="primary" *ngIf="game == 12">斗地主</ion-chip>
                   <ion-chip color="primary" *ngIf="game == 13">扎金花</ion-chip>
                   <ion-chip color="primary" *ngIf="game == 14">百家乐</ion-chip>
                   <ion-chip color="primary" *ngIf="game == 15">2D捕鱼</ion-chip>
                   <ion-chip color="primary" *ngIf="game == 16">二八杠</ion-chip>
-                  <ion-chip color="primary" *ngIf="game == 17">红黑大战</ion-chip>
-                  <ion-chip color="primary" *ngIf="game == 18">视讯百家乐</ion-chip>
+                  <ion-chip color="primary" *ngIf="game == 17"
+                    >红黑大战</ion-chip
+                  >
+                  <ion-chip color="primary" *ngIf="game == 18"
+                    >视讯百家乐</ion-chip
+                  >
                 </ng-container>
               </ng-container>
             </div>
@@ -195,25 +228,63 @@
           <div class="item">
             <div class="label">游戏状态：</div>
             <div class="prop">
-              <ion-chip color="primary" *ngIf="item.gameStatus == 0">无</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 1">打地鼠</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 2">开心彩</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 3">水果</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 4">水浒传</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 5">百人牛牛</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 6">飞禽走兽</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 7">奔驰宝马</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 8">抢庄牛牛</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 9">龙虎斗</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 10">3D捕鱼</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 11">扫雷红包</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 12">斗地主</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 13">扎金花</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 14">百家乐</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 15">2D捕鱼</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 16">二八杠</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 17">红黑大战</ion-chip>
-              <ion-chip color="primary" *ngIf="item.gameStatus == 18">视讯百家乐</ion-chip>
+              <ion-chip color="primary" *ngIf="item.gameStatus == 0"
+                >无</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 1"
+                >打地鼠</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 2"
+                >开心彩</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 3"
+                >水果</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 4"
+                >水浒传</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 5"
+                >百人牛牛</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 6"
+                >飞禽走兽</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 7"
+                >奔驰宝马</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 8"
+                >抢庄牛牛</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 9"
+                >龙虎斗</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 10"
+                >3D捕鱼</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 11"
+                >扫雷红包</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 12"
+                >斗地主</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 13"
+                >扎金花</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 14"
+                >百家乐</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 15"
+                >2D捕鱼</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 16"
+                >二八杠</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 17"
+                >红黑大战</ion-chip
+              >
+              <ion-chip color="primary" *ngIf="item.gameStatus == 18"
+                >视讯百家乐</ion-chip
+              >
             </div>
           </div>
           <div class="item">
@@ -238,21 +309,23 @@
                 <ion-chip color="primary" *ngIf="game == 15">2D捕鱼</ion-chip>
                 <ion-chip color="primary" *ngIf="game == 16">二八杠</ion-chip>
                 <ion-chip color="primary" *ngIf="game == 17">红黑大战</ion-chip>
-                <ion-chip color="primary" *ngIf="game == 18">视讯百家乐</ion-chip>
+                <ion-chip color="primary" *ngIf="game == 18"
+                  >视讯百家乐</ion-chip
+                >
               </ng-container>
             </div>
           </div>
           <div class="item">
             <div class="label">最后登录时间：</div>
-            <div class="prop">{{item.loginTime}}</div>
+            <div class="prop">{{ item.loginTime }}</div>
           </div>
           <div class="item">
             <div class="label">最后登录IP：</div>
-            <div class="prop">{{item.lastIp}}</div>
+            <div class="prop">{{ item.lastIp }}</div>
           </div>
           <div class="item">
             <div class="label">备注：</div>
-            <div class="prop">{{item.forbidRemark || '无'}}</div>
+            <div class="prop">{{ item.forbidRemark || "无" }}</div>
           </div>
         </CardBody>
       </Card>

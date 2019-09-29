@@ -27,8 +27,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="刷新中...">
+  <ion-refresher slot="fixed"(ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles">
     </ion-refresher-content>
   </ion-refresher>
   <div class="no-body" *ngIf="!dataList?.length">
@@ -117,7 +117,7 @@
       <span>全选</span>
     </label>
     <ion-buttons slot="end">
-      <ion-button expand="full" color="primary" no-margin (click)="deleteInBatches()"
+      <ion-button expand="full" color="primary" class="ion-no-margin" (click)="deleteInBatches()"
         [disabled]="!selectAllIds?.length">
         批量删除</ion-button>
     </ion-buttons>

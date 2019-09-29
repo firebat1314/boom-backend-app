@@ -1,22 +1,27 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PopupService } from 'src/app/providers/popup/popup.service';
-import { ApiService } from 'src/app/providers/api.service';
-import { UtilsService } from 'src/app/providers/utils/utils.service';
-import { IonSearchbar, ActionSheetController, AlertController, NavController, ModalController } from '@ionic/angular';
-import { ForbidComponent } from './forbid/forbid.component';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { PopupService } from "src/app/providers/popup/popup.service";
+import { ApiService } from "src/app/providers/api.service";
+import { UtilsService } from "src/app/providers/utils/utils.service";
+import {
+  IonSearchbar,
+  ActionSheetController,
+  AlertController,
+  NavController,
+  ModalController,
+} from "@ionic/angular";
+import { ForbidComponent } from "./forbid/forbid.component";
 
 @Component({
-  selector: 'sss-user',
-  templateUrl: './user.page.html',
-  styleUrls: ['./user.page.scss'],
+  selector: "sss-user",
+  templateUrl: "./user.page.html",
+  styleUrls: ["./user.page.scss"],
 })
 export class UserPage implements OnInit {
-
-  @ViewChild(IonSearchbar, { static: false }) searchBar: IonSearchbar
-  keyword = '35606';
-  searchType = 'uaid';
+  keyword = "35606";
   data: any;
   dataList: any = [];
+  showModal = 1;
+  showPopup = false;
   accountId: any;
   frozenVisible: false;
   pwdVisible: false;
@@ -24,12 +29,12 @@ export class UserPage implements OnInit {
   chgWithdrawVisible: false;
   tradeVisible: false;
   gameForbid = {
-    roleId: '',
-    status: '0',
+    roleId: "",
+    status: "0",
     point: 0,
-    games: '',
+    games: "",
     gamesArr: [],
-  }
+  };
   constructor(
     private popupServ: PopupService,
     private apiServ: ApiService,
@@ -38,49 +43,35 @@ export class UserPage implements OnInit {
     public alertController: AlertController,
     public navCtrl: NavController,
     public modalController: ModalController
-  ) { }
-
+  ) {}
 
   ngOnInit() {
     this.getDataList();
   }
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.searchBar.setFocus();
-    }, 200);
-  }
+  ngAfterViewInit() {}
   onSearchKeyUp(e: KeyboardEvent) {
     e.preventDefault();
     if ("Enter" == e.key) {
-
       this.getDataList();
     }
   }
   getDataList(options?) {
-    if (this.keyword.trim() === '') {
-      this.popupServ.toast('请输入关键字')
-      return
-    }
-    let foo: string;
-    if (this.searchType = 'uaid') {
-      foo = 'searchByuaid';
-    } else if (this.searchType = 'roleid') {
-      foo = 'searchByroleid';
-    } else if (this.searchType = 'Account') {
-      foo = 'searchByAccount';
-    }
+ 
     return new Promise((resolve, reject) => {
-      this.apiServ[foo]({
-        'keyword': this.keyword
-      }, options).subscribe((data: any) => {
+      this.apiServ.getUserList(
+        {
+          accountId: 35720,
+        },
+        options
+      ).subscribe((data: any) => {
         if (data && data.code === 0) {
-          resolve()
+          resolve();
           let dataList = data.list;
           for (let i = 0; i < dataList.length; i++) {
-            dataList[i].sumPay = dataList[i].sumPay / 100.0
-            dataList[i].gold = dataList[i].gold / 100.0
-            dataList[i].bankGold = dataList[i].bankGold / 100.0
-            dataList[i].withdraw = dataList[i].withdraw / 100.0
+            dataList[i].sumPay = dataList[i].sumPay / 100.0;
+            dataList[i].gold = dataList[i].gold / 100.0;
+            dataList[i].bankGold = dataList[i].bankGold / 100.0;
+            dataList[i].withdraw = dataList[i].withdraw / 100.0;
             this.accountId = dataList[i].accountId;
             if (!dataList[i].gameForbid) {
               dataList[i].gameForbid = this.gameForbid;
@@ -89,605 +80,668 @@ export class UserPage implements OnInit {
           }
           this.dataList = dataList;
         } else {
-          reject()
-          this.dataList = []
+          reject();
+          this.dataList = [];
         }
-      })
-    })
+      });
+    });
   }
   doRefresh(event) {
     this.getDataList({ showLoading: false }).then(() => {
       event.target.complete();
-    })
+    });
   }
   async operateForUaid(user: any) {
     let buttons = [];
-    user.forbid === 0 && buttons.push({
-      text: '冻结账号',
-      role: 'selected',
-      handler: () => {
-        this.frozenHandler(user.accountId);
-      }
-    });
-    user.forbid === 1 && buttons.push({
-      text: '解冻账号',
-      role: 'selected',
-      handler: () => {
-        this.unfrozenHandler(user.roleId, user.forbidRemark);
-      }
-    });
-    user.bind === 1 && buttons.push({
-      text: '修改绑定手机',
-      role: 'selected',
-      handler: () => {
-        this.bindHandler(user.accountId, user.bind);
-      }
-    });
-    user.bind === 0 && buttons.push({
-      text: '绑定手机',
-      role: 'selected',
-      handler: () => {
-        this.bindHandler(user.accountId, user.bind);
-      }
-    });
+    user.forbid === 0 &&
+      buttons.push({
+        text: "冻结账号",
+        role: "selected",
+        handler: () => {
+          this.frozenHandler(user.accountId);
+        },
+      });
+    user.forbid === 1 &&
+      buttons.push({
+        text: "解冻账号",
+        role: "selected",
+        handler: () => {
+          this.unfrozenHandler(user.roleId, user.forbidRemark);
+        },
+      });
+    user.bind === 1 &&
+      buttons.push({
+        text: "修改绑定手机",
+        role: "selected",
+        handler: () => {
+          this.bindHandler(user.accountId, user.bind);
+        },
+      });
+    user.bind === 0 &&
+      buttons.push({
+        text: "绑定手机",
+        role: "selected",
+        handler: () => {
+          this.bindHandler(user.accountId, user.bind);
+        },
+      });
     const actionSheet = await this.actionSheetController.create({
-      header: '操作',
-      buttons: [...buttons, {
-        text: '修改密码',
-        role: 'selected',
-        handler: () => {
-          this.pwdHandler(user.accountId);
-        }
-      }, {
-        text: '修改设备标识',
-        role: 'selected',
-        handler: () => {
-          this.chgDeviceNoHandler(user.accountId);
-        }
-      }, {
-        text: '修改提现信息',
-        role: 'selected',
-        handler: () => {
-          this.withdrawHandler(user.roleId);
-        }
-      }, {
-        text: '取消',
-        role: 'cancel',
-        handler: () => {
-          console.log('Play clicked');
-        }
-      }]
+      header: "操作",
+      buttons: [
+        ...buttons,
+        {
+          text: "修改密码",
+          role: "selected",
+          handler: () => {
+            this.pwdHandler(user.accountId);
+          },
+        },
+        {
+          text: "修改设备标识",
+          role: "selected",
+          handler: () => {
+            this.chgDeviceNoHandler(user.accountId);
+          },
+        },
+        {
+          text: "修改提现信息",
+          role: "selected",
+          handler: () => {
+            this.withdrawHandler(user.roleId);
+          },
+        },
+        {
+          text: "取消",
+          role: "cancel",
+          handler: () => {
+            console.log("Play clicked");
+          },
+        },
+      ],
     });
     await actionSheet.present();
   }
   async operateForRoleid(user: any) {
     const actionSheet = await this.actionSheetController.create({
-      header: '操作',
-      buttons: [{
-        text: '扣除余额',
-        role: 'selected',
-        handler: () => {
-          this.deductHandler(user.roleId);
-        }
-      }, {
-        text: '扣除银行余额',
-        role: 'selected',
-        handler: () => {
-          this.bankdeductHandler(user.roleId);
-        }
-      }, {
-        text: '设置VIP等级',
-        role: 'selected',
-        handler: () => {
-          this.setVupLvlHandler(user.roleId);
-        }
-      }, {
-        text: '资金流查询',
-        role: 'selected',
-        handler: () => {
-          this.tradeHandler(user.roleId);
-        }
-      }, {
-        text: '取消',
-        role: 'cancel',
-        handler: () => {
-          console.log('Play clicked');
-        }
-      }]
+      header: "操作",
+      buttons: [
+        {
+          text: "扣除余额",
+          role: "selected",
+          handler: () => {
+            this.deductHandler(user.roleId);
+          },
+        },
+        {
+          text: "扣除银行余额",
+          role: "selected",
+          handler: () => {
+            this.bankdeductHandler(user.roleId);
+          },
+        },
+        {
+          text: "设置VIP等级",
+          role: "selected",
+          handler: () => {
+            this.setVupLvlHandler(user.roleId);
+          },
+        },
+        {
+          text: "资金流查询",
+          role: "selected",
+          handler: () => {
+            this.tradeHandler(user.roleId);
+          },
+        },
+        {
+          text: "取消",
+          role: "cancel",
+          handler: () => {
+            console.log("Play clicked");
+          },
+        },
+      ],
     });
     await actionSheet.present();
   }
   async operateForAccount(user: any) {
     const actionSheet = await this.actionSheetController.create({
-      header: '操作',
-      buttons: [{
-        text: '踢出游戏',
-        role: 'selected',
-        handler: () => {
-          this.kickout(user.roleId);
-        }
-      }, {
-        text: '设置游戏黑名单',
-        role: 'selected',
-        handler: () => {
-          this.gamesForbid(user.roleId, user.gameForbid);
-        }
-      }, {
-        text: '取消',
-        role: 'cancel',
-        handler: () => {
-          console.log('Play clicked');
-        }
-      }]
+      header: "操作",
+      buttons: [
+        {
+          text: "踢出游戏",
+          role: "selected",
+          handler: () => {
+            this.kickout(user.roleId);
+          },
+        },
+        {
+          text: "设置游戏黑名单",
+          role: "selected",
+          handler: () => {
+            this.gamesForbid(user.roleId, user.gameForbid);
+          },
+        },
+        {
+          text: "取消",
+          role: "cancel",
+          handler: () => {
+            console.log("Play clicked");
+          },
+        },
+      ],
     });
     await actionSheet.present();
   }
   // 基本操作
   // 冻结
   async frozenHandler(accountId: any) {
-    let auth = await this.utils.isAuth('qry:user:frozen');
+    let auth = await this.utils.isAuth("qry:user:frozen");
     if (!auth) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '冻结账号',
-      message: '备注',
+      header: "冻结账号",
+      message: "备注",
       inputs: [
         {
-          name: 'frozen',
-          type: 'text',
-          placeholder: '请输入备注'
-        }
+          name: "frozen",
+          type: "text",
+          placeholder: "请输入备注",
+        },
       ],
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
-            this.apiServ.frozen({
-              'ids': accountId,
-              'remark': e.frozen
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
+            this.apiServ
+              .frozen({
+                ids: accountId,
+                remark: e.frozen,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   // 解冻
   async unfrozenHandler(id: any, remark: any) {
-    if (!await this.utils.isAuth('qry:user:frozen')) {
+    if (!(await this.utils.isAuth("qry:user:frozen"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '解冻账号',
+      header: "解冻账号",
       message: `此用户因为[${remark}]而被冻结，确认要解冻？`,
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
-            this.apiServ.unfrozen({
-              'userId': id
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
+            this.apiServ
+              .unfrozen({
+                userId: id,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   // 绑定
   async bindHandler(accountId: any, isBind: number) {
-    let auth = await this.utils.isAuth('qry:user:bind');
+    let auth = await this.utils.isAuth("qry:user:bind");
     if (!auth) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: isBind === 1 ? '修改手机' : '绑定手机',
-      message: '请输入手机号',
+      header: isBind === 1 ? "修改手机" : "绑定手机",
+      message: "请输入手机号",
       inputs: [
         {
-          name: 'mobile',
-          type: 'number',
-        }
+          name: "mobile",
+          type: "number",
+        },
       ],
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
-            if (!(/^1[3456789]\d{9}$/.test(e.mobile))) {
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
+            if (!/^1[3456789]\d{9}$/.test(e.mobile)) {
               this.popupServ.toast("请填写正确的手机号");
               return false;
             }
-            this.apiServ.bindMobile({
-              'accountId': accountId,
-              'phone': e.mobile
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            this.apiServ
+              .bindMobile({
+                accountId: accountId,
+                phone: e.mobile,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   // 改密
   async pwdHandler(accountId: string | string[]) {
-    if (!await this.utils.isAuth('qry:user:chgPwd')) {
+    if (!(await this.utils.isAuth("qry:user:chgPwd"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '修改密码',
+      header: "修改密码",
       inputs: [
         {
-          name: 'psw',
-          type: 'text',
-          placeholder: '请输入密码'
-        }, {
-          name: 'pswc',
-          type: 'text',
-          placeholder: '请确认密码'
+          name: "psw",
+          type: "text",
+          placeholder: "请输入密码",
+        },
+        {
+          name: "pswc",
+          type: "text",
+          placeholder: "请确认密码",
         },
       ],
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
             if (!/\S/.test(e.psw)) {
-              this.popupServ.toast('确认密码不能为空');
+              this.popupServ.toast("确认密码不能为空");
               return false;
             } else if (e.psw !== e.pswc) {
-              this.popupServ.toast('确认密码与密码输入不一致');
+              this.popupServ.toast("确认密码与密码输入不一致");
               return false;
             }
-            this.apiServ.chgPwd(null, {
-              params: {
-                'accountId': accountId,
-                'password': e.psw
-              }
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            this.apiServ
+              .chgPwd(null, {
+                params: {
+                  accountId: accountId,
+                  password: e.psw,
+                },
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   // 修改设备标识
   async chgDeviceNoHandler(accountId: string | string[]) {
-    if (!await this.utils.isAuth('qry:user:chgDeviceNo')) {
+    if (!(await this.utils.isAuth("qry:user:chgDeviceNo"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '修改设备标识',
+      header: "修改设备标识",
       inputs: [
         {
-          name: 'deviceNo',
-          type: 'text',
-          placeholder: '请输入设备标识'
-        }
-      ],
-      buttons: [
-        {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
-            if (!/^([a-zA-Z0-9_-])/.test(e.psw)) {
-              this.popupServ.toast('请输入正确的设备标识');
-              return false;
-            }
-            this.apiServ.chgDeviceNo({
-              'accountId': accountId,
-              'deviceNo': e.deviceNo
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
-    alert.present();
-  }
-  // 修改体现信息
-  async withdrawHandler(roleId: string | string[]) {
-    if (!await this.utils.isAuth('qry:user:chgWithdraw')) {
-      return this.popupServ.toast("没有权限，请联系管理员授权");
-    }
-    let alert = await this.alertController.create({
-      header: '修改提现信息',
-      inputs: [
-        {
-          name: 'aliAccount',
-          type: 'text',
-          label: '支付宝账号',
-          placeholder: '请输入支付宝账号'
-        }, {
-          name: 'aliName',
-          type: 'text',
-          placeholder: '请输入支付宝昵称'
-        }, {
-          name: 'cardNum',
-          type: 'text',
-          placeholder: '请输入银行卡账号'
-        }, {
-          name: 'cardName',
-          type: 'text',
-          placeholder: '请输入银行卡户名'
+          name: "deviceNo",
+          type: "text",
+          placeholder: "请输入设备标识",
         },
       ],
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
-            this.apiServ.chgWithdraw({
-              'roleId': roleId,
-              'aliAccount': e.aliAccount,
-              'aliName': e.aliName,
-              'cardNum': e.cardNum,
-              'cardName': e.cardName,
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
+            if (!/^([a-zA-Z0-9_-])/.test(e.psw)) {
+              this.popupServ.toast("请输入正确的设备标识");
+              return false;
+            }
+            this.apiServ
+              .chgDeviceNo({
+                accountId: accountId,
+                deviceNo: e.deviceNo,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
+    alert.present();
+  }
+  // 修改体现信息
+  async withdrawHandler(roleId: string | string[]) {
+    if (!(await this.utils.isAuth("qry:user:chgWithdraw"))) {
+      return this.popupServ.toast("没有权限，请联系管理员授权");
+    }
+    let alert = await this.alertController.create({
+      header: "修改提现信息",
+      inputs: [
+        {
+          name: "aliAccount",
+          type: "text",
+          label: "支付宝账号",
+          placeholder: "请输入支付宝账号",
+        },
+        {
+          name: "aliName",
+          type: "text",
+          placeholder: "请输入支付宝昵称",
+        },
+        {
+          name: "cardNum",
+          type: "text",
+          placeholder: "请输入银行卡账号",
+        },
+        {
+          name: "cardName",
+          type: "text",
+          placeholder: "请输入银行卡户名",
+        },
+      ],
+      buttons: [
+        {
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
+            this.apiServ
+              .chgWithdraw({
+                roleId: roleId,
+                aliAccount: e.aliAccount,
+                aliName: e.aliName,
+                cardNum: e.cardNum,
+                cardName: e.cardName,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
 
   // 财富操作
   // 扣除余额
   async deductHandler(roleId: any) {
-    if (!await this.utils.isAuth('qry:user:deduct')) {
+    if (!(await this.utils.isAuth("qry:user:deduct"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '扣除余额',
+      header: "扣除余额",
       inputs: [
         {
-          name: 'deduct',
-          type: 'text',
-          placeholder: '请输入扣除金额'
-        }
+          name: "deduct",
+          type: "text",
+          placeholder: "请输入扣除金额",
+        },
       ],
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
-            if (!/^((0{1}\.\d+)|([1-9]\d*\.{1}\d+)|([1-9]+\d*))$/.test(e.deduct)) {
-              this.popupServ.toast('金额只能为大于0的数字');
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
+            if (
+              !/^((0{1}\.\d+)|([1-9]\d*\.{1}\d+)|([1-9]+\d*))$/.test(e.deduct)
+            ) {
+              this.popupServ.toast("金额只能为大于0的数字");
               return false;
             }
-            this.apiServ.deduct({
-              'roleId': roleId,
-              'value': e.deduct
-            }, { openDefultdata: false }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            this.apiServ
+              .deduct(
+                {
+                  roleId: roleId,
+                  value: e.deduct,
+                },
+                { openDefultdata: false }
+              )
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   // 扣除银行余额
   async bankdeductHandler(roleId: any) {
-    if (!await this.utils.isAuth('qry:user:bankdeduct')) {
+    if (!(await this.utils.isAuth("qry:user:bankdeduct"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '扣除银行余额',
+      header: "扣除银行余额",
       inputs: [
         {
-          name: 'value',
-          type: 'text',
-          placeholder: '请输入扣除金额'
-        }
+          name: "value",
+          type: "text",
+          placeholder: "请输入扣除金额",
+        },
       ],
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
-            if (!/^((0{1}\.\d+)|([1-9]\d*\.{1}\d+)|([1-9]+\d*))$/.test(e.value)) {
-              this.popupServ.toast('金额只能为大于0的数字');
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
+            if (
+              !/^((0{1}\.\d+)|([1-9]\d*\.{1}\d+)|([1-9]+\d*))$/.test(e.value)
+            ) {
+              this.popupServ.toast("金额只能为大于0的数字");
               return false;
             }
-            this.apiServ.bankdeduct({
-              'roleId': roleId,
-              'value': e.value
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            this.apiServ
+              .bankdeduct({
+                roleId: roleId,
+                value: e.value,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   // 设置VIP等级
   async setVupLvlHandler(roleId: any) {
-    if (!await this.utils.isAuth('qry:user:setVupLvl')) {
+    if (!(await this.utils.isAuth("qry:user:setVupLvl"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '设置VIP等级',
+      header: "设置VIP等级",
       inputs: [
         {
-          name: 'value',
-          type: 'text',
-          placeholder: '请输入VIP等级'
-        }
+          name: "value",
+          type: "text",
+          placeholder: "请输入VIP等级",
+        },
       ],
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
-          handler: (e) => {
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
+          handler: e => {
             if (!/^(([0-9]+\d*))$/.test(e.value)) {
-              this.popupServ.toast('VIP等级为不小于0的数字');
+              this.popupServ.toast("VIP等级为不小于0的数字");
               return false;
             }
-            this.apiServ.vipSet({
-              'roleId': roleId,
-              'vipLvl': e.value
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            this.apiServ
+              .vipSet({
+                roleId: roleId,
+                vipLvl: e.value,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   // 资金流查询
   async tradeHandler(roleId: any) {
-    if (!await this.utils.isAuth('qry:user:trade')) {
+    if (!(await this.utils.isAuth("qry:user:trade"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
-    this.navCtrl.navigateForward(['/qry/trade'], { queryParams: { roleId: roleId } });
+    this.navCtrl.navigateForward(["/qry/trade"], {
+      queryParams: { roleId: roleId },
+    });
   }
   // 踢出游戏
   async kickout(roleId: any) {
-    if (!await this.utils.isAuth('qry:user:trade')) {
+    if (!(await this.utils.isAuth("qry:user:trade"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     let alert = await this.alertController.create({
-      header: '踢出游戏',
-      message: '确认要把该玩家踢出游戏？',
+      header: "踢出游戏",
+      message: "确认要把该玩家踢出游戏？",
       buttons: [
         {
-          text: '取消',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "取消",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: '确定',
+            console.log("Confirm Cancel");
+          },
+        },
+        {
+          text: "确定",
           handler: () => {
-            this.apiServ.kickout({
-              'roleId': roleId,
-            }).subscribe(res => {
-              if (res && res.code === 0) {
-                this.popupServ.toast('操作成功');
-                this.getDataList();
-              }
-            })
-          }
-        }
-      ]
-    })
+            this.apiServ
+              .kickout({
+                roleId: roleId,
+              })
+              .subscribe(res => {
+                if (res && res.code === 0) {
+                  this.popupServ.toast("操作成功");
+                  this.getDataList();
+                }
+              });
+          },
+        },
+      ],
+    });
     alert.present();
   }
   //设置游戏黑名单
   async gamesForbid(roleId: any, gameForbid: any) {
-    if (!await this.utils.isAuth('qry:user:trade')) {
+    if (!(await this.utils.isAuth("qry:user:trade"))) {
       return this.popupServ.toast("没有权限，请联系管理员授权");
     }
     const modal = await this.modalController.create({
       component: ForbidComponent,
       componentProps: {
         roleId: roleId,
-        gameForbid: gameForbid
-      }
+        gameForbid: gameForbid,
+      },
     });
-    modal.onWillDismiss().then((res) => {
-      if (res.data['dismissed']) {
+    modal.onWillDismiss().then(res => {
+      if (res.data["dismissed"]) {
         this.getDataList();
       }
     });
 
     return await modal.present();
   }
-} 
+}

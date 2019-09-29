@@ -8,7 +8,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="ion-padding">
   <Steps [size]="'small'">
     <Step *ngFor="let item of activities" [title]="item.content" [description]="item.timestamp"></Step>
   </Steps>

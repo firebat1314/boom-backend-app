@@ -1,68 +1,74 @@
 .searchbar {
-    --padding-start: 0px;
-    --padding-end: 0px;
-    --padding-top: 0px;
-    --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
 
-    .searchbar-wrap {
-        display: flex;
-        align-items: center;
+  .searchbar-wrap {
+    display: flex;
+    align-items: center;
 
-        .search-options {
-            flex-shrink: 0;
-        }
+    .search-options {
+      flex-shrink: 0;
     }
+  }
 
-    SearchBar,
-    ion-searchbar {
-        flex: 1;
-    }
+  SearchBar,
+  ion-searchbar {
+    flex: 1;
+  }
 }
 
-.no-body {
-    opacity: .3;
-    padding-top: 50px;
-    text-align: center;
-
-    ion-icon {
-        font-size: 144px;
+/* ion-content{
+    --background: transparent;
+    .content-wrap{
+        background: #ffffff;
     }
+} */
+.no-body {
+  opacity: 0.3;
+  padding-top: 50px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 144px;
+  }
 }
 
 WingBlank {
-    padding-top: 16px !important;
+  padding-top: 16px !important;
 
-    &:last-child {
-        margin-bottom: 16px;
-    }
+  &:last-child {
+    margin-bottom: 16px;
+  }
 
-    CardBody {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 8px;
-        font-size: 12px;
+  CardBody {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px;
+    font-size: 12px;
 
-        .item {
-            display: flex;
-            align-items: center;
-            padding: 4px 8px;
-            min-width: 50%;
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 4px 8px;
+      min-width: 50%;
 
-            .label {
-                white-space: nowrap;
-            }
+      .label {
+        white-space: nowrap;
+      }
 
-            .prop {
-                color: #999;
-                word-break: break-all;
+      .prop {
+        color: #999;
+        word-break: break-all;
 
-                ion-chip {
-                    font-size: 12px;
-                    padding: 4px 8px;
-                    height: auto;
-                    margin: 2px;
-                }
-            }
+        ion-chip {
+          font-size: 12px;
+          padding: 4px 8px;
+          height: auto;
+          margin: 2px;
         }
+      }
     }
+  }
 }

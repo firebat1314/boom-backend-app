@@ -64,6 +64,9 @@ export class ApiService {
   searchByAccount(data = {}, options: HttpOptions = {}) {//玩家账号查询
     return this.http.get('/qry/user/list/account', data, options);
   }
+  getUserList(data = {}, options: HttpOptions = {}) {//玩家查询
+    return this.http.get('/qry/user/list', data, options);
+  }
   frozen(data = {}, options: HttpOptions = {}) {//冻结账号
     return this.http.get('/qry/user/frozen', data, options);
   }

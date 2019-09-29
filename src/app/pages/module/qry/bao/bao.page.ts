@@ -91,14 +91,14 @@ export class BaoPage implements OnInit {
     }
   }
   getBorrow(id) {
-    this.navController.navigateForward(['/qry/bao/borrow'], {
+    this.navController.navigateForward(['/module/qry/bao/borrow'], {
       queryParams: {
         id: id,
       }
     });
   }
   getDeposit(id) {
-    this.navController.navigateForward(['/qry/bao/deposit'], {
+    this.navController.navigateForward(['/module/qry/bao/deposit'], {
       queryParams: {
         'roleId': id,
       }

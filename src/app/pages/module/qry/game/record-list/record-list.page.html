@@ -9,9 +9,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content pullingIcon="arrow-round-down" pullingText="下拉刷新" refreshingSpinner="circles"
-      refreshingText="刷新中..."></ion-refresher-content>
+  <ion-refresher slot="fixed"(ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles"></ion-refresher-content>
   </ion-refresher>
 
   <div class="no-body" *ngIf="!dataList?.length">
